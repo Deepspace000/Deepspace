@@ -246,9 +246,6 @@
   .c-text { color: var(--ctext, var(--text)); }
   .c-who { color: var(--cwho, var(--dim)); }
   .comments { border-left: 0; padding-left: 0; }
-  .f-item { border-left: 2px solid var(--cbar, transparent); padding-left: 0.7rem; }
-  .f-text { color: var(--ctext, inherit); }
-  .f-who { color: var(--cwho, inherit); }
 
   .note {
     display: block;
@@ -576,8 +573,9 @@
     animation-delay: 3.6s;
   }
   .f-item + .f-item { margin-top: 1.5rem; }
-  .f-text { display: block; white-space: pre-line; font-size: 0.88rem; line-height: 1.75; color: var(--text); }
-  .f-who { display: block; margin-top: 0.25rem; font-size: 0.75rem; line-height: 1.6; color: var(--dim); }
+  .f-item { padding: 0.6rem 0.85rem; border-radius: 3px; border-left: 2px solid var(--cbar, transparent); background: var(--cbg, transparent); }
+  .f-text { display: block; white-space: pre-line; font-size: 0.88rem; line-height: 1.75; color: var(--ctext, var(--text)); }
+  .f-who { display: block; margin-top: 0.25rem; font-size: 0.75rem; line-height: 1.6; color: var(--cwho, var(--dim)); }
 
   @media (min-width: 1000px) {
     .hero {
@@ -592,6 +590,7 @@
     .hero .sub { grid-column: 1 / -1; grid-row: 3; }
     .flank { grid-row: 1; width: auto; max-width: 23rem; margin-top: 0; align-self: center; }
     .flank.left { grid-column: 1; justify-self: end; text-align: right; padding-right: 1.6rem; border-right: 1px solid var(--line); }
+    .flank.left .f-item { border-left: 0; border-right: 2px solid var(--cbar, transparent); }
     .flank.right { grid-column: 3; justify-self: start; text-align: left; padding-left: 1.6rem; border-left: 1px solid var(--line); }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -701,32 +700,6 @@
       <p>deepspace is the ambient project of Mirko Ruckels, an Australian musician living in Brisbane.</p>
       <p>Since 2007 he has made slow, spacious and dream-like music from synthesizers, software and acoustic instruments. The music evokes this and other worlds, filled with empty spaces, night cities, deserts, deep oceans and strange phenomena.</p>
       <p>His albums are released independently and on Projekt Records.</p>
-    </section>
-
-    <section id="photos">
-      <h2>photos</h2>
-      <div class="photos">
-        <figure class="wide">
-          <img src="img/photos/press-sunset.jpg" alt="Mirko on a beach at sunset, in a dark cap, glasses and a scarf" width="1400" height="788" loading="lazy">
-          <figcaption>deepspace press photo</figcaption>
-        </figure>
-        <figure>
-          <img src="img/photos/press-dusk.jpg" alt="Mirko close to the camera at dusk by the sea, in a dark cap and glasses" width="1000" height="1333" loading="lazy">
-          <figcaption>deepspace press photo</figcaption>
-        </figure>
-        <figure>
-          <img src="img/photos/projekt-2022a.jpg" alt="Mirko in a leather jacket and striped shirt, photographed from below" width="750" height="700" loading="lazy">
-          <figcaption>Projekt Records press photo, 2022</figcaption>
-        </figure>
-        <figure>
-          <img src="img/photos/projekt-2022b.jpg" alt="Mirko lying back with chess pieces on a chequered top" width="750" height="734" loading="lazy">
-          <figcaption>Projekt Records press photo, 2022</figcaption>
-        </figure>
-        <figure>
-          <img src="img/photos/projekt-2022c.jpg" alt="The studio: a laptop and a tablet running music software" width="750" height="563" loading="lazy">
-          <figcaption>The studio, Projekt Records press photo, 2022</figcaption>
-        </figure>
-      </div>
     </section>
 
     <section id="music">
@@ -986,6 +959,32 @@
     </section>
 
 
+    <section id="photos">
+      <h2>photos</h2>
+      <div class="photos">
+        <figure class="wide">
+          <img src="img/photos/press-sunset.jpg" alt="Mirko on a beach at sunset, in a dark cap, glasses and a scarf" width="1400" height="788" loading="lazy">
+          <figcaption>deepspace press photo</figcaption>
+        </figure>
+        <figure>
+          <img src="img/photos/press-dusk.jpg" alt="Mirko close to the camera at dusk by the sea, in a dark cap and glasses" width="1000" height="1333" loading="lazy">
+          <figcaption>deepspace press photo</figcaption>
+        </figure>
+        <figure>
+          <img src="img/photos/projekt-2022a.jpg" alt="Mirko in a leather jacket and striped shirt, photographed from below" width="750" height="700" loading="lazy">
+          <figcaption>Projekt Records press photo, 2022</figcaption>
+        </figure>
+        <figure>
+          <img src="img/photos/projekt-2022b.jpg" alt="Mirko lying back with chess pieces on a chequered top" width="750" height="734" loading="lazy">
+          <figcaption>Projekt Records press photo, 2022</figcaption>
+        </figure>
+        <figure>
+          <img src="img/photos/projekt-2022c.jpg" alt="The studio: a laptop and a tablet running music software" width="750" height="563" loading="lazy">
+          <figcaption>The studio, Projekt Records press photo, 2022</figcaption>
+        </figure>
+      </div>
+    </section>
+
     <section id="press">
       <h2>press material</h2>
 
@@ -1099,6 +1098,46 @@
     { x: 0.60, y: 0.15, r: 0.45, c: [40, 52, 96],  a: 0.20, sx: 0.00012, sy: 0.00007, p: 1.3 }
   ];
 
+  // The colour of space follows the scroll: dark, blue, soft pink, green.
+  // Each stop sets the sky gradient, the four clouds (colour, strength), the horizon glow and the motes.
+  var STOPS = [
+    { base: [[3, 6, 11], [5, 8, 14], [7, 11, 18]],
+      cl: [[[14, 22, 34], 0.22], [[10, 18, 30], 0.20], [[16, 26, 38], 0.14], [[20, 24, 44], 0.14]],
+      hz: [143, 180, 204], hzA: 0.03, mote: [200, 225, 240] },
+    { base: [[3, 6, 11], [7, 16, 27], [10, 22, 36]],
+      cl: [[[24, 58, 86], 0.34], [[18, 44, 74], 0.30], [[30, 70, 92], 0.20], [[40, 52, 96], 0.20]],
+      hz: [143, 180, 204], hzA: 0.05, mote: [200, 225, 240] },
+    { base: [[11, 6, 16], [19, 10, 24], [27, 14, 31]],
+      cl: [[[92, 48, 82], 0.26], [[74, 38, 72], 0.24], [[100, 56, 88], 0.16], [[66, 42, 94], 0.16]],
+      hz: [218, 164, 198], hzA: 0.05, mote: [240, 214, 234] },
+    { base: [[3, 11, 9], [7, 20, 15], [10, 28, 20]],
+      cl: [[[24, 80, 62], 0.28], [[20, 68, 54], 0.26], [[34, 90, 70], 0.18], [[30, 74, 78], 0.18]],
+      hz: [150, 214, 184], hzA: 0.05, mote: [206, 242, 226] }
+  ];
+  var progress = 0, target = 0;
+
+  function readScroll() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    target = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
+  }
+  function mixN(a, b, f) { return a + (b - a) * f; }
+  function mixC(a, b, f) { return [mixN(a[0], b[0], f), mixN(a[1], b[1], f), mixN(a[2], b[2], f)]; }
+  function rgb(c, a) {
+    return 'rgba(' + Math.round(c[0]) + ',' + Math.round(c[1]) + ',' + Math.round(c[2]) + ',' + (a === undefined ? 1 : a) + ')';
+  }
+  // The blend between two neighbouring stops for the current scroll position.
+  function sky() {
+    var pos = progress * (STOPS.length - 1);
+    var i = Math.min(Math.floor(pos), STOPS.length - 2);
+    var f = pos - i;
+    f = f * f * (3 - 2 * f);
+    var A = STOPS[i], B = STOPS[i + 1];
+    var out = { base: [], cl: [], hz: mixC(A.hz, B.hz, f), hzA: mixN(A.hzA, B.hzA, f), mote: mixC(A.mote, B.mote, f) };
+    for (var k = 0; k < 3; k++) out.base.push(mixC(A.base[k], B.base[k], f));
+    for (var j = 0; j < 4; j++) out.cl.push({ c: mixC(A.cl[j][0], B.cl[j][0], f), a: mixN(A.cl[j][1], B.cl[j][1], f) });
+    return out;
+  }
+
   var motes = [];
 
   function seed() {
@@ -1128,11 +1167,12 @@
   }
 
   function draw(t) {
+    var S = sky();
     // base
     var g = ctx.createLinearGradient(0, 0, 0, h);
-    g.addColorStop(0, '#03060b');
-    g.addColorStop(0.55, '#07101b');
-    g.addColorStop(1, '#0a1624');
+    g.addColorStop(0, rgb(S.base[0]));
+    g.addColorStop(0.55, rgb(S.base[1]));
+    g.addColorStop(1, rgb(S.base[2]));
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, w, h);
 
@@ -1145,8 +1185,8 @@
       var rad = c.r * Math.max(w, h) * 0.8;
       var breathe = 0.85 + 0.15 * Math.sin(t * 0.00018 + c.p);
       var rg = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
-      rg.addColorStop(0, 'rgba(' + c.c[0] + ',' + c.c[1] + ',' + c.c[2] + ',' + (c.a * breathe) + ')');
-      rg.addColorStop(1, 'rgba(' + c.c[0] + ',' + c.c[1] + ',' + c.c[2] + ',0)');
+      rg.addColorStop(0, rgb(S.cl[i].c, S.cl[i].a * breathe));
+      rg.addColorStop(1, rgb(S.cl[i].c, 0));
       ctx.fillStyle = rg;
       ctx.fillRect(0, 0, w, h);
     }
@@ -1154,10 +1194,10 @@
     // a faint horizon: the place the hallway ends
     var hy = h * 0.58;
     var hz = ctx.createLinearGradient(0, hy - h * 0.12, 0, hy + h * 0.12);
-    var glow = 0.05 + 0.02 * Math.sin(t * 0.0002);
-    hz.addColorStop(0, 'rgba(143,180,204,0)');
-    hz.addColorStop(0.5, 'rgba(143,180,204,' + glow + ')');
-    hz.addColorStop(1, 'rgba(143,180,204,0)');
+    var glow = S.hzA + 0.02 * Math.sin(t * 0.0002);
+    hz.addColorStop(0, rgb(S.hz, 0));
+    hz.addColorStop(0.5, rgb(S.hz, glow));
+    hz.addColorStop(1, rgb(S.hz, 0));
     ctx.fillStyle = hz;
     ctx.fillRect(0, hy - h * 0.12, w, h * 0.24);
     ctx.globalCompositeOperation = 'source-over';
@@ -1168,19 +1208,30 @@
       var px = ((m.x + t * m.s) % 1) * w;
       var py = (m.y + Math.sin(t * m.f + m.t) * 0.01) * h;
       var tw = 0.25 + 0.55 * (0.5 + 0.5 * Math.sin(t * m.f * 3 + m.t));
-      ctx.fillStyle = 'rgba(200,225,240,' + (tw * 0.55) + ')';
+      ctx.fillStyle = rgb(S.mote, tw * 0.55);
       ctx.beginPath();
       ctx.arc(px, py, m.r, 0, 6.2832);
       ctx.fill();
     }
   }
 
+  var lastT = 0;
   function loop(t) {
+    var dt = Math.min(t - (lastT || t), 1500);
+    lastT = t;
+    progress += (target - progress) * (1 - Math.exp(-dt / 700));
+    if (Math.abs(target - progress) < 0.0005) progress = target;
     draw(t);
     requestAnimationFrame(loop);
   }
 
-  window.addEventListener('resize', resize);
+  window.addEventListener('scroll', function () {
+    readScroll();
+    if (reduce) { progress = target; draw(performance.now()); }
+  }, { passive: true });
+  window.addEventListener('resize', function () { readScroll(); resize(); });
+  readScroll();
+  progress = target;
   resize();
   if (!reduce) requestAnimationFrame(loop);
 })();
@@ -1470,6 +1521,14 @@
     return h;
   }
   // Each comment gets its own tint, a few degrees round the album colour, so neighbours are easy to tell apart.
+  var FLANK_HUES = [45, 330, 290, 225, 5, 62];
+  function tintFlank(node, i) {
+    var h = FLANK_HUES[i % FLANK_HUES.length];
+    node.style.setProperty('--ctext', 'hsl(' + h + ', 34%, 82%)');
+    node.style.setProperty('--cwho', 'hsl(' + h + ', 22%, 62%)');
+    node.style.setProperty('--cbar', 'hsl(' + h + ', 44%, 56%)');
+    node.style.setProperty('--cbg', 'hsla(' + h + ', 42%, 55%, 0.07)');
+  }
   var HUE_STEP = [0, 22, -22, 44, -44, 66];
   var LIGHT = [84, 79, 87, 81, 77, 85];
   function tintComment(node, accent, i) {
@@ -1632,7 +1691,7 @@
       if (!box) return;
       pick(names).forEach(function (c, ci) {
         var it = el('div', 'f-item');
-        tintComment(it, ACCENTS[albums[0].t], ci + (id === 'flank-right' ? 3 : 0));
+        tintFlank(it, ci + (id === 'flank-right' ? 3 : 0));
         it.appendChild(el('span', 'f-text', '\u201c' + c.x + '\u201d'));
         it.appendChild(el('span', 'f-who', c.w));
         box.appendChild(it);
