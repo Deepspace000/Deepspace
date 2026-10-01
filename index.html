@@ -120,6 +120,16 @@
   ul { list-style: none; }
   li + li { margin-top: 1.6rem; }
 
+  h3 {
+    font-weight: 300;
+    font-size: 0.82rem;
+    letter-spacing: 0.22em;
+    color: var(--dim);
+    margin: 2.8rem 0 1.2rem;
+  }
+  h2 + h3 { margin-top: 0; }
+  .reviews li + li { margin-top: 0.95rem; }
+
   .note {
     display: block;
     color: var(--dim);
@@ -580,8 +590,8 @@
       </ul>
     </section>
 
-    <section id="words">
-      <h2>words</h2>
+    <section id="interviews">
+      <h2>interviews</h2>
       <ul>
         <li>
           <a href="https://echoes.org/2025/11/20/monday-nov-17-2025-deepspace-interview-2" data-view="page" target="_blank" rel="noopener">Echoes interview</a>
@@ -592,17 +602,58 @@
           <span class="note">On Water Planets</span>
         </li>
         <li>
-          <a href="https://echoes.org/2024/12/29/echoes-january-cd-of-the-month-deepspace/" data-view="page" target="_blank" rel="noopener">Echoes CD of the Month</a>
-          <span class="note">A review of Neon Blue Utopia</span>
-        </li>
-        <li>
-          <a href="https://chaindlk.com/reviews/12524" data-view="page" target="_blank" rel="noopener">Chain D.L.K. review</a>
-          <span class="note">Also on Neon Blue Utopia</span>
-        </li>
-        <li>
           <a href="https://www.projekt.com/store/deepspace-exploring-the-blue/" data-view="page" target="_blank" rel="noopener">Exploring the Blue</a>
           <span class="note">An interview on Projekt</span>
         </li>
+      </ul>
+    </section>
+
+    <section id="reviews">
+      <h2>reviews</h2>
+
+      <h3>Sonic Immersion</h3>
+      <ul class="reviews">
+        <li><a href="https://www.sonicimmersion.org/deepspace-the-architecture-of-flowers/" target="_blank" rel="noopener">The Architecture of Flowers</a></li>
+        <li><a href="https://www.sonicimmersion.org/deepspace-the-blue-dunes/" target="_blank" rel="noopener">The Blue Dunes</a></li>
+        <li><a href="https://www.sonicimmersion.org/deepspace-superradiance/" target="_blank" rel="noopener">Superradiance</a></li>
+        <li><a href="https://www.sonicimmersion.org/deepspace-deep-blue-universe/" target="_blank" rel="noopener">Deep Blue Universe</a></li>
+        <li><a href="https://www.sonicimmersion.org/deepspace-slow-wave-cathedral/" target="_blank" rel="noopener">Slow Wave Cathedral</a></li>
+        <li><a href="https://www.sonicimmersion.org/deepspace-world-ocean-atlas/" target="_blank" rel="noopener">World Ocean Atlas</a></li>
+        <li><a href="https://www.sonicimmersion.org/deepspace-another-empty-galaxy/" target="_blank" rel="noopener">Another Empty Galaxy</a></li>
+        <li><a href="https://www.sonicimmersion.org/deepspace-the-barometric-sea/" target="_blank" rel="noopener">The Barometric Sea</a></li>
+        <li><a href="https://www.sonicimmersion.org/deepspace-the-barometric-sun/" target="_blank" rel="noopener">The Barometric Sun</a></li>
+        <li>
+          <a href="https://www.sonicimmersion.org/theadelaidean-deepspace-adrift/" target="_blank" rel="noopener">Adrift</a>
+          <span class="note">With theAdelaidean</span>
+        </li>
+      </ul>
+
+      <h3>Exposé</h3>
+      <ul class="reviews">
+        <li><a href="https://expose.org/index.php/articles/display/deepspace-neon-blue-utopia-3.html" data-view="page" target="_blank" rel="noopener">Neon Blue Utopia</a></li>
+        <li><a href="https://expose.org/index.php/articles/display/deepspace-the-black-orchid-galaxies-3.html" data-view="page" target="_blank" rel="noopener">The Black Orchid Galaxies</a></li>
+        <li><a href="https://expose.org/index.php/articles/display/deepspace-the-architecture-of-flowers-3.html" data-view="page" target="_blank" rel="noopener">The Architecture of Flowers</a></li>
+        <li><a href="https://expose.org/index.php/articles/display/deepspace-the-blue-dunes-3.html" data-view="page" target="_blank" rel="noopener">The Blue Dunes</a></li>
+        <li><a href="https://expose.org/index.php/articles/display/deepspace-superradiance-3.html" data-view="page" target="_blank" rel="noopener">Superradiance</a></li>
+      </ul>
+
+      <h3>Echoes</h3>
+      <ul class="reviews">
+        <li>
+          <a href="https://echoes.org/2024/12/29/echoes-january-cd-of-the-month-deepspace/" data-view="page" target="_blank" rel="noopener">Neon Blue Utopia</a>
+          <span class="note">CD of the Month</span>
+        </li>
+      </ul>
+
+      <h3>Chain D.L.K.</h3>
+      <ul class="reviews">
+        <li><a href="https://chaindlk.com/reviews/12524" data-view="page" target="_blank" rel="noopener">Neon Blue Utopia</a></li>
+      </ul>
+    </section>
+
+    <section id="story">
+      <h2>story</h2>
+      <ul>
         <li>
           <a href="http://www.projekt.com/store/wp-content/uploads/ARC254-Deepspace-TheBlueDunes.pdf" data-view="https://www.projekt.com/store/wp-content/uploads/ARC254-Deepspace-TheBlueDunes.pdf" target="_blank" rel="noopener">The Blue Dunes</a>
           <span class="note">A short science fiction story, as a PDF</span>
@@ -851,7 +902,9 @@
       { q: 1, x: "It resonates with my soul. It reminds me of my first album of Steve Roach: Towards the Blue (Quiet Music). Fantastic album! Favorite track: Primordial Oceans.", w: "star_maze_vdb, supporter on Bandcamp" }
     ] },
     { t: 'Blue Worlds I', y: '2018', l: 'Independent', u: D + 'blue-worlds-i', art: 'a3896224812', id: '2227799233', c: [] },
-    { t: 'The Empty Atoms', y: '2016', l: 'Independent', u: D + 'the-empty-atoms', art: 'a1642143802', id: '1419835340', c: [] },
+    { t: 'The Empty Atoms', y: '2016', l: 'Independent', u: D + 'the-empty-atoms', art: 'a1642143802', id: '1419835340', c: [
+      { q: 1, x: "This track tells a story in my mind, I don't understand it. but it's a sublime experience and brings back happy memories. Beautifully put together and masterfully produced, a really gem in the genre. Favorite track: Double Hearing.", w: "digitalmeltdown, supporter on Bandcamp" }
+    ] },
     { t: 'Slow Wave Cathedral', y: '2011', l: 'Independent', u: D + 'slow-wave-cathedral', art: 'a2005583787', id: '4157215996', c: [
       { q: 1, x: 'well composed and warm sounding', w: 'Sonic Immersion' }
     ]},
