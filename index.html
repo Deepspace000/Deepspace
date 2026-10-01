@@ -204,13 +204,13 @@
   .s-photo { width: 84px; height: 84px; flex: none; object-fit: cover; object-position: 50% 25%; border-radius: 2px; background: #0b1624; filter: saturate(0.92) brightness(0.95); }
   .s-photo.round { border-radius: 50%; }
 
-  /* a quote to the right of the reviews */
-  #reviews { position: relative; }
+  /* a quote at the top right of the interviews */
+  #interviews { position: relative; }
   .pull { margin: 0 0 2.4rem; padding-left: 1rem; border-left: 1px solid var(--line); }
   .pull-q { font-size: 1.2rem; line-height: 1.5; color: #e4edf4; }
   .pull-by { margin-top: 0.7rem; font-size: 0.82rem; line-height: 1.6; color: var(--dim); }
   @media (min-width: 1100px) {
-    .pull { position: absolute; top: 3.4rem; left: calc(100% + 2.5rem); width: 15rem; margin: 0; }
+    .pull { position: absolute; top: 0; left: calc(100% + 2.5rem); width: 15rem; margin: 0; }
   }
 
   /* story: a cover to the right of each */
@@ -859,6 +859,10 @@
 
     <section id="interviews">
       <h2>interviews</h2>
+      <aside class="pull">
+        <p class="pull-q">“Ambient music is my oasis.”</p>
+        <p class="pull-by">deepspace, in <a href="https://www.projekt.com/store/deepspace-exploring-the-blue/" data-view="page" target="_blank" rel="noopener">Exploring the Blue</a></p>
+      </aside>
       <ul class="srcs">
         <li class="src">
           <img class="s-photo" src="img/photos/echoes-mirko.jpg" alt="Mirko during the Echoes podcast video call" width="84" height="84" loading="lazy">
@@ -886,10 +890,6 @@
 
     <section id="reviews">
       <h2>reviews</h2>
-      <aside class="pull">
-        <p class="pull-q">“Ambient music is my oasis.”</p>
-        <p class="pull-by">deepspace, in <a href="https://www.projekt.com/store/deepspace-exploring-the-blue/" data-view="page" target="_blank" rel="noopener">Exploring the Blue</a></p>
-      </aside>
       <h3 class="pub"><img class="logo" src="img/logo-sonicimmersion.jpg" alt="" width="22" height="22"><span>Sonic Immersion</span></h3>
       <ul class="reviews">
         <li class="rv" data-album="The Architecture of Flowers"><a href="https://www.sonicimmersion.org/deepspace-the-architecture-of-flowers/" data-view="https://web.archive.org/web/20260307152938if_/https://www.sonicimmersion.org/deepspace-the-architecture-of-flowers/" data-archived="1" target="_blank" rel="noopener">The Architecture of Flowers</a></li>
