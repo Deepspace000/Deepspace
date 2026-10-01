@@ -158,16 +158,37 @@
   .rv-cover img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.85) brightness(0.9); }
   .rv-cover.blank { background: radial-gradient(circle at 50% 42%, rgba(143,180,204,0.30), transparent 62%), linear-gradient(160deg, #0c1a2b, #060b14); }
 
-  /* photos */
-  .photos { column-count: 2; column-gap: 1rem; }
-  .photos figure { margin: 0 0 1.1rem; break-inside: avoid; }
-  .photos figure.wide { column-span: all; }
-  .photos img { display: block; width: 100%; height: auto; border-radius: 2px; background: #0b1624; }
-  .photos figcaption { margin-top: 0.4rem; font-size: 0.78rem; line-height: 1.5; color: var(--dim); }
-  @media (max-width: 520px) { .photos { column-count: 1; } }
-  .photos.small { column-count: auto; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 1rem 1.1rem; margin-top: 0.4rem; }
-  .photos.small figure { margin: 0; }
-  .photos.small img { width: auto; height: 220px; max-width: 100%; }
+  /* photos: one wide picture, a row of three, a row of four, centred and a little wider than the text */
+  .gallery {
+    position: relative;
+    left: 50%;
+    width: min(860px, calc(100vw - 4rem));
+    transform: translateX(-50%);
+    display: grid;
+    gap: 0.9rem;
+  }
+  .gallery figure { margin: 0; }
+  .gallery img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 2px;
+    background: #0b1624;
+    filter: saturate(0.92) brightness(0.95);
+    transition: filter 1s ease;
+  }
+  .gallery img:hover { filter: none; }
+  .g-hero img { aspect-ratio: 16 / 9; }
+  .g-row { display: grid; gap: 0.9rem; }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .g3 img { aspect-ratio: 1 / 1; }
+  .g4 { grid-template-columns: repeat(4, 1fr); }
+  .g4 img { aspect-ratio: 4 / 5; }
+  .gallery figcaption, .g-cap { margin: 0.5rem 0 0; font-size: 0.78rem; line-height: 1.5; color: var(--dim); text-align: center; }
+  .g-cap { margin: -0.3rem 0 0.4rem; }
+  @media (max-width: 520px) { .g4 { grid-template-columns: repeat(2, 1fr); } }
+  @media (prefers-reduced-motion: reduce) { .gallery img { transition: none; } }
 
   /* video rail, scrolls sideways */
   .rail-wrap {
@@ -1041,29 +1062,23 @@
 
     <section id="photos">
       <h2>photos</h2>
-      <div class="photos">
-        <figure class="wide">
+      <div class="gallery">
+        <figure class="g-hero">
           <img src="img/photos/press-sunset.jpg" alt="Mirko on a beach at sunset, in a dark cap, glasses and a scarf" width="1400" height="788" loading="lazy">
           <figcaption>deepspace press photo</figcaption>
         </figure>
-        <figure>
-          <img src="img/photos/projekt-2022a.jpg" alt="Mirko in a leather jacket and striped shirt, photographed from below" width="750" height="700" loading="lazy">
-          <figcaption>Projekt Records press photo, 2022</figcaption>
-        </figure>
-        <figure>
-          <img src="img/photos/projekt-2022b.jpg" alt="Mirko lying back with chess pieces on a chequered top" width="750" height="734" loading="lazy">
-          <figcaption>Projekt Records press photo, 2022</figcaption>
-        </figure>
-        <figure>
-          <img src="img/photos/projekt-2022c.jpg" alt="The studio: a laptop and a tablet running music software" width="750" height="563" loading="lazy">
-          <figcaption>The studio, Projekt Records press photo, 2022</figcaption>
-        </figure>
-      </div>
-      <div class="photos small">
-        <figure><img src="img/photos/mirko-sunglasses-bw.jpg" alt="Black-and-white photo of Mirko in sunglasses and a blazer, on a veranda" width="177" height="250" loading="lazy"></figure>
-        <figure><img src="img/photos/mirko-keyboard.jpg" alt="Mirko close to the camera in glasses, with a keyboard behind him" width="189" height="252" loading="lazy"></figure>
-        <figure><img src="img/photos/mirko-windswept-bw.jpg" alt="Black-and-white photo of Mirko in a jacket with the wind in his hair, looking out over a lake" width="250" height="275" loading="lazy"></figure>
-        <figure><img src="img/photos/mirko-sunlit.jpg" alt="Sunlit close-up of Mirko looking down" width="203" height="225" loading="lazy"></figure>
+        <div class="g-row g3">
+          <figure><img src="img/photos/projekt-2022a.jpg" alt="Mirko in a leather jacket and striped shirt, photographed from below" width="750" height="700" loading="lazy" style="object-position: 50% 22%"></figure>
+          <figure><img src="img/photos/projekt-2022b.jpg" alt="Mirko lying back with chess pieces on a chequered top" width="750" height="734" loading="lazy" style="object-position: 50% 30%"></figure>
+          <figure><img src="img/photos/projekt-2022c.jpg" alt="The studio: a laptop and a tablet running music software" width="750" height="563" loading="lazy"></figure>
+        </div>
+        <p class="g-cap">Projekt Records press photos, 2022</p>
+        <div class="g-row g4">
+          <figure><img src="img/photos/mirko-sunglasses-bw.jpg" alt="Black-and-white photo of Mirko in sunglasses and a blazer, on a veranda" width="177" height="250" loading="lazy" style="object-position: 50% 25%"></figure>
+          <figure><img src="img/photos/mirko-keyboard.jpg" alt="Mirko close to the camera in glasses, with a keyboard behind him" width="189" height="252" loading="lazy" style="object-position: 50% 30%"></figure>
+          <figure><img src="img/photos/mirko-windswept-bw.jpg" alt="Black-and-white photo of Mirko in a jacket with the wind in his hair, looking out over a lake" width="250" height="275" loading="lazy" style="object-position: 50% 20%"></figure>
+          <figure><img src="img/photos/mirko-sunlit.jpg" alt="Sunlit close-up of Mirko looking down" width="203" height="225" loading="lazy" style="object-position: 50% 35%"></figure>
+        </div>
       </div>
     </section>
 
