@@ -484,6 +484,7 @@
     a.vid { grid-template-columns: 104px 1fr; column-gap: 0.9rem; }
     .v-thumb { width: 104px; height: 58px; }
   }
+.c-who a { color: var(--dim); }
 </style>
 </head>
 <body>
@@ -783,8 +784,9 @@
       { q: 1, x: "deepspace goes utopian virtual. his best so far.", w: "JTH, supporter on Bandcamp" },
       { q: 1, x: "Pure euphoria. Thank you deepspace.", w: "MR GREY, supporter on Bandcamp" },
       { q: 1, x: "Simply, thank you for this wonder.", w: "Ignatious Land, supporter on Bandcamp" },
-      { q: 1, x: "doesn’t just create a mood; it builds a world", w: "Chain D.L.K." },
-      { x: "Echoes made it their CD of the Month for January 2025 and heard Brian Eno in its flowing, impressionistic sound.", w: "Echoes" }
+      { q: 1, x: "His sound is more influenced by Brian Eno’s ambient aesthetic, of fluid impressionism, sometimes to the point of vaporous. On NEON BLUE UTOPIA he adds in Eno’s sensibility for subtle melodies… with shimmering synth crystals, shards of melody and the environmental sound of rain transformed through electronics. It’s a sound that hints at new vistas just over the hill… It’s an album to get lost in, just like the Megacity of his imagination. Welcome to 2025, or is it 2125?", w: "Echoes Radio, review", u: "https://echoes.org/2024/12/29/echoes-january-cd-of-the-month-deepspace/" },
+      { q: 1, x: "Ruckels has crafted an album that doesn’t just create a mood; it builds a world. His meticulous layering of detuned synths, shimmering drones, and hyperreal textures draws listeners into a space that is both futuristic and achingly intimate.", w: "Chain D.L.K., review", u: "https://www.chaindlk.com/reviews/12524" },
+      { q: 1, x: "77 minutes of purely instrumental compositions that straddle the boundaries of atmospheric, electronic, dreamwave and post-rock, taking his sound into the far reaches of space and beyond, using droning guitars, synthesizers that occasionally detune suddenly, muted percussion and piano, vast expansive ambient fills, brilliant sparkles of tonal color, and sampled sounds (which can include voices), all in order to bring his visions to life, spread across the album’s fifteen long tracks.", w: "Exposé, review", u: "https://expose.org/index.php/articles/display/deepspace-neon-blue-utopia-3.html" }
     ]},
     { t: 'Vertical Landscapes \u2013 Retrospective', y: '2024', l: 'Projekt Records', u: P + 'vertical-landscapes-retrospective', art: 'a2602865903', id: '3949209331', c: [
       { q: 1, x: "Good music, tripping vibes, helps me concentrate and inspire. Favorite track: HyperdriveEngage.", w: "Xbass540, supporter on Bandcamp" },
@@ -970,7 +972,16 @@
       a.c.forEach(function (c) {
         var li = el('li');
         li.appendChild(el('span', 'c-text', c.q ? '\u201c' + c.x + '\u201d' : c.x));
-        li.appendChild(el('span', 'c-who', c.w));
+        var who = el('span', 'c-who');
+        if (c.u) {
+          var link = el('a', null, c.w);
+          link.href = c.u; link.target = '_blank'; link.rel = 'noopener';
+          link.setAttribute('data-view', 'page');
+          who.appendChild(link);
+        } else {
+          who.textContent = c.w;
+        }
+        li.appendChild(who);
         ul.appendChild(li);
       });
       inner.appendChild(ul);
