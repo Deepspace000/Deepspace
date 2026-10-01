@@ -453,6 +453,37 @@
   @media (prefers-reduced-motion: reduce) {
     .panel, .album.open .panel { transition-duration: 0.01s; transition-delay: 0s; }
   }
+
+  /* ---------- Individual videos ---------- */
+  .videos { margin-top: 2.8rem; }
+  .videos li + li { margin-top: 1.3rem; }
+  a.vid {
+    display: grid;
+    grid-template-columns: 128px 1fr;
+    column-gap: 1.1rem;
+    align-items: center;
+    padding: 0;
+    background-image: none;
+  }
+  a.vid:hover, a.vid:focus-visible { background-image: none; }
+  .v-thumb {
+    display: block;
+    width: 128px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 2px;
+    background: #0b1624;
+    filter: saturate(0.85) brightness(0.88);
+    transition: filter 1.2s ease;
+  }
+  a.vid:hover .v-thumb, a.vid:focus-visible .v-thumb { filter: saturate(1) brightness(1); }
+  .v-name { display: block; line-height: 1.45; transition: color 0.9s ease; }
+  .v-meta .note { margin-top: 0.1rem; }
+  a.vid:hover .v-name, a.vid:focus-visible .v-name { color: #ffffff; }
+  @media (max-width: 520px) {
+    a.vid { grid-template-columns: 104px 1fr; column-gap: 0.9rem; }
+    .v-thumb { width: 104px; height: 58px; }
+  }
 </style>
 </head>
 <body>
@@ -506,6 +537,44 @@
         <li>
           <a href="https://youtube.com/playlist?list=PLC-ueUAKetVLUp8Kro-l4x7xT5nLPBdIc" data-view="https://www.youtube.com/embed/videoseries?list=PLC-ueUAKetVLUp8Kro-l4x7xT5nLPBdIc" data-kind="embed" target="_blank" rel="noopener">Neon Blue Utopia videos</a>
           <span class="note">A playlist for the 2024 album</span>
+        </li>
+      </ul>
+      <ul class="videos">
+        <li>
+          <a class="vid" href="https://www.youtube.com/watch?v=fqwIbqaYP4g" data-view="https://www.youtube.com/embed/fqwIbqaYP4g?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Utopia=Visions">
+            <img class="v-thumb" src="https://i.ytimg.com/vi/fqwIbqaYP4g/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <span class="v-meta"><span class="v-name">Utopia=Visions</span><span class="note">from Neon Blue Utopia</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="vid" href="https://www.youtube.com/watch?v=PnXr_Fkzpu4" data-view="https://www.youtube.com/embed/PnXr_Fkzpu4?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Parkour on Lazarus Heights">
+            <img class="v-thumb" src="https://i.ytimg.com/vi/PnXr_Fkzpu4/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <span class="v-meta"><span class="v-name">Parkour on Lazarus Heights</span><span class="note">from Neon Blue Utopia</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="vid" href="https://www.youtube.com/watch?v=hvMmEgfJuhE" data-view="https://www.youtube.com/embed/hvMmEgfJuhE?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Rainy Megacity 7 Precinct">
+            <img class="v-thumb" src="https://i.ytimg.com/vi/hvMmEgfJuhE/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <span class="v-meta"><span class="v-name">Rainy Megacity 7 Precinct</span><span class="note">from Neon Blue Utopia</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="vid" href="https://www.youtube.com/watch?v=IovVNuh2SYg" data-view="https://www.youtube.com/embed/IovVNuh2SYg?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch HyperdriveEngage">
+            <img class="v-thumb" src="https://i.ytimg.com/vi/IovVNuh2SYg/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <span class="v-meta"><span class="v-name">HyperdriveEngage</span><span class="note">from The Black Orchid Galaxies</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="vid" href="https://www.youtube.com/watch?v=ORFVcdp7KOw" data-view="https://www.youtube.com/embed/ORFVcdp7KOw?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Inflorescence">
+            <img class="v-thumb" src="https://i.ytimg.com/vi/ORFVcdp7KOw/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <span class="v-meta"><span class="v-name">Inflorescence</span><span class="note">from The Architecture of Flowers</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="vid" href="https://www.youtube.com/watch?v=qYor5vTOxx8" data-view="https://www.youtube.com/embed/qYor5vTOxx8?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Dreaming Stalks">
+            <img class="v-thumb" src="https://i.ytimg.com/vi/qYor5vTOxx8/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <span class="v-meta"><span class="v-name">Dreaming Stalks</span><span class="note">from The Architecture of Flowers</span></span>
+          </a>
         </li>
       </ul>
     </section>
