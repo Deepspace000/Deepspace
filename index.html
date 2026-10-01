@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>deepspace</title>
+<meta name="description" content="deepspace is the ambient music project of Mirko Ruckels, based in Brisbane, Australia.">
+<meta name="theme-color" content="#04070d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2304070d'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%238fb4cc'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #04070d;
+    --deep: #0a1320;
+    --mist: #8fb4cc;
+    --text: #c8d3de;
+    --dim: #8296aa;
+    --line: rgba(143, 180, 204, 0.22);
+    --font: "Poppins", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { background: var(--night); scroll-behavior: smooth; }
+
+  body {
+    min-height: 100vh;
+    background: var(--night);
+    color: var(--text);
+    font-family: var(--font);
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.85;
+    letter-spacing: 0.02em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #sky {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    display: block;
+  }
+
+  main { position: relative; z-index: 1; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem 1rem;
+    position: relative;
+  }
+
+  h1 {
+    font-weight: 200;
+    font-size: clamp(1.6rem, 6.2vw, 4.2rem);
+    line-height: 1;
+    color: #e4edf4;
+    white-space: nowrap;
+  }
+
+  h1 .l {
+    display: inline-block;
+    margin-right: 0.62em;
+    opacity: 0;
+    filter: blur(14px);
+    transform: translateY(0.12em);
+    animation: surface 4.5s cubic-bezier(.2,.6,.2,1) forwards;
+    animation-delay: calc(0.9s + var(--i) * 0.28s);
+  }
+  h1 .l:last-child { margin-right: 0; }
+
+  @keyframes surface {
+    to { opacity: 1; filter: blur(0); transform: none; }
+  }
+
+  .sub {
+    margin-top: 2.4rem;
+    font-size: clamp(0.8rem, 1.9vw, 0.95rem);
+    letter-spacing: 0.32em;
+    color: var(--dim);
+    opacity: 0;
+    animation: fade 4s ease forwards;
+    animation-delay: 4.2s;
+  }
+
+  @keyframes fade { to { opacity: 1; } }
+
+  /* ---------- Content ---------- */
+  .content {
+    max-width: 36rem;
+    margin: 0 auto;
+    padding: 12vh 1.75rem 14vh;
+  }
+
+  section { margin-bottom: 14vh; }
+  section:last-of-type { margin-bottom: 0; }
+
+  h2 {
+    font-weight: 300;
+    font-size: 0.95rem;
+    letter-spacing: 0.3em;
+    color: var(--mist);
+    margin-bottom: 1.8rem;
+  }
+
+  p { color: var(--text); max-width: 34rem; }
+  p + p { margin-top: 1.3rem; }
+
+  ul { list-style: none; }
+  li + li { margin-top: 1.6rem; }
+
+  .note {
+    display: block;
+    color: var(--dim);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin-top: 0.15rem;
+  }
+
+  a {
+    color: var(--text);
+    text-decoration: none;
+    background-image: linear-gradient(var(--line), var(--line));
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+    transition: color 0.9s ease, background-size 0.9s ease;
+  }
+  a:hover, a:focus-visible {
+    color: #ffffff;
+    background-image: linear-gradient(var(--mist), var(--mist));
+  }
+  a:focus-visible {
+    outline: 1px solid var(--mist);
+    outline-offset: 5px;
+  }
+
+  .inline-links a + a { margin-left: 1.6rem; }
+  .inline-links { line-height: 2.3; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 1rem 6vh;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+  }
+
+  @media (max-width: 520px) {
+    h1 { font-size: 1.35rem; }
+    h1 .l { margin-right: 0.5em; }
+    .sub { letter-spacing: 0.22em; }
+    .inline-links a { display: inline-block; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    h1 .l, .sub { animation: none; opacity: 1; filter: none; transform: none; }
+  }
+
+  /* ---------- Discography ---------- */
+  .quick { margin-bottom: 3rem; }
+  .albums { list-style: none; }
+  .album {
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    column-gap: 1.3rem;
+    align-items: center;
+    padding: 1.1rem 0;
+  }
+  .cover {
+    width: 88px;
+    height: 88px;
+    display: block;
+    overflow: hidden;
+    border-radius: 2px;
+    padding: 0;
+    background-image: none;
+    background-color: #0b1624;
+  }
+  .cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.85) brightness(0.9);
+    transition: filter 1.2s ease;
+  }
+  .cover:hover img, .cover:focus-visible img { filter: saturate(1) brightness(1); }
+  .cover:hover, .cover:focus-visible { background-image: none; }
+  .cover.blank {
+    background:
+      radial-gradient(circle at 50% 42%, rgba(143,180,204,0.30), transparent 62%),
+      linear-gradient(160deg, #0c1a2b, #060b14);
+  }
+  .a-title { font-size: 1rem; line-height: 1.45; color: #e4edf4; }
+  .a-meta { font-size: 0.82rem; line-height: 1.6; color: var(--dim); }
+  .a-actions { margin-top: 0.55rem; font-size: 0.9rem; }
+  .a-actions > * + * { margin-left: 1.6rem; }
+
+  .praise {
+    font: inherit;
+    letter-spacing: inherit;
+    color: var(--text);
+    background-color: transparent;
+    background-image: linear-gradient(var(--line), var(--line));
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    border: 0;
+    padding: 0 0 2px;
+    cursor: pointer;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.9s ease, background-image 0.9s ease;
+  }
+  .praise:hover, .praise.on, .praise:focus-visible {
+    color: #ffffff;
+    background-image: linear-gradient(var(--mist), var(--mist));
+  }
+  .praise:focus-visible { outline: 1px solid var(--mist); outline-offset: 5px; }
+
+  .panel {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    visibility: hidden;
+    transition: grid-template-rows 1.3s cubic-bezier(.2,.6,.2,1), opacity 1.3s ease, visibility 0s linear 1.3s;
+  }
+  .album.open .panel {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+    transition: grid-template-rows 0.9s cubic-bezier(.2,.6,.2,1), opacity 0.9s ease, visibility 0s;
+  }
+  .panel-in { overflow: hidden; min-height: 0; }
+  .comments {
+    list-style: none;
+    margin: 1.2rem 0 0.3rem;
+    padding-left: 1.1rem;
+    border-left: 1px solid var(--line);
+  }
+  .comments li + li { margin-top: 1.2rem; }
+  .c-text { font-size: 0.92rem; line-height: 1.75; color: var(--text); }
+  .c-who { display: block; font-size: 0.78rem; line-height: 1.6; color: var(--dim); margin-top: 0.2rem; }
+
+  @media (max-width: 520px) {
+    .album { grid-template-columns: 72px 1fr; column-gap: 1rem; }
+    .cover { width: 72px; height: 72px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .panel, .album.open .panel { transition-duration: 0.01s; transition-delay: 0s; }
+    .cover img { transition: none; }
+  }
+
+  /* ---------- In-page player ---------- */
+  .player {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    visibility: hidden;
+    transition: grid-template-rows 1.3s cubic-bezier(.2,.6,.2,1), opacity 1.3s ease, visibility 0s linear 1.3s;
+  }
+  .album.playing .player {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+    transition: grid-template-rows 0.9s cubic-bezier(.2,.6,.2,1), opacity 0.9s ease, visibility 0s;
+  }
+  .player-in { overflow: hidden; min-height: 0; }
+  .player iframe { display: block; width: 100%; height: 340px; border: 0; margin-top: 1.1rem; color-scheme: dark; }
+  .player .ext { display: inline-block; margin-top: 0.8rem; font-size: 0.82rem; }
+
+  /* ---------- Viewer (pages opened on the site) ---------- */
+  .linkbtn {
+    font: inherit;
+    letter-spacing: inherit;
+    color: var(--text);
+    background: transparent linear-gradient(var(--line), var(--line)) 0 100% / 100% 1px no-repeat;
+    border: 0;
+    padding: 0 0 2px;
+    cursor: pointer;
+    transition: color 0.9s ease, background-image 0.9s ease;
+  }
+  .linkbtn:hover, .linkbtn:focus-visible { color: #fff; background-image: linear-gradient(var(--mist), var(--mist)); }
+  .linkbtn:focus-visible { outline: 1px solid var(--mist); outline-offset: 5px; }
+
+  html.lock, html.lock body { overflow: hidden; }
+  .viewer {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    background: rgba(4, 7, 13, 0.97);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0s linear 0.8s;
+  }
+  .viewer.on { opacity: 1; visibility: visible; transition: opacity 0.8s ease; }
+  .v-bar {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    padding: calc(0.9rem + env(safe-area-inset-top, 0px)) 1.25rem 0.9rem;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.88rem;
+  }
+  .v-title { flex: 1; min-width: 0; color: var(--dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .v-body { flex: 1; min-height: 0; display: flex; justify-content: center; padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .v-frame { width: 100%; height: 100%; border: 0; background: #ffffff; color-scheme: normal; }
+  .viewer.embed .v-body { align-items: center; padding: 1.5rem; }
+  .viewer.embed .v-frame { max-width: 720px; height: min(78vh, 440px); background: transparent; border-radius: 4px; }
+  @media (prefers-reduced-motion: reduce) {
+    .player, .album.playing .player, .viewer, .viewer.on { transition-duration: 0.01s; transition-delay: 0s; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<main>
+  <header class="hero">
+    <h1 aria-label="deepspace">
+      <span class="l" style="--i:0" aria-hidden="true">d</span><span class="l" style="--i:1" aria-hidden="true">e</span><span class="l" style="--i:2" aria-hidden="true">e</span><span class="l" style="--i:3" aria-hidden="true">p</span><span class="l" style="--i:4" aria-hidden="true">s</span><span class="l" style="--i:5" aria-hidden="true">p</span><span class="l" style="--i:6" aria-hidden="true">a</span><span class="l" style="--i:7" aria-hidden="true">c</span><span class="l" style="--i:8" aria-hidden="true">e</span>
+    </h1>
+    <p class="sub">ambient music</p>
+  </header>
+
+  <div class="content">
+
+    <section id="about">
+      <h2>about</h2>
+      <p>deepspace is the ambient project of Mirko Ruckels, an Australian musician living in Brisbane.</p>
+      <p>Since 2006 he has made slow, spacious music from synthesizers, software and acoustic instruments. Many pieces picture places like empty rooms, night cities, deep water and far planets.</p>
+      <p>His albums are released independently and on Projekt Records.</p>
+    </section>
+
+    <section id="music">
+      <h2>music</h2>
+      <p class="inline-links quick">
+        <a href="https://deepspace1.bandcamp.com/" target="_blank" rel="noopener">Bandcamp</a>
+        <a href="https://open.spotify.com/artist/0lbz7rIgD0oxtTdmiPE7Jm" data-view="https://open.spotify.com/embed/artist/0lbz7rIgD0oxtTdmiPE7Jm?theme=0" data-kind="embed" target="_blank" rel="noopener">Spotify</a>
+        <a href="https://www.youtube.com/@Deepspace_Music" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.projekt.com/" target="_blank" rel="noopener">Projekt</a>
+      </p>
+      <ol id="albums" class="albums"></ol>
+    </section>
+
+    <section id="watch">
+      <h2>watch</h2>
+      <ul>
+        <li>
+          <a href="https://www.youtube.com/@Deepspace_Music" target="_blank" rel="noopener">Music videos</a>
+          <span class="note">Every deepspace video on YouTube</span>
+        </li>
+        <li>
+          <a href="https://youtube.com/playlist?list=PLC-ueUAKetVLUp8Kro-l4x7xT5nLPBdIc" data-view="https://www.youtube.com/embed/videoseries?list=PLC-ueUAKetVLUp8Kro-l4x7xT5nLPBdIc" data-kind="embed" target="_blank" rel="noopener">Neon Blue Utopia videos</a>
+          <span class="note">A playlist for the 2024 album</span>
+        </li>
+      </ul>
+    </section>
+
+    <section id="words">
+      <h2>words</h2>
+      <ul>
+        <li>
+          <a href="https://echoes.org/2025/11/20/monday-nov-17-2025-deepspace-interview-2" data-view="page" target="_blank" rel="noopener">Echoes interview</a>
+          <span class="note">Podcast conversation, November 2025</span>
+        </li>
+        <li>
+          <a href="https://www.chaindlk.com/interviews/deepspace__" data-view="page" target="_blank" rel="noopener">Chain D.L.K. interview</a>
+          <span class="note">On Water Planets</span>
+        </li>
+        <li>
+          <a href="https://echoes.org/2024/12/29/echoes-january-cd-of-the-month-deepspace/" data-view="page" target="_blank" rel="noopener">Echoes CD of the Month</a>
+          <span class="note">A review of Neon Blue Utopia</span>
+        </li>
+        <li>
+          <a href="https://chaindlk.com/reviews/12524" data-view="page" target="_blank" rel="noopener">Chain D.L.K. review</a>
+          <span class="note">Also on Neon Blue Utopia</span>
+        </li>
+        <li>
+          <a href="https://www.projekt.com/store/deepspace-exploring-the-blue/" data-view="page" target="_blank" rel="noopener">Exploring the Blue</a>
+          <span class="note">An interview on Projekt</span>
+        </li>
+        <li>
+          <a href="http://www.projekt.com/store/wp-content/uploads/ARC254-Deepspace-TheBlueDunes.pdf" data-view="https://www.projekt.com/store/wp-content/uploads/ARC254-Deepspace-TheBlueDunes.pdf" target="_blank" rel="noopener">The Blue Dunes</a>
+          <span class="note">A short science fiction story, as a PDF</span>
+        </li>
+      </ul>
+    </section>
+
+    <section id="elsewhere">
+      <h2>elsewhere</h2>
+      <p class="inline-links">
+        <a href="https://www.instagram.com/deepspace_ambientartist/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/deepspaceAU" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://bsky.app/profile/deepspaceau.bsky.social" target="_blank" rel="noopener">Bluesky</a>
+        <a href="https://linktr.ee/deepspace_" target="_blank" rel="noopener">Linktree</a>
+      </p>
+    </section>
+
+  </div>
+</main>
+
+<footer>deepspace &nbsp; brisbane</footer>
+
+<div id="viewer" class="viewer" role="dialog" aria-modal="true" aria-label="Viewer">
+  <div class="v-bar">
+    <span class="v-title"></span>
+    <a class="v-ext" target="_blank" rel="noopener">open in new tab</a>
+    <button class="linkbtn v-close" type="button">close</button>
+  </div>
+  <div class="v-body">
+    <iframe class="v-frame" title="" allow="autoplay; encrypted-media; fullscreen; clipboard-write" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+</div>
+
+<script>
+(function () {
+  var canvas = document.getElementById('sky');
+  var ctx = canvas.getContext('2d');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var w = 0, h = 0, dpr = 1;
+
+  // Slow clouds of colour. Each one drifts on its own long cycle.
+  var clouds = [
+    { x: 0.25, y: 0.35, r: 0.55, c: [24, 58, 86],  a: 0.34, sx: 0.00011, sy: 0.00008, p: 0.0 },
+    { x: 0.75, y: 0.60, r: 0.60, c: [18, 44, 74],  a: 0.30, sx: 0.00009, sy: 0.00012, p: 2.1 },
+    { x: 0.50, y: 0.85, r: 0.70, c: [30, 70, 92],  a: 0.20, sx: 0.00007, sy: 0.00010, p: 4.2 },
+    { x: 0.60, y: 0.15, r: 0.45, c: [40, 52, 96],  a: 0.20, sx: 0.00012, sy: 0.00007, p: 1.3 }
+  ];
+
+  var motes = [];
+
+  function seed() {
+    motes = [];
+    var n = Math.round((w * h) / 16000);
+    for (var i = 0; i < n; i++) {
+      motes.push({
+        x: Math.random(),
+        y: Math.random(),
+        r: Math.random() * 1.1 + 0.25,
+        s: Math.random() * 0.00002 + 0.000005,
+        t: Math.random() * 6.28,
+        f: Math.random() * 0.0006 + 0.0002
+      });
+    }
+  }
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    seed();
+    draw(performance.now());
+  }
+
+  function draw(t) {
+    // base
+    var g = ctx.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, '#03060b');
+    g.addColorStop(0.55, '#07101b');
+    g.addColorStop(1, '#0a1624');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+
+    // clouds
+    ctx.globalCompositeOperation = 'lighter';
+    for (var i = 0; i < clouds.length; i++) {
+      var c = clouds[i];
+      var cx = (c.x + Math.sin(t * c.sx + c.p) * 0.14) * w;
+      var cy = (c.y + Math.cos(t * c.sy + c.p) * 0.10) * h;
+      var rad = c.r * Math.max(w, h) * 0.8;
+      var breathe = 0.85 + 0.15 * Math.sin(t * 0.00018 + c.p);
+      var rg = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
+      rg.addColorStop(0, 'rgba(' + c.c[0] + ',' + c.c[1] + ',' + c.c[2] + ',' + (c.a * breathe) + ')');
+      rg.addColorStop(1, 'rgba(' + c.c[0] + ',' + c.c[1] + ',' + c.c[2] + ',0)');
+      ctx.fillStyle = rg;
+      ctx.fillRect(0, 0, w, h);
+    }
+
+    // a faint horizon: the place the hallway ends
+    var hy = h * 0.58;
+    var hz = ctx.createLinearGradient(0, hy - h * 0.12, 0, hy + h * 0.12);
+    var glow = 0.05 + 0.02 * Math.sin(t * 0.0002);
+    hz.addColorStop(0, 'rgba(143,180,204,0)');
+    hz.addColorStop(0.5, 'rgba(143,180,204,' + glow + ')');
+    hz.addColorStop(1, 'rgba(143,180,204,0)');
+    ctx.fillStyle = hz;
+    ctx.fillRect(0, hy - h * 0.12, w, h * 0.24);
+    ctx.globalCompositeOperation = 'source-over';
+
+    // motes
+    for (var j = 0; j < motes.length; j++) {
+      var m = motes[j];
+      var px = ((m.x + t * m.s) % 1) * w;
+      var py = (m.y + Math.sin(t * m.f + m.t) * 0.01) * h;
+      var tw = 0.25 + 0.55 * (0.5 + 0.5 * Math.sin(t * m.f * 3 + m.t));
+      ctx.fillStyle = 'rgba(200,225,240,' + (tw * 0.55) + ')';
+      ctx.beginPath();
+      ctx.arc(px, py, m.r, 0, 6.2832);
+      ctx.fill();
+    }
+  }
+
+  function loop(t) {
+    draw(t);
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  if (!reduce) requestAnimationFrame(loop);
+})();
+</script>
+
+
+<script>
+(function () {
+  // To add or change a comment, edit the "c" list for that album.
+  // { q: 1, x: "exact words", w: "who said it" }  -> shown in quotation marks
+  // { x: "a summary", w: "who said it" }          -> shown without quotation marks
+  // Cover: "art" is the number from the Bandcamp cover image address (f4.bcbits.com/img/aNUMBER_5.jpg).
+  var P = 'https://projektrecords.bandcamp.com/album/';
+  var D = 'https://deepspace1.bandcamp.com/album/';
+
+  var albums = [
+    { t: 'The Atlas Sector', y: '2026', l: 'Projekt Records', u: P + 'the-atlas-sector', art: 'a3058428799', id: '295441197', c: [
+      { q: 1, x: 'yet another modern masterpiece of progressive electronic space music', w: 'a supporter on Bandcamp' },
+      { x: 'A fitting follow-up to Water Planets, which they rank among the greatest ambient albums ever made.', w: 'Darksted, supporter on Bandcamp' }
+    ]},
+    { t: 'Water Planets', y: '2025', l: 'Projekt Records', u: P + 'water-planets', art: 'a2107629789', id: '3740035671', c: [
+      { q: 1, x: 'A wonderful album, a must buy for purveyors of fine space ambient music', w: 'DJ_Tim_Tee, supporter on Bandcamp' },
+      { q: 1, x: 'warm, shimmering and curvaceous', w: 'Chuck van Zyl, Star\u2019s End' }
+    ]},
+    { t: 'Neon Blue Utopia', y: '2025', l: 'Projekt Records', u: P + 'neon-blue-utopia', art: 'a1006312085', id: '844316991', c: [
+      { q: 1, x: 'Simply, thank you for this wonder.', w: 'Ignatious Land, supporter on Bandcamp' },
+      { q: 1, x: 'doesn\u2019t just create a mood; it builds a world', w: 'Chain D.L.K.' },
+      { x: 'Echoes made it their CD of the Month for January 2025 and heard Brian Eno in its flowing, impressionistic sound.', w: 'Echoes' }
+    ]},
+    { t: 'Vertical Landscapes \u2013 Retrospective', y: '2024', l: 'Projekt Records', u: P + 'vertical-landscapes-retrospective', art: 'a2602865903', id: '3949209331', c: [
+      { q: 1, x: 'spellbinding ambient electronic music', w: 'Progressive Rock Central' }
+    ]},
+    { t: 'The Black Orchid Galaxies', y: '2024', l: 'Projekt Records', u: P + 'the-black-orchid-galaxies', art: 'a1888469178', id: '360422661', c: [
+      { q: 1, x: 'puts you on the bridge of the ship', w: 'Wayne Neverka, supporter on Bandcamp' },
+      { q: 1, x: 'a deep dive into the furthest reaches of Space Ambient', w: 'Mick Chillage, supporter on Bandcamp' },
+      { x: 'Called the most engaging of his Projekt releases up to that point.', w: 'Expos\u00e9 Online' }
+    ]},
+    { t: 'The Architecture of Flowers', y: '2023', l: 'Independent', u: D + 'the-architecture-of-flowers-2', art: 'a1188060786', id: '1744732581', c: [
+      { q: 1, x: 'What an amazing, artistic and expansive ambient album.', w: 'djentstorm, supporter on Bandcamp' },
+      { x: 'Says Deepspace has not reached the end of his sonic journeys and is, if anything, just getting started.', w: 'theAdelaidean' }
+    ]},
+    { t: 'The Blue Dunes', y: '2022', l: 'Projekt Records', u: P + 'the-blue-dunes', art: 'a1404827542', id: '2823436337', c: [
+      { q: 1, x: 'an ocean of ambient bliss', w: 'Sonic Immersion' },
+      { x: 'Described as a slow-moving sonic sculpture that quietly shifts the listener\u2019s mood.', w: 'Expos\u00e9' },
+      { x: 'Named Best New Release of 2022.', w: 'WPPM Sound + Vision' }
+    ]},
+    { t: 'Superradiance', y: '2022', l: 'Projekt Records', u: P + 'superradiance', art: 'a3133139340', id: '4036417005', c: [
+      { q: 1, x: 'Sublime album from one of the most consistently brilliant composers around', w: 'a supporter on Bandcamp' },
+      { x: 'Takes listeners into the deep end, and works best on the three long tracks near the close.', w: 'Sonic Immersion' },
+      { x: 'Gentle floating ambient, well suited to drifting off to sleep.', w: 'Expos\u00e9' }
+    ]},
+    { t: 'The Dream Polaroids', y: '2021', l: 'Independent', u: D + 'the-dream-polaroids', art: 'a0597051670', id: '316257753', c: [
+      { q: 1, x: 'My second favourite deepspace album after Architecture', w: 'a supporter on Bandcamp' }
+    ]},
+    { t: 'Deep Blue Universe', y: '2019', l: 'Independent', u: D + 'deep-blue-universe', art: 'a0428217506', id: '2704147216', c: [] },
+    { t: 'Blue Worlds I', y: '2018', l: 'Independent', u: D + 'blue-worlds-i', art: 'a3896224812', id: '2227799233', c: [] },
+    { t: 'The Empty Atoms', y: '2016', l: 'Independent', u: D + 'the-empty-atoms', art: 'a1642143802', id: '1419835340', c: [] },
+    { t: 'Slow Wave Cathedral', y: '2011', l: 'Independent', u: D + 'slow-wave-cathedral', art: 'a2005583787', id: '4157215996', c: [
+      { q: 1, x: 'well composed and warm sounding', w: 'Sonic Immersion' }
+    ]},
+    { t: 'World Ocean Atlas', l: 'Independent', u: D + 'world-ocean-atlas', art: 'a3452207579', id: '560561516', c: [] },
+    { t: 'The Glittering Domain', y: '2009', l: 'Independent', u: D + 'the-glittering-domain', art: 'a2062773657', id: '2856690676', c: [] },
+    { t: 'Another Empty Galaxy', y: '2008', l: 'Independent', u: D + 'another-empty-galaxy', art: 'a2675181772', id: '3728114010', c: [
+      { q: 1, x: 'a galactic ride into the depths of the space', w: 'Bert Strolenberg, Sonic Immersion' }
+    ]},
+    { t: 'Subantarctic Sessions (EP)', y: '2008', l: 'Independent', u: D + 'subantarctic-sessions-ep', art: 'a1187507317', id: '1996925198', c: [
+      { q: 1, x: 'Mirror Sea is my #1 favorite song of Deepspace', w: 'Josiah Grey, supporter on Bandcamp' },
+      { x: 'Had been a fan of this EP for years and was glad to finally see it on Bandcamp.', w: 'Ike Hall, supporter on Bandcamp' }
+    ]},
+    { t: 'The Barometric Sun', y: '2007', l: 'Independent', u: D + 'the-barometric-sun', art: 'a2915591821', id: '4011671419', c: [] },
+    { t: 'Slow Moving Lifeforms Vol 1', l: 'Independent', u: D + 'slow-moving-lifeforms-vol-1', art: 'a4238683211', id: '500095178', c: [] },
+    { t: 'The Barometric Sea', y: '2007', l: 'Independent', u: D + 'the-barometric-sea', art: 'a1042314047', id: '159508198', c: [
+      { x: 'Won Best New Talent on release and made the top five on several ambient sites.', w: 'from the Bandcamp page' }
+    ]}
+  ];
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text) n.textContent = text;
+    return n;
+  }
+
+  var list = document.getElementById('albums');
+
+  // ---- Bandcamp player, opened inside the page ----
+  function buildPlayer(a) {
+    var wrap = el('div', 'player');
+    var inner = el('div', 'player-in');
+    inner.appendChild(el('div', 'player-slot'));
+    var ext = el('a', 'ext', 'open on Bandcamp');
+    ext.href = a.u; ext.target = '_blank'; ext.rel = 'noopener';
+    inner.appendChild(ext);
+    wrap.appendChild(inner);
+    return wrap;
+  }
+  function stopPlayer(row) {
+    var slot = row.querySelector('.player-slot');
+    var f = slot && slot.firstChild;
+    row.classList.remove('playing');
+    if (row._listen) { row._listen.textContent = 'listen'; row._listen.setAttribute('aria-expanded', 'false'); }
+    if (f) {
+      f.src = 'about:blank';
+      setTimeout(function () {
+        if (!row.classList.contains('playing') && f.parentNode === slot) slot.removeChild(f);
+      }, 1500);
+    }
+  }
+  function stopAllPlayers() {
+    var rows = document.querySelectorAll('.album.playing');
+    for (var i = 0; i < rows.length; i++) stopPlayer(rows[i]);
+  }
+  function startPlayer(row, a) {
+    stopAllPlayers();
+    var slot = row.querySelector('.player-slot');
+    while (slot.firstChild) slot.removeChild(slot.firstChild);
+    var f = document.createElement('iframe');
+    f.src = 'https://bandcamp.com/EmbeddedPlayer/album=' + a.id +
+            '/size=large/bgcol=0a1320/linkcol=8fb4cc/tracklist=true/artwork=small/transparent=true/';
+    f.title = 'Player for ' + a.t;
+    f.setAttribute('allow', 'autoplay; encrypted-media');
+    f.setAttribute('seamless', '');
+    slot.appendChild(f);
+    row.classList.add('playing');
+    if (row._listen) { row._listen.textContent = 'close'; row._listen.setAttribute('aria-expanded', 'true'); }
+  }
+  document.addEventListener('deepspace:stop', stopAllPlayers);
+
+  albums.forEach(function (a, i) {
+    var row = el('li', 'album');
+
+    var cover = el('a', 'cover');
+    cover.href = a.u; cover.target = '_blank'; cover.rel = 'noopener';
+    cover.tabIndex = -1; cover.setAttribute('aria-hidden', 'true');
+    if (a.art) {
+      var img = new Image();
+      img.alt = ''; img.width = 88; img.height = 88; img.decoding = 'async'; img.referrerPolicy = 'no-referrer';
+      if (i > 2) img.loading = 'lazy';
+      img.onerror = function () { cover.classList.add('blank'); img.remove(); };
+      img.src = 'https://f4.bcbits.com/img/' + a.art + '_5.jpg';
+      cover.appendChild(img);
+    } else {
+      cover.classList.add('blank');
+    }
+    row.appendChild(cover);
+
+    var info = el('div', 'a-info');
+    info.appendChild(el('div', 'a-title', a.t));
+    var meta = [a.y, a.l].filter(Boolean).join(', ');
+    info.appendChild(el('div', 'a-meta', meta));
+
+    var actions = el('div', 'a-actions');
+    var listen = el('a', null, 'listen');
+    listen.href = a.u; listen.target = '_blank'; listen.rel = 'noopener';
+    listen.setAttribute('aria-label', 'Listen to ' + a.t);
+    actions.appendChild(listen);
+
+    var player = null;
+    if (a.id) {
+      player = buildPlayer(a);
+      listen.setAttribute('role', 'button');
+      listen.setAttribute('aria-expanded', 'false');
+      row._listen = listen;
+      listen.addEventListener('click', function (e) {
+        if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button !== 0) return;
+        e.preventDefault();
+        if (row.classList.contains('playing')) stopPlayer(row); else startPlayer(row, a);
+      });
+    }
+
+    if (a.c.length) {
+      var btn = el('button', 'praise', 'praise');
+      btn.type = 'button';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', 'Praise for ' + a.t);
+      btn.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+      actions.appendChild(btn);
+
+      var panel = el('div', 'panel');
+      var inner = el('div', 'panel-in');
+      var ul = el('ul', 'comments');
+      a.c.forEach(function (c) {
+        var li = el('li');
+        li.appendChild(el('span', 'c-text', c.q ? '\u201c' + c.x + '\u201d' : c.x));
+        li.appendChild(el('span', 'c-who', c.w));
+        ul.appendChild(li);
+      });
+      inner.appendChild(ul);
+      panel.appendChild(inner);
+      row.appendChild(info);
+      info.appendChild(actions);
+      row.appendChild(panel);
+    } else {
+      info.appendChild(actions);
+      row.appendChild(info);
+    }
+    if (player) row.appendChild(player);
+    list.appendChild(row);
+  });
+
+  // ---- Praise: hold to peek, tap to keep open, click elsewhere to close ----
+  var HOLD = 350;
+  var pressRow = null, pressStart = 0;
+
+  function setOpen(row, on) {
+    row.classList.toggle('open', on);
+    var b = row.querySelector('.praise');
+    if (b) {
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-expanded', on ? 'true' : 'false');
+    }
+  }
+  function closeAll() {
+    var open = document.querySelectorAll('.album.open');
+    for (var i = 0; i < open.length; i++) setOpen(open[i], false);
+  }
+
+  document.addEventListener('pointerdown', function (e) {
+    var t = e.target;
+    var btn = t.closest ? t.closest('.praise') : null;
+    if (btn) {
+      var row = btn.closest('.album');
+      if (row.classList.contains('open')) { closeAll(); pressRow = null; return; }
+      closeAll();
+      setOpen(row, true);
+      pressRow = row;
+      pressStart = Date.now();
+      return;
+    }
+    if (!(t.closest && t.closest('.panel'))) closeAll();
+  });
+
+  function release() {
+    if (pressRow && Date.now() - pressStart >= HOLD) setOpen(pressRow, false);
+    pressRow = null;
+  }
+  document.addEventListener('pointerup', release);
+  document.addEventListener('pointercancel', release);
+
+  // Keyboard: Enter or Space toggles, Escape closes
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('.praise') : null;
+    if (btn && e.detail === 0) {
+      var row = btn.closest('.album');
+      var wasOpen = row.classList.contains('open');
+      closeAll();
+      if (!wasOpen) setOpen(row, true);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeAll();
+  });
+})();
+</script>
+
+
+<script>
+(function () {
+  var v = document.getElementById('viewer');
+  var frame = v.querySelector('.v-frame');
+  var title = v.querySelector('.v-title');
+  var ext = v.querySelector('.v-ext');
+  var closeBtn = v.querySelector('.v-close');
+  var body = v.querySelector('.v-body');
+  var page = [document.querySelector('main'), document.querySelector('footer')];
+  var last = null;
+
+  function setInert(on) { page.forEach(function (n) { if (n) n.inert = on; }); }
+
+  function open(a) {
+    document.dispatchEvent(new Event('deepspace:stop'));   // stop any album player
+    var view = a.getAttribute('data-view');
+    var src = (view && view !== 'page') ? view : a.href;
+    v.classList.toggle('embed', a.getAttribute('data-kind') === 'embed');
+    title.textContent = a.textContent;
+    ext.href = a.href;
+    frame.title = a.textContent;
+    frame.src = src;
+    last = a;
+    setInert(true);
+    document.documentElement.classList.add('lock');
+    v.classList.add('on');
+    closeBtn.focus();
+  }
+  function close() {
+    if (!v.classList.contains('on')) return;
+    v.classList.remove('on');
+    document.documentElement.classList.remove('lock');
+    setInert(false);
+    frame.src = 'about:blank';
+    if (last) last.focus();
+  }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[data-view]') : null;
+    if (!a) return;
+    if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    open(a);
+  });
+  closeBtn.addEventListener('click', close);
+  body.addEventListener('click', function (e) {
+    if (e.target === body && v.classList.contains('embed')) close();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+})();
+</script>
+
+</body>
+</html>
