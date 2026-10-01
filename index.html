@@ -318,18 +318,21 @@
   .albums { list-style: none; }
   .album {
     display: grid;
-    grid-template-columns: 24px 112px 1fr;
-    column-gap: 1.2rem;
+    grid-template-columns: 144px 1fr;
+    column-gap: 1.5rem;
     align-items: center;
     padding: 1.1rem 0;
   }
-  /* streaming links, a column to the left of each cover */
+  /* streaming links, to the right of each title */
+  .a-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.3rem 1rem; }
+  .a-head .a-title { flex: 1; min-width: 0; }
   .svcs {
+    flex: none;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    flex-direction: row;
     align-items: center;
-    height: 112px;
+    gap: 0.7rem;
+    margin-top: 0.25rem;
   }
   .svc {
     display: block;
@@ -347,8 +350,8 @@
   .svc:hover, .svc:focus-visible { background-image: none; filter: brightness(1.3); transform: scale(1.12); }
   .svc:focus-visible { outline: 1px solid var(--mist); outline-offset: 3px; }
   .cover {
-    width: 112px;
-    height: 112px;
+    width: 144px;
+    height: 144px;
     display: block;
     overflow: hidden;
     border-radius: 2px;
@@ -427,9 +430,10 @@
   .c-who { display: block; font-size: 0.78rem; line-height: 1.6; color: var(--dim); margin-top: 0.2rem; }
 
   @media (max-width: 520px) {
-    .album { grid-template-columns: 20px 88px 1fr; column-gap: 0.85rem; }
-    .cover { width: 88px; height: 88px; }
-    .svcs { height: 88px; }
+    .album { grid-template-columns: 104px 1fr; column-gap: 1rem; }
+    .a-head { flex-direction: column; }
+    .svcs { margin-top: 0.1rem; }
+    .cover { width: 104px; height: 104px; }
     .svc { width: 18px; height: 18px; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -1670,14 +1674,13 @@
   albums.forEach(function (a, i) {
     var row = el('li', 'album');
     if (ACCENTS[a.t]) row.style.setProperty('--accent', ACCENTS[a.t]);
-    row.appendChild(buildSvcs(a));
 
     var cover = el('a', 'cover');
     cover.href = a.u; cover.target = '_blank'; cover.rel = 'noopener';
     cover.tabIndex = -1; cover.setAttribute('aria-hidden', 'true');
     if (a.art) {
       var img = new Image();
-      img.alt = ''; img.width = 112; img.height = 112; img.decoding = 'async'; img.referrerPolicy = 'no-referrer';
+      img.alt = ''; img.width = 144; img.height = 144; img.decoding = 'async'; img.referrerPolicy = 'no-referrer';
       if (i > 2) img.loading = 'lazy';
       img.onerror = function () { cover.classList.add('blank'); img.remove(); };
       img.src = 'https://f4.bcbits.com/img/' + a.art + '_5.jpg';
@@ -1688,7 +1691,10 @@
     row.appendChild(cover);
 
     var info = el('div', 'a-info');
-    info.appendChild(el('div', 'a-title', a.t));
+    var head = el('div', 'a-head');
+    head.appendChild(el('div', 'a-title', a.t));
+    head.appendChild(buildSvcs(a));
+    info.appendChild(head);
     var meta = [a.y, a.l].filter(Boolean).join(', ');
     info.appendChild(el('div', 'a-meta', meta));
 
