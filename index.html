@@ -569,6 +569,39 @@
   .v-frame { width: 100%; height: 100%; border: 0; background: #ffffff; color-scheme: normal; }
   .viewer.embed .v-body { align-items: center; padding: 1.5rem; }
   .viewer.embed .v-frame { max-width: 720px; height: min(78vh, 440px); background: transparent; border-radius: 4px; }
+
+  /* pages (reviews, interviews, stories) open in a floating window: drag the bar, scroll the page, pull the corner to resize */
+  .viewer.win {
+    inset: auto;
+    top: 0;
+    left: 0;
+    width: min(860px, 94vw);
+    height: min(84vh, 920px);
+    min-width: 300px;
+    min-height: 220px;
+    max-width: 98vw;
+    max-height: 96vh;
+    resize: both;
+    overflow: hidden;
+    background: #0a1320;
+    border: 1px solid rgba(143, 180, 204, 0.35);
+    border-radius: 6px;
+    box-shadow: 0 30px 90px -20px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(0, 0, 0, 0.4);
+  }
+  .viewer.win .v-bar { cursor: grab; user-select: none; -webkit-user-select: none; touch-action: none; }
+  .viewer.win.dragging .v-bar { cursor: grabbing; }
+  .viewer.win.dragging .v-frame { pointer-events: none; }
+  .viewer.win .v-body { display: block; padding: 0; }
+  .viewer.win .v-frame { width: 100%; height: 100%; }
+  @media (max-width: 640px) {
+    .viewer.win {
+      left: 0 !important; top: 0 !important;
+      width: 100vw; height: 100vh; height: 100dvh;
+      max-width: 100vw; max-height: 100vh; max-height: 100dvh;
+      border-radius: 0; border: 0; resize: none;
+    }
+    .viewer.win .v-bar { cursor: default; }
+  }
   @media (prefers-reduced-motion: reduce) {
     .player, .album.playing .player, .viewer, .viewer.on { transition-duration: 0.01s; transition-delay: 0s; }
   }
@@ -1891,36 +1924,91 @@
 (function () {
   var v = document.getElementById('viewer');
   var frame = v.querySelector('.v-frame');
+  var bar = v.querySelector('.v-bar');
   var title = v.querySelector('.v-title');
   var ext = v.querySelector('.v-ext');
   var closeBtn = v.querySelector('.v-close');
   var body = v.querySelector('.v-body');
   var page = [document.querySelector('main'), document.querySelector('footer')];
   var last = null;
+  var pos = null;          // where the window was left, so the next one opens in the same place
 
   function setInert(on) { page.forEach(function (n) { if (n) n.inert = on; }); }
+  function isWin() { return v.classList.contains('win'); }
+
+  function clamp() {
+    if (!isWin() || !pos) return;
+    var r = v.getBoundingClientRect();
+    pos.x = Math.min(Math.max(pos.x, 80 - r.width), window.innerWidth - 80);
+    pos.y = Math.min(Math.max(pos.y, 0), window.innerHeight - 44);
+    v.style.left = pos.x + 'px';
+    v.style.top = pos.y + 'px';
+  }
+  function place() {
+    var r = v.getBoundingClientRect();
+    if (!pos) pos = { x: Math.max(8, (window.innerWidth - r.width) / 2), y: Math.max(12, (window.innerHeight - r.height) / 4) };
+    clamp();
+  }
 
   function show(o) {
     document.dispatchEvent(new Event('deepspace:stop'));   // stop any album player
+    var win = !o.embed;
     v.classList.toggle('embed', !!o.embed);
+    v.classList.toggle('win', win);
+    if (!win) { v.style.left = ''; v.style.top = ''; }
     title.textContent = o.title;
+    bar.title = win ? 'Drag to move' : '';
     ext.href = o.href;
     frame.title = o.title;
     frame.src = o.src;
     last = o.opener;
-    setInert(true);
-    document.documentElement.classList.add('lock');
+    if (win) {
+      // a window: the page behind stays visible and scrolls
+      setInert(false);
+      document.documentElement.classList.remove('lock');
+      place();
+    } else {
+      setInert(true);
+      document.documentElement.classList.add('lock');
+    }
     v.classList.add('on');
     closeBtn.focus();
   }
   function close() {
     if (!v.classList.contains('on')) return;
     v.classList.remove('on');
+    v.classList.remove('dragging');
     document.documentElement.classList.remove('lock');
     setInert(false);
     frame.src = 'about:blank';
     if (last) last.focus();
   }
+
+  // drag the window by its bar
+  var drag = null;
+  bar.addEventListener('pointerdown', function (e) {
+    if (!isWin() || e.button !== 0 || window.innerWidth <= 640) return;
+    if (e.target.closest && e.target.closest('a, button')) return;
+    var r = v.getBoundingClientRect();
+    drag = { dx: e.clientX - r.left, dy: e.clientY - r.top, id: e.pointerId };
+    try { bar.setPointerCapture(e.pointerId); } catch (err) {}
+    v.classList.add('dragging');
+    e.preventDefault();
+  });
+  bar.addEventListener('pointermove', function (e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    pos = { x: e.clientX - drag.dx, y: e.clientY - drag.dy };
+    clamp();
+  });
+  function endDrag(e) {
+    if (!drag || (e && e.pointerId !== drag.id)) return;
+    try { bar.releasePointerCapture(drag.id); } catch (err) {}
+    drag = null;
+    v.classList.remove('dragging');
+  }
+  bar.addEventListener('pointerup', endDrag);
+  bar.addEventListener('pointercancel', endDrag);
+  window.addEventListener('resize', clamp);
 
   document.addEventListener('deepspace:view', function (e) { show(e.detail); });
   closeBtn.addEventListener('click', close);
