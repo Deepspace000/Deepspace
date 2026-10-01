@@ -147,6 +147,9 @@
   .photos img { display: block; width: 100%; height: auto; border-radius: 2px; background: #0b1624; }
   .photos figcaption { margin-top: 0.4rem; font-size: 0.78rem; line-height: 1.5; color: var(--dim); }
   @media (max-width: 520px) { .photos { column-count: 1; } }
+  .photos.small { column-count: auto; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 1rem 1.1rem; margin-top: 0.4rem; }
+  .photos.small figure { margin: 0; }
+  .photos.small img { width: auto; height: 220px; max-width: 100%; }
 
   /* video rail, scrolls sideways */
   .rail-wrap {
@@ -1003,6 +1006,12 @@
           <img src="img/photos/projekt-2022c.jpg" alt="The studio: a laptop and a tablet running music software" width="750" height="563" loading="lazy">
           <figcaption>The studio, Projekt Records press photo, 2022</figcaption>
         </figure>
+      </div>
+      <div class="photos small">
+        <figure><img src="img/photos/mirko-sunglasses-bw.jpg" alt="Black-and-white photo of Mirko in sunglasses and a blazer, on a veranda" width="177" height="250" loading="lazy"></figure>
+        <figure><img src="img/photos/mirko-keyboard.jpg" alt="Mirko close to the camera in glasses, with a keyboard behind him" width="189" height="252" loading="lazy"></figure>
+        <figure><img src="img/photos/mirko-windswept-bw.jpg" alt="Black-and-white photo of Mirko in a jacket with the wind in his hair, looking out over a lake" width="250" height="275" loading="lazy"></figure>
+        <figure><img src="img/photos/mirko-sunlit.jpg" alt="Sunlit close-up of Mirko looking down" width="203" height="225" loading="lazy"></figure>
       </div>
     </section>
 
