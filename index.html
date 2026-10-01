@@ -1586,11 +1586,11 @@
   var FLANK_HUES = [45, 330, 290, 225, 5, 62];
   function tintFlank(node, i) {
     var h = FLANK_HUES[i % FLANK_HUES.length];
-    node.style.setProperty('--ctext', 'hsl(' + h + ', 50%, 84%)');
-    node.style.setProperty('--ctext2', 'hsl(' + ((h + 28) % 360) + ', 54%, 80%)');
-    node.style.setProperty('--cwho', 'hsl(' + h + ', 32%, 66%)');
-    node.style.setProperty('--cbar', 'hsl(' + h + ', 44%, 56%)');
-    node.style.setProperty('--cbg', 'hsla(' + h + ', 42%, 55%, 0.07)');
+    node.style.setProperty('--ctext', 'hsl(' + h + ', 26%, 84%)');
+    node.style.setProperty('--ctext2', 'hsl(' + ((h + 28) % 360) + ', 28%, 81%)');
+    node.style.setProperty('--cwho', 'hsl(' + h + ', 18%, 66%)');
+    node.style.setProperty('--cbar', 'hsl(' + h + ', 26%, 56%)');
+    node.style.setProperty('--cbg', 'hsla(' + h + ', 26%, 55%, 0.045)');
   }
   var HUE_STEP = [0, 22, -22, 44, -44, 66];
   var LIGHT = [84, 79, 87, 81, 77, 85];
