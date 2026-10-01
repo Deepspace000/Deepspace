@@ -149,10 +149,19 @@
   @media (max-width: 520px) { .photos { column-count: 1; } }
 
   /* video rail, scrolls sideways */
-  .rail-wrap { position: relative; margin-top: 2.6rem; }
+  .rail-wrap {
+    position: relative;
+    left: 50%;
+    width: min(1180px, calc(100vw - 4rem));
+    margin-top: 2.6rem;
+    transform: translateX(-50%);
+  }
   .rail {
-    display: flex;
-    gap: 0.95rem;
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    grid-auto-flow: column;
+    grid-auto-columns: 300px;
+    gap: 1.5rem 1.1rem;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x proximity;
@@ -163,19 +172,20 @@
     scrollbar-color: var(--line) transparent;
   }
   .rail:focus-visible { outline: 1px solid var(--mist); outline-offset: 4px; }
-  .vcard { flex: 0 0 208px; display: block; padding: 0; background-image: none; scroll-snap-align: start; }
+  .vcard { display: block; padding: 0; background-image: none; scroll-snap-align: start; }
   .vcard img {
     display: block;
-    width: 208px;
-    height: 117px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
     object-fit: cover;
     border-radius: 2px;
     background: #0b1624;
     filter: saturate(0.85) brightness(0.9);
     transition: filter 1.2s ease, transform 0.6s ease;
   }
-  .vcard .v-name { display: block; margin-top: 0.55rem; font-size: 0.88rem; line-height: 1.4; transition: color 0.9s ease; }
-  .vcard .note { margin-top: 0.1rem; font-size: 0.78rem; }
+  .vcard .v-name { display: block; margin-top: 0.6rem; font-size: 0.98rem; line-height: 1.4; transition: color 0.9s ease; }
+  .vcard .note { margin-top: 0.1rem; font-size: 0.82rem; }
   .vcard:hover, .vcard:focus-visible { background-image: none; }
   .vcard:hover img, .vcard:focus-visible img { filter: none; transform: scale(1.03); }
   .vcard:hover .v-name, .vcard:focus-visible .v-name { color: #ffffff; }
@@ -183,8 +193,8 @@
     position: absolute;
     top: 0;
     z-index: 2;
-    width: 2.8rem;
-    height: 117px;
+    bottom: 1rem;
+    width: 3.2rem;
     border: 0;
     color: #ffffff;
     font-size: 2rem;
@@ -197,6 +207,7 @@
   .rail-btn.next { right: 0; background: linear-gradient(to left, rgba(4,7,13,0.92), rgba(4,7,13,0)); }
   .rail-wrap:hover .rail-btn, .rail-btn:focus-visible { opacity: 1; }
   @media (hover: none) { .rail-btn { display: none; } }
+  @media (max-width: 520px) { .rail { grid-auto-columns: 240px; } }
   @media (prefers-reduced-motion: reduce) { .rail { scroll-behavior: auto; } .vcard img { transition: none; } }
 
   /* interviews: a photo from each */
@@ -729,127 +740,127 @@
         <button class="rail-btn prev" type="button" aria-label="Earlier videos" hidden>&#8249;</button>
         <div class="rail" role="region" aria-label="All videos, newest first" tabindex="0">
           <a class="vcard" href="https://www.youtube.com/watch?v=dGSQcL1nqJ0" data-view="https://www.youtube.com/embed/dGSQcL1nqJ0?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Can you tell me what I am seeing? It’s vast and moving slowly…">
-            <img src="https://i.ytimg.com/vi/dGSQcL1nqJ0/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/dGSQcL1nqJ0/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Can you tell me what I am seeing? It’s vast and moving slowly…</span><span class="note">Sep 2026</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=pTbGgMj4VCE" data-view="https://www.youtube.com/embed/pTbGgMj4VCE?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Watch the sun rise from space…">
-            <img src="https://i.ytimg.com/vi/pTbGgMj4VCE/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/pTbGgMj4VCE/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Watch the sun rise from space…</span><span class="note">Sep 2026</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=J1PCDjlQKlw" data-view="https://www.youtube.com/embed/J1PCDjlQKlw?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Take a 35 minute walk into a transforming endless desert">
-            <img src="https://i.ytimg.com/vi/J1PCDjlQKlw/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/J1PCDjlQKlw/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Take a 35 minute walk into a transforming endless desert</span><span class="note">Sep 2026</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=FOgRjMkAF34" data-view="https://www.youtube.com/embed/FOgRjMkAF34?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch The feeling of rushing through space…">
-            <img src="https://i.ytimg.com/vi/FOgRjMkAF34/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/FOgRjMkAF34/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">The feeling of rushing through space…</span><span class="note">Sep 2026</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=elZ6H_sbM_A" data-view="https://www.youtube.com/embed/elZ6H_sbM_A?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch BlueHeavenAbyss (Theme from Water Planets)">
-            <img src="https://i.ytimg.com/vi/elZ6H_sbM_A/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/elZ6H_sbM_A/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">BlueHeavenAbyss (Theme from Water Planets)</span><span class="note">Oct 2025 · Arrangement video</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=Xrng-2slsiA" data-view="https://www.youtube.com/embed/Xrng-2slsiA?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Vertical Automated Parking">
-            <img src="https://i.ytimg.com/vi/Xrng-2slsiA/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/Xrng-2slsiA/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Vertical Automated Parking</span><span class="note">Jun 2025 · from Neon Blue Utopia</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=hLht99zuFSc" data-view="https://www.youtube.com/embed/hLht99zuFSc?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Floor 426-B">
-            <img src="https://i.ytimg.com/vi/hLht99zuFSc/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/hLht99zuFSc/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Floor 426-B</span><span class="note">Jan 2025 · from Neon Blue Utopia</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=kGIwJAV6Ifc" data-view="https://www.youtube.com/embed/kGIwJAV6Ifc?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Sunny Hypnagogia Heights">
-            <img src="https://i.ytimg.com/vi/kGIwJAV6Ifc/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/kGIwJAV6Ifc/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Sunny Hypnagogia Heights</span><span class="note">Jan 2025 · from Neon Blue Utopia</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=Ykfo9Lbe724" data-view="https://www.youtube.com/embed/Ykfo9Lbe724?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Entering Aquarium Prefecture">
-            <img src="https://i.ytimg.com/vi/Ykfo9Lbe724/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/Ykfo9Lbe724/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Entering Aquarium Prefecture</span><span class="note">Jan 2025 · from Neon Blue Utopia</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=n_mcmWzy5hs" data-view="https://www.youtube.com/embed/n_mcmWzy5hs?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Bubble Echolalia District">
-            <img src="https://i.ytimg.com/vi/n_mcmWzy5hs/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/n_mcmWzy5hs/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Bubble Echolalia District</span><span class="note">Jan 2025 · from Neon Blue Utopia</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=Ylabk5dX2is" data-view="https://www.youtube.com/embed/Ylabk5dX2is?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Just a Pill and All this will End">
-            <img src="https://i.ytimg.com/vi/Ylabk5dX2is/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/Ylabk5dX2is/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Just a Pill and All this will End</span><span class="note">Jan 2025</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=PnXr_Fkzpu4" data-view="https://www.youtube.com/embed/PnXr_Fkzpu4?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Parkour on Lazarus Heights">
-            <img src="https://i.ytimg.com/vi/PnXr_Fkzpu4/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/PnXr_Fkzpu4/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Parkour on Lazarus Heights</span><span class="note">Jan 2025 · from Neon Blue Utopia</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=fqwIbqaYP4g" data-view="https://www.youtube.com/embed/fqwIbqaYP4g?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Utopia=Visions">
-            <img src="https://i.ytimg.com/vi/fqwIbqaYP4g/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/fqwIbqaYP4g/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Utopia=Visions</span><span class="note">Jan 2025 · from Neon Blue Utopia</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=hvMmEgfJuhE" data-view="https://www.youtube.com/embed/hvMmEgfJuhE?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Rainy Megacity 7 Precinct">
-            <img src="https://i.ytimg.com/vi/hvMmEgfJuhE/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/hvMmEgfJuhE/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Rainy Megacity 7 Precinct</span><span class="note">Dec 2024 · from Neon Blue Utopia</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=uW7xP1NgAQI" data-view="https://www.youtube.com/embed/uW7xP1NgAQI?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Considering the Loss of the Organic (Smoo's Capsule)">
-            <img src="https://i.ytimg.com/vi/uW7xP1NgAQI/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/uW7xP1NgAQI/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Considering the Loss of the Organic (Smoo's Capsule)</span><span class="note">Mar 2024 · video version</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=k7hotpJYeM8" data-view="https://www.youtube.com/embed/k7hotpJYeM8?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Considering the Loss of the Organic (Smoo's Capsule)">
-            <img src="https://i.ytimg.com/vi/k7hotpJYeM8/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/k7hotpJYeM8/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Considering the Loss of the Organic (Smoo's Capsule)</span><span class="note">Mar 2024</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=IovVNuh2SYg" data-view="https://www.youtube.com/embed/IovVNuh2SYg?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch HyperdriveEngage">
-            <img src="https://i.ytimg.com/vi/IovVNuh2SYg/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/IovVNuh2SYg/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">HyperdriveEngage</span><span class="note">Mar 2024 · from The Black Orchid Galaxies</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=y5cHCDlnRsY" data-view="https://www.youtube.com/embed/y5cHCDlnRsY?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch In the Hydroponic Garden Sector">
-            <img src="https://i.ytimg.com/vi/y5cHCDlnRsY/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/y5cHCDlnRsY/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">In the Hydroponic Garden Sector</span><span class="note">Mar 2024 · from The Black Orchid Galaxies</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=UA3X460Zjyk" data-view="https://www.youtube.com/embed/UA3X460Zjyk?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch The Great Sea of Brachychiton">
-            <img src="https://i.ytimg.com/vi/UA3X460Zjyk/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/UA3X460Zjyk/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">The Great Sea of Brachychiton</span><span class="note">Jan 2024</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=aNW0vdBUg3g" data-view="https://www.youtube.com/embed/aNW0vdBUg3g?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Enveloped in Green and Blue">
-            <img src="https://i.ytimg.com/vi/aNW0vdBUg3g/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/aNW0vdBUg3g/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Enveloped in Green and Blue</span><span class="note">Jan 2024</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=cUa9VlMWXj8" data-view="https://www.youtube.com/embed/cUa9VlMWXj8?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch O Radiant Bee! (The Arboretum)">
-            <img src="https://i.ytimg.com/vi/cUa9VlMWXj8/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/cUa9VlMWXj8/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">O Radiant Bee! (The Arboretum)</span><span class="note">Nov 2023 · from The Architecture of Flowers</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=qYor5vTOxx8" data-view="https://www.youtube.com/embed/qYor5vTOxx8?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Dreaming Stalks">
-            <img src="https://i.ytimg.com/vi/qYor5vTOxx8/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/qYor5vTOxx8/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Dreaming Stalks</span><span class="note">Oct 2023 · from The Architecture of Flowers</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=ORFVcdp7KOw" data-view="https://www.youtube.com/embed/ORFVcdp7KOw?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Inflorescence">
-            <img src="https://i.ytimg.com/vi/ORFVcdp7KOw/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/ORFVcdp7KOw/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Inflorescence</span><span class="note">Oct 2023 · from The Architecture of Flowers</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=6exH5JgjydI" data-view="https://www.youtube.com/embed/6exH5JgjydI?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Emptiness (excerpt)">
-            <img src="https://i.ytimg.com/vi/6exH5JgjydI/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/6exH5JgjydI/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Emptiness (excerpt)</span><span class="note">Oct 2022 · from The Blue Dunes</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=LVQnMR9S50M" data-view="https://www.youtube.com/embed/LVQnMR9S50M?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch An Unexpected Shelter (excerpt)">
-            <img src="https://i.ytimg.com/vi/LVQnMR9S50M/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/LVQnMR9S50M/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">An Unexpected Shelter (excerpt)</span><span class="note">Oct 2022 · from The Blue Dunes</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=h9gySW7-t0g" data-view="https://www.youtube.com/embed/h9gySW7-t0g?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch The Blue Dunes (excerpt)">
-            <img src="https://i.ytimg.com/vi/h9gySW7-t0g/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/h9gySW7-t0g/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">The Blue Dunes (excerpt)</span><span class="note">Oct 2022 · from The Blue Dunes</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=NOG0mGqCMrQ" data-view="https://www.youtube.com/embed/NOG0mGqCMrQ?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Do You Hear Faint Music?">
-            <img src="https://i.ytimg.com/vi/NOG0mGqCMrQ/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/NOG0mGqCMrQ/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Do You Hear Faint Music?</span><span class="note">Apr 2022 · from Superradiance</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=SDEID8FdYvQ" data-view="https://www.youtube.com/embed/SDEID8FdYvQ?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Interlude: Hope for Early Microbial Forms">
-            <img src="https://i.ytimg.com/vi/SDEID8FdYvQ/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/SDEID8FdYvQ/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Interlude: Hope for Early Microbial Forms</span><span class="note">Mar 2022</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=g8w5bDry_xs" data-view="https://www.youtube.com/embed/g8w5bDry_xs?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Leaving Earth">
-            <img src="https://i.ytimg.com/vi/g8w5bDry_xs/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/g8w5bDry_xs/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Leaving Earth</span><span class="note">Mar 2022 · from Superradiance</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=4AhJOq_ZvjY" data-view="https://www.youtube.com/embed/4AhJOq_ZvjY?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch et flux">
-            <img src="https://i.ytimg.com/vi/4AhJOq_ZvjY/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/4AhJOq_ZvjY/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">et flux</span><span class="note">Dec 2021 · with theAdelaidean</span>
           </a>
           <a class="vcard" href="https://www.youtube.com/watch?v=GLAORVqq0dQ" data-view="https://www.youtube.com/embed/GLAORVqq0dQ?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Dawn">
-            <img src="https://i.ytimg.com/vi/GLAORVqq0dQ/mqdefault.jpg" alt="" width="208" height="117" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <img src="https://i.ytimg.com/vi/GLAORVqq0dQ/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
             <span class="v-name">Dawn</span><span class="note">Nov 2021 · with theAdelaidean</span>
           </a>
         </div>
