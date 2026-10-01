@@ -587,6 +587,16 @@
   .f-item { padding: 0.6rem 0.85rem; border-radius: 3px; border-left: 2px solid var(--cbar, transparent); background: var(--cbg, transparent); }
   .f-text { display: block; white-space: pre-line; font-size: 0.88rem; line-height: 1.75; color: var(--ctext, var(--text)); }
   .f-who { display: block; margin-top: 0.25rem; font-size: 0.75rem; line-height: 1.6; color: var(--cwho, var(--dim)); }
+  /* the words carry a soft two-colour wash taken from the album */
+  .c-text { display: block; }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .c-text, .f-text {
+      background-image: linear-gradient(100deg, var(--ctext, var(--text)), var(--ctext2, var(--ctext, var(--text))));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
 
   @media (min-width: 1000px) {
     .hero {
@@ -1535,8 +1545,9 @@
   var FLANK_HUES = [45, 330, 290, 225, 5, 62];
   function tintFlank(node, i) {
     var h = FLANK_HUES[i % FLANK_HUES.length];
-    node.style.setProperty('--ctext', 'hsl(' + h + ', 34%, 82%)');
-    node.style.setProperty('--cwho', 'hsl(' + h + ', 22%, 62%)');
+    node.style.setProperty('--ctext', 'hsl(' + h + ', 50%, 84%)');
+    node.style.setProperty('--ctext2', 'hsl(' + ((h + 28) % 360) + ', 54%, 80%)');
+    node.style.setProperty('--cwho', 'hsl(' + h + ', 32%, 66%)');
     node.style.setProperty('--cbar', 'hsl(' + h + ', 44%, 56%)');
     node.style.setProperty('--cbg', 'hsla(' + h + ', 42%, 55%, 0.07)');
   }
@@ -1545,8 +1556,9 @@
   function tintComment(node, accent, i) {
     var h = Math.round((hexHue(accent || '#8fb4cc') + HUE_STEP[i % HUE_STEP.length] + 360) % 360);
     var l = LIGHT[i % LIGHT.length];
-    node.style.setProperty('--ctext', 'hsl(' + h + ', 62%, ' + l + '%)');
-    node.style.setProperty('--cwho', 'hsl(' + h + ', 28%, 62%)');
+    node.style.setProperty('--ctext', 'hsl(' + h + ', 66%, ' + (l + 1) + '%)');
+    node.style.setProperty('--ctext2', 'hsl(' + ((h + 34) % 360) + ', 70%, ' + (l - 4) + '%)');
+    node.style.setProperty('--cwho', 'hsl(' + h + ', 38%, 66%)');
     node.style.setProperty('--cbar', 'hsl(' + h + ', 62%, 60%)');
     node.style.setProperty('--cbg', 'hsla(' + h + ', 55%, 55%, 0.09)');
   }
