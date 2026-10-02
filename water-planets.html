@@ -559,6 +559,27 @@
     for (var k = 0; k < 5; k++) { var cx = S * (0.25 + 0.5 * rnd()), cy = S * (0.25 + 0.5 * rnd()), cr = R * (0.1 + 0.18 * rnd()); x2.fillStyle = 'rgba(10,8,6,0.35)'; x2.beginPath(); x2.arc(cx, cy, cr, 0, 6.2832); x2.fill(); x2.fillStyle = 'rgba(255,240,220,0.18)'; x2.beginPath(); x2.arc(cx - cr * 0.25, cy - cr * 0.25, cr * 0.7, 0, 6.2832); x2.fill(); }
     x2.restore(); return c;
   }
+  function buildSun(o) {
+    var R = Math.min(80, Math.max(16, Math.round(o.r * dpr))), S = R * 2, c = document.createElement('canvas');
+    c.width = c.height = S; var x2 = c.getContext('2d'), img = x2.createImageData(S, S), d = img.data, col = o.col, sd = o.seed % 97 + 1;
+    for (var py = 0; py < S; py++) for (var px = 0; px < S; px++) {
+      var nx = (px + 0.5 - R) / R, ny = (py + 0.5 - R) / R, rr = nx * nx + ny * ny, i = (py * S + px) * 4;
+      if (rr > 1) continue;
+      var nz = Math.sqrt(1 - rr);
+      var big = fbm(nx * 2.6 + sd, ny * 2.6 + sd, nz * 2.6, 4);                  // large drifting cells
+      var cell = fbm(nx * 9 + sd * 3, ny * 9, nz * 9 + sd, 3);                   // fine granulation
+      var gran = 0.72 + 0.5 * cell + 0.25 * (big - 0.5);
+      var spot = ssm(0.70, 0.84, fbm(nx * 3.2 + sd * 5, ny * 3.2, nz * 3.2 + 4, 3)) * (1 - ssm(0.5, 0.95, rr));   // dark sunspots
+      var limb = 0.38 + 0.62 * Math.pow(nz, 0.55);                                // darker towards the edge
+      var k = gran * limb * (1 - 0.7 * spot);
+      var hot = Math.pow(nz, 3) * 0.55;                                           // whiter in the middle
+      d[i] = Math.min(255, col[0] * k + 255 * hot * k);
+      d[i + 1] = Math.min(255, col[1] * k + 255 * hot * k * 0.9);
+      d[i + 2] = Math.min(255, col[2] * k + 255 * hot * k * 0.7);
+      d[i + 3] = 255 * Math.min(1, (1 - Math.sqrt(rr)) * R / 1.5);
+    }
+    x2.putImageData(img, 0, 0); return c;
+  }
   function buildNebula(o) {
     var S = 200, c = document.createElement('canvas'); c.width = c.height = S;
     var x2 = c.getContext('2d'), img = x2.createImageData(S, S), d = img.data, a1 = o.c1, a2 = o.c2, sd = o.seed;
@@ -588,7 +609,7 @@
     var ns = Math.round(Math.min(150, Math.max(60, W * H / 5200)));
     for (var i = 0; i < ns; i++) { var ly = rnd(); stars.push({ x: rnd() * W, y: rnd() * H, r: 0.4 + rnd() * 1.3, par: ly < 0.6 ? 0.04 : (ly < 0.9 ? 0.1 : 0.22), t: rnd() * 6.28, f: 0.6 + rnd() * 1.8, a: 0.35 + rnd() * 0.5 }); }
     objs = [];
-    var recipe = ['planet', 'nebula', 'planet', 'sun', 'planet', 'asteroids'], kindBag = [], cursor = 0, idx = 0, sizeSeq = [92, 46, 124, 62, 36, 106, 54, 80], pi = 0, Hs = Math.max(H, 480);
+    var Hs = Math.max(H, 480), recipe = ['planet', 'nebula', 'planet', 'sun', 'planet', 'asteroids', 'planet'], kindBag = [], cursor = -Hs * 0.55, idx = 0, sizeSeq = [92, 46, 124, 62, 36, 106, 54, 80], pi = 0;
     while (cursor < maxScroll + Hs && idx < 40) {
       var type = recipe[idx % recipe.length]; idx++;
       var par = 0.26 + rnd() * 0.22;
@@ -616,7 +637,7 @@
       o.ext = ext;
       var span = (Hs + 2 * ext) / par;                                 // how much scrolling it takes to cross the screen
       o.worldY = (cursor + span / 2) * par + Hs / 2;
-      cursor += span + Hs * 0.6;                                       // a gap before the next one, so never two at once
+      cursor += span + Hs * 0.3;                                       // a gap before the next one, so never two at once
       objs.push(o);
     }
   }
@@ -626,6 +647,7 @@
     builds.push(function () {
       if (o.type === 'planet') { o.spr = buildPlanet(o); o.moons.forEach(function (m) { m.spr = buildMoon(m.r, m.seed, m.tint); }); }
       else if (o.type === 'nebula') o.spr = buildNebula(o);
+      else if (o.type === 'sun') o.spr = buildSun(o);
       else if (o.type === 'asteroids') o.rocks.forEach(function (r) { r.spr = buildAsteroid(r.r, r.seed); });
       o.ready = true;
     });
@@ -657,14 +679,34 @@
       ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 0.5 * vis; ctx.translate(x, y); ctx.rotate(o.rot + t * 0.00001);
       ctx.drawImage(o.spr, -o.r, -o.r, o.r * 2, o.r * 2); ctx.restore();
     } else if (o.type === 'sun') {
+      if (!o.ready) return;
+      var c = o.col, pulse = 1 + 0.035 * Math.sin(t * 0.0015 + o.ph);
       ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = vis;
-      var c = o.col, pulse = 1 + 0.04 * Math.sin(t * 0.002 + o.ph);
-      var g = ctx.createRadialGradient(x, y, 0, x, y, o.r * 5 * pulse);
-      g.addColorStop(0, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.55)'); g.addColorStop(0.25, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.16)'); g.addColorStop(1, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)');
-      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, o.r * 5 * pulse, 0, 6.2832); ctx.fill();
-      for (var k = 0; k < o.rays; k++) { var a = o.ph + k * 3.1416 / o.rays + t * 0.00005, L = o.r * (3.2 + (k % 3) * 0.8); var gg = ctx.createLinearGradient(x - Math.cos(a) * L, y - Math.sin(a) * L, x + Math.cos(a) * L, y + Math.sin(a) * L); gg.addColorStop(0, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)'); gg.addColorStop(0.5, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.22)'); gg.addColorStop(1, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)'); ctx.strokeStyle = gg; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(x - Math.cos(a) * L, y - Math.sin(a) * L); ctx.lineTo(x + Math.cos(a) * L, y + Math.sin(a) * L); ctx.stroke(); }
-      ctx.globalAlpha = 0.95 * vis; ctx.fillStyle = 'rgba(255,255,255,1)'; ctx.beginPath(); ctx.arc(x, y, o.r * 0.42, 0, 6.2832); ctx.fill();
-      ctx.fillStyle = 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.9)'; ctx.beginPath(); ctx.arc(x, y, o.r * 0.7, 0, 6.2832); ctx.fill();
+      // corona: a tight bright halo, a wide soft one, and a faint far glow
+      [[1.5, 0.5], [2.6, 0.2], [5.2, 0.09]].forEach(function (L) {
+        var rad = o.r * L[0] * pulse, g = ctx.createRadialGradient(x, y, o.r * 0.8, x, y, rad);
+        g.addColorStop(0, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + L[1] + ')'); g.addColorStop(1, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, rad, 0, 6.2832); ctx.fill();
+      });
+      // long streamers
+      for (var k = 0; k < o.rays; k++) {
+        var a = o.ph + k * 3.1416 / o.rays + t * 0.00004, L2 = o.r * (3.4 + (k % 3) * 0.9);
+        var gg = ctx.createLinearGradient(x - Math.cos(a) * L2, y - Math.sin(a) * L2, x + Math.cos(a) * L2, y + Math.sin(a) * L2);
+        gg.addColorStop(0, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)'); gg.addColorStop(0.5, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.14)'); gg.addColorStop(1, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)');
+        ctx.strokeStyle = gg; ctx.lineWidth = 1.1; ctx.beginPath(); ctx.moveTo(x - Math.cos(a) * L2, y - Math.sin(a) * L2); ctx.lineTo(x + Math.cos(a) * L2, y + Math.sin(a) * L2); ctx.stroke();
+      }
+      ctx.restore();
+      // the surface, turning slowly
+      ctx.save(); ctx.globalAlpha = 0.95 * vis; ctx.translate(x, y); ctx.rotate(t * 0.00004 + o.ph);
+      ctx.drawImage(o.spr, -o.r, -o.r, o.r * 2, o.r * 2); ctx.restore();
+      // prominences arching off the edge, flickering
+      ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.lineCap = 'round';
+      for (var q = 0; q < 4; q++) {
+        var pa = o.ph * (q + 1) + q * 1.9 + t * 0.00003, pw = 0.28 + 0.1 * q, fl = 0.55 + 0.45 * Math.sin(t * 0.0011 + q * 2 + o.ph);
+        ctx.strokeStyle = 'rgba(' + Math.min(255, c[0] + 20) + ',' + Math.round(c[1] * 0.8) + ',' + Math.round(c[2] * 0.6) + ',' + (0.55 * fl * vis) + ')'; ctx.lineWidth = Math.max(1.2, o.r * 0.045);
+        ctx.beginPath(); ctx.arc(x, y, o.r * (1.02 + 0.06 * fl), pa, pa + pw); ctx.stroke();
+        ctx.beginPath(); ctx.arc(x + Math.cos(pa + pw / 2) * o.r * 1.04, y + Math.sin(pa + pw / 2) * o.r * 1.04, o.r * (0.12 + 0.06 * fl), pa + 3.4, pa + 6.0); ctx.stroke();
+      }
       ctx.restore();
     } else {
       if (!o.ready) return;
