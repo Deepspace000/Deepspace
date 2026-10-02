@@ -874,7 +874,7 @@
     hsx.globalCompositeOperation = 'source-over';
     var pos = hsys.P.map(function (p, i) {
       p.a += p.w * dt * boost;
-      var R = w * (0.2 + i * 0.2), q = proj(Math.cos(p.ph + p.a) * R, Math.sin(p.ph + p.a) * R); q.p = p; q.R = R; return q;
+      var R = w * (0.15 + i * 0.065), q = proj(Math.cos(p.ph + p.a) * R, Math.sin(p.ph + p.a) * R); q.p = p; q.R = R; return q;
     });
     hsx.lineWidth = 1;
     pos.forEach(function (q) {                                                 // each orbit, as a ring in perspective
@@ -883,7 +883,7 @@
       hsx.strokeStyle = 'rgba(150,200,255,0.2)'; hsx.stroke();
     });
     pos.sort(function (a, b) { return b.dep - a.dep; });                       // far ones first
-    var drawn = false, sr = Math.max(26, w * 0.05);
+    var drawn = false, sr = Math.max(22, w * 0.04);
     function star() { var pu = 1 + 0.03 * Math.sin(t * 0.0015); hsx.save(); hsx.translate(cx, cy); hsx.rotate(t * 0.00004); hsx.drawImage(hsys.star, -sr * pu, -sr * pu, sr * 2 * pu, sr * 2 * pu); hsx.restore(); }
     pos.forEach(function (q) {
       if (!drawn && q.dep < 0) { star(); drawn = true; }                       // the star sits between far and near planets
