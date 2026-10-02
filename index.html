@@ -510,6 +510,14 @@
     .label-logo, .label-logo img { width: 36px; height: 36px; }
     .label-logo { margin-left: 0.6rem; }
   }
+  h3.group {
+    font-weight: 300;
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    color: var(--dim);
+    margin: 3.4rem 0 0.8rem;
+  }
+  .quick + h3.group { margin-top: 0; }
 </style>
 </head>
 <body>
@@ -550,7 +558,10 @@
         <a href="https://www.youtube.com/@Deepspace_Music" target="_blank" rel="noopener">YouTube</a>
         <a href="https://www.projekt.com/" target="_blank" rel="noopener">Projekt</a>
       </p>
-      <ol id="albums" class="albums"></ol>
+      <h3 class="group">projekt</h3>
+      <ol id="albums-projekt" class="albums"></ol>
+      <h3 class="group">independent</h3>
+      <ol id="albums-indie" class="albums"></ol>
     </section>
 
     <section id="watch">
@@ -1173,7 +1184,8 @@
     return n;
   }
 
-  var list = document.getElementById('albums');
+  var listProjekt = document.getElementById('albums-projekt');
+  var listIndie = document.getElementById('albums-indie');
 
   // ---- Bandcamp player, opened inside the page ----
   function buildPlayer(a) {
@@ -1312,7 +1324,7 @@
       row.appendChild(logo);
     }
     if (player) row.appendChild(player);
-    list.appendChild(row);
+    (/^Projekt/.test(a.l) ? listProjekt : listIndie).appendChild(row);
   });
 
   // ---- Comments either side of the new album at the top ----
