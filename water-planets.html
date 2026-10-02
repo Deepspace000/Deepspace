@@ -137,10 +137,23 @@
   /* chapter openers: a full-width picture with the part title laid over it */
   .chapter { position: relative; min-height: 42vh; display: flex; align-items: flex-end; justify-content: center; text-align: center; padding: 3rem 1.25rem 2.2rem;
     background: linear-gradient(rgba(5, 13, 24, 0.05) 30%, rgba(5, 13, 24, 0.82)), var(--img, none) center / cover no-repeat; border-top: 1px solid rgba(214, 178, 100, 0.35); border-bottom: 1px solid rgba(214, 178, 100, 0.35); }
+  .hwrap { position: relative; overflow: hidden; background: radial-gradient(ellipse at 50% 40%, #1a0b0c 0%, #070a14 55%, #03060c 100%); }
+  .hwrap > .chapter, .hwrap > .band { position: relative; z-index: 1; background: none; }
+  .chapter.chapter-hydros { min-height: 62vh; }
+  .hwrap > .hsys { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .chapter-hydros .chapter-in { position: relative; z-index: 1; }
   .chapter.chapter-ships { min-height: 0; aspect-ratio: 1080 / 470; background: var(--img) center / cover no-repeat; align-items: flex-start; padding-top: 1rem; }
   .chapter.story-head { min-height: 22vh; background: linear-gradient(rgba(5, 13, 24, 0.4), rgba(5, 13, 24, 0.7)); }
   .chapter .part { display: block; font-size: 0.72em; letter-spacing: 0.34em; text-transform: uppercase; color: #d9bd7a; }
   .chapter h2 { margin: 0.2rem 0 0; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; font-size: clamp(2.1rem, 8vw, 3.6rem); letter-spacing: 0.04em; color: #fff3d0; text-shadow: 0 2px 22px rgba(0, 0, 0, 0.85); }
+
+  /* the planet being described sits in the background of its own section */
+  .fplanet { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 0; pointer-events: none; will-change: transform, opacity; opacity: 0; }
+  .fplanet canvas { position: absolute; display: block; }
+  .band.has-planet .book { background:
+      linear-gradient(90deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0) 7%, rgba(0, 0, 0, 0) 93%, rgba(0, 0, 0, 0.3)),
+      repeating-linear-gradient(0deg, rgba(255, 240, 210, 0.025) 0 1px, rgba(0, 0, 0, 0) 1px 4px),
+      linear-gradient(180deg, rgba(33, 26, 17, 0.8), rgba(23, 18, 12, 0.84)); backdrop-filter: blur(1.5px); -webkit-backdrop-filter: blur(1.5px); }
 
   /* a little more paper: darker edges, a curled corner, grain */
   .book { box-shadow: inset 0 0 46px rgba(0, 0, 0, 0.55), 0 0 0 5px rgba(23, 18, 12, 0.9), 0 0 0 6px rgba(214, 178, 100, 0.3), 0 26px 60px -20px rgba(0, 0, 0, 0.9); }
@@ -242,7 +255,8 @@
     </div>
   </section>
 
-  <div class="chapter" role="img" aria-label="A glowing orange red dwarf star surrounded by six blue water planets" style="--img:url(img/water-planets/hydros-system.jpg)"><div class="chapter-in"><span class="part">Part II</span><h2>Hydros</h2></div></div>
+  <div class="hwrap"><canvas class="hsys" aria-hidden="true"></canvas>
+  <div class="chapter chapter-hydros" role="img" aria-label="The Hydros system: a red dwarf star with six blue water planets orbiting it"><div class="chapter-in"><span class="part">Part II</span><h2>Hydros</h2></div></div>
 
   <section id="hydros" class="band plain">
     <div class="wrap">
@@ -255,6 +269,7 @@
       </ul>
     </div>
   </section>
+  </div>
 
   <div class="chapter" role="img" aria-label="A calm blue ocean under a large pale planet, with a red star glowing in the corner" style="--img:url(img/water-planets/hydros-ocean.jpg)"><div class="chapter-in"><span class="part">Part III</span><h2>The Six Water Planets</h2></div></div>
 
@@ -615,6 +630,153 @@
     x2.putImageData(img, 0, 0); return c;
   }
 
+
+  // ---- the planet being described hangs in the background of its own entry ----
+  var feats = [];
+  ['thalassa', 'nereis', 'pelagia', 'ondine', 'hydraxis', 'bathys'].forEach(function (id, n) {
+    var band = document.getElementById(id), fig = band && band.querySelector('.planet-plate');
+    if (!band || !fig) return;
+    band.classList.add('has-planet');
+    var box = document.createElement('div'); box.className = 'fplanet'; box.setAttribute('aria-hidden', 'true');
+    band.insertBefore(box, band.querySelector('.wrap'));
+    var seed = +fig.getAttribute('data-seed'), rr = rng(seed);
+    var f = { band: band, box: box, kind: +fig.getAttribute('data-kind'), seed: seed % 977 + 3, side: n % 2 ? -1 : 1, tilt: (rr() - 0.5) * 0.8, phase: rr() * 6.28, vis: 0, r: 0, started: false, moons: [] };
+    var nm = 2 + (n % 2);
+    for (var m = 0; m < nm; m++) f.moons.push({ a: 1.6 + m * 0.55 + rr() * 0.2, rf: 0.08 + rr() * 0.07, ph: rr() * 6.28, w: (0.22 + rr() * 0.3) * (m % 2 ? -1 : 1), tilt: (rr() - 0.5) * 0.6, seed: Math.floor(rr() * 999) });
+    feats.push(f);
+  });
+  function sizeFeats() {
+    feats.forEach(function (f) {
+      f.r = W < 700 ? Math.min(W * 0.4, 170) : Math.min(210, Math.max(110, W * 0.15));
+      if (f.paint || f.ready) {                    // a new size only changes how big it is drawn
+        if (f.planetEl) { f.planetEl.style.width = f.planetEl.style.height = f.r * 2 + 'px'; f.planetEl.style.left = f.planetEl.style.top = -f.r + 'px'; }
+        f.moons.forEach(function (m) { if (m.el) { m.el.style.width = m.el.style.height = m.rf * f.r * 2 + 'px'; } });
+      }
+    });
+  }
+  function updateFeats(t, dt) {
+    var best = 0;
+    for (var i = 0; i < feats.length; i++) {
+      var f = feats[i], rect = f.band.getBoundingClientRect();
+      var near = rect.top < H * 2 && rect.bottom > -H;
+      if (near && !f.started) {                      // start painting it when its entry is about to come up
+        f.started = true; f.r = W < 700 ? Math.min(W * 0.4, 170) : Math.min(210, Math.max(110, W * 0.15));
+        f.paint = startPlanet({ r: f.r, kind: f.kind, seed: f.seed, tilt: f.tilt, phase: f.phase, landLevel: 1.5 }, W < 700 ? 130 : 170);
+      }
+      if (f.paint && !painting) { painting = true; if (stepPlanet(f.paint, 7)) {
+        var el = f.paint.c; el.style.cssText = 'position:absolute;width:' + f.r * 2 + 'px;height:' + f.r * 2 + 'px;left:' + (-f.r) + 'px;top:' + (-f.r) + 'px;z-index:1;filter:drop-shadow(0 0 ' + Math.round(f.r * 0.25) + 'px rgba(110,190,255,0.35))';
+        f.box.appendChild(el); f.planetEl = el; f.paint = null; f.ready = true;
+        f.moons.forEach(function (m) { var c = buildMoon(f.r * m.rf, m.seed, [190, 188, 180]); c.style.cssText = 'position:absolute;width:' + m.rf * f.r * 2 + 'px;height:' + m.rf * f.r * 2 + 'px;'; f.box.appendChild(c); m.el = c; });
+      } }
+      // how much of its entry is on screen decides how visible it is
+      var v = ssm(H * 0.95, H * 0.45, rect.top) * ssm(H * 0.05, H * 0.55, rect.bottom);
+      f.vis += (v - f.vis) * Math.min(1, dt * 2.5);                               // arrives and leaves slowly
+      if (f.vis > best) best = f.vis;
+      if (!f.ready) continue;
+      f.box.style.opacity = f.vis.toFixed(3);
+      if (f.vis < 0.01) continue;
+      var prog = Math.min(1, Math.max(0, (H * 0.5 - rect.top) / Math.max(1, rect.height)));
+      var cx = W * (0.5 + f.side * (W < 700 ? 0.22 : 0.3)), cy = H * 0.5 - rect.top + (prog - 0.5) * H * 0.22;
+      f.box.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0)';
+      f.moons.forEach(function (m) {
+        m.ph += (0.28 * m.w + m.w * Math.min(vel * 0.0028, 5)) * dt;           // faster as you scroll
+        var ax = Math.cos(m.ph) * m.a * f.r, ay = Math.sin(m.ph) * m.a * f.r * 0.3, ct = Math.cos(m.tilt), st = Math.sin(m.tilt);
+        var mx = ax * ct - ay * st, my = ax * st + ay * ct, rad = m.rf * f.r;
+        m.el.style.transform = 'translate3d(' + (mx - rad).toFixed(1) + 'px,' + (my - rad).toFixed(1) + 'px,0)';
+        m.el.style.zIndex = Math.sin(m.ph) > 0 ? 2 : 0;
+      });
+    }
+    featVis = Math.max(best, updateEarth(t, dt));
+  }
+  // ---- Part I: Earth, ravaged by heat, drifts slowly past behind the story ----
+  function buildEarth(R) {
+    var S = R * 2, c = document.createElement('canvas'); c.width = c.height = S;
+    var x2 = c.getContext('2d'), img = x2.createImageData(S, S), d = img.data, L = [-0.62, -0.5, 0.6], ll = Math.sqrt(0.3844 + 0.25 + 0.36);
+    for (var py = 0; py < S; py++) for (var px = 0; px < S; px++) {
+      var nx = (px + 0.5 - R) / R, ny = (py + 0.5 - R) / R, rr = nx * nx + ny * ny, i = (py * S + px) * 4;
+      if (rr > 1) continue;
+      var nz = Math.sqrt(1 - rr), x = nx * 0.92 - ny * 0.39, y = nx * 0.39 + ny * 0.92;
+      var land = fbm(x * 1.7 + 5, y * 1.7, nz * 1.7, 5);                          // the old continents
+      var dry = land > 0.5;
+      var fine = fbm(x * 9 + 2, y * 9, nz * 9, 4);
+      var crack = 1 - Math.abs(fbm(x * 7 + 40, y * 7, nz * 7, 3) - 0.5) * 2;      // a network of fissures
+      crack = Math.pow(Math.max(0, crack), 14);
+      var col = dry ? mix([150, 78, 40], [214, 140, 70], fine) : mix([48, 24, 20], [92, 44, 30], fine);   // scorched land / dried sea beds
+      var ash = ssm(0.55, 0.8, fbm(x * 3 + 11, y * 3, nz * 3, 5)) * 0.65;          // ash and smoke
+      col = mix(col, [70, 52, 48], ash);
+      var dif = nx * L[0] / ll + ny * L[1] / ll + nz * L[2] / ll, k = 0.05 + 0.95 * ssm(-0.1, 0.5, dif);
+      var glow = crack * (0.35 + 0.65 * ssm(0.3, -0.2, dif)) * (1 - ash * 0.7);    // lava light in the cracks, strongest at night
+      var rim = Math.pow(1 - nz, 2.4) * ssm(-0.4, 0.6, dif), a = 255 * Math.min(1, (1 - Math.sqrt(rr)) * R / 1.6);
+      d[i] = Math.min(255, col[0] * k + glow * 255 + rim * 255);
+      d[i + 1] = Math.min(255, col[1] * k + glow * 120 + rim * 120);
+      d[i + 2] = Math.min(255, col[2] * k + glow * 30 + rim * 50);
+      d[i + 3] = a;
+    }
+    x2.putImageData(img, 0, 0); return c;
+  }
+  var earth = null, storyBand = document.getElementById('story');
+  function updateEarth(t, dt) {
+    if (!storyBand) return 0;
+    var rect = storyBand.getBoundingClientRect();
+    if (!earth) {
+      earth = { vis: 0, box: document.createElement('div') };
+      earth.box.className = 'fplanet'; earth.box.setAttribute('aria-hidden', 'true');
+      storyBand.classList.add('has-planet'); storyBand.insertBefore(earth.box, storyBand.querySelector('.wrap'));
+    }
+    var near = rect.top < H * 2 && rect.bottom > -H;
+    if (near && !earth.ready) {
+      earth.r = W < 700 ? Math.min(W * 0.42, 180) : Math.min(230, Math.max(120, W * 0.17));
+      var el = buildEarth(Math.min(130, Math.round(earth.r * Math.min(dpr, 1.5))));
+      el.style.cssText = 'position:absolute;width:' + earth.r * 2 + 'px;height:' + earth.r * 2 + 'px;left:' + (-earth.r) + 'px;top:' + (-earth.r) + 'px;filter:drop-shadow(0 0 ' + Math.round(earth.r * 0.3) + 'px rgba(255,90,30,0.45))';
+      earth.box.appendChild(el); earth.ready = true;
+    }
+    var v = ssm(H * 0.95, H * 0.45, rect.top) * ssm(H * 0.05, H * 0.55, rect.bottom);
+    earth.vis += (v - earth.vis) * Math.min(1, dt * 2.5);
+    if (!earth.ready) return earth.vis;
+    earth.box.style.opacity = earth.vis.toFixed(3);
+    if (earth.vis > 0.01) {
+      var prog = Math.min(1, Math.max(0, (H * 0.9 - rect.top) / Math.max(1, rect.height + H * 0.8)));   // drifts all the way across as the story passes
+      var cx = W * (W < 700 ? 0.7 : 0.78) - prog * W * 0.18, cy = H * 0.5 - rect.top + (prog - 0.5) * H * 0.9;
+      earth.box.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0)';
+    }
+    return earth.vis;
+  }
+  var painting = false, featVis = 0;
+
+  // ---- the Hydros system: planets orbit the red dwarf, and orbit faster as you scroll ----
+  var hs = document.querySelector('.hsys'), hsx = hs && hs.getContext('2d'), hsys = null;
+  function drawHsys(t, dt) {
+    if (!hs) return;
+    var rect = hs.parentNode.getBoundingClientRect();
+    var vc = Math.min(Math.max(H * 0.5 - rect.top, 0), rect.height);
+    if (rect.bottom < -50 || rect.top > H + 50) return;
+    var w = rect.width, h = rect.height, d2 = Math.min(dpr, 2);
+    if (hs.width !== Math.round(w * d2) || hs.height !== Math.round(h * d2)) { hs.width = Math.round(w * d2); hs.height = Math.round(h * d2); }
+    hsx.setTransform(d2, 0, 0, d2, 0, 0); hsx.clearRect(0, 0, w, h);
+    if (!hsys) {
+      var kinds = [0, 1, 2, 3, 5, 6], sz = [15, 22, 12, 27, 18, 24], P = [];
+      for (var i = 0; i < 6; i++) P.push({ r: sz[i], a: 0, w: 0.5 / Math.pow(i + 1, 0.7) * (i % 2 ? -1 : 1), ph: i * 1.05 + 0.3, spr: buildPlanet({ r: sz[i], kind: kinds[i], seed: 11 + i * 29, tilt: 0.1 * i, phase: i, landLevel: 1.5 }) });
+      hsys = { star: buildSun({ r: 40, col: [255, 70, 50], seed: 7 }), P: P };
+    }
+    var cx = w / 2, cy = Math.min(Math.max(vc, Math.min(w * 0.3, 230)), h - Math.min(w * 0.3, 230)), base = Math.min(w * 0.42, 420), sc = base / 6.4, boost = 1 + Math.min(vel * 0.0028, 5);
+    hsx.save(); hsx.translate(cx, cy); hsx.rotate(-0.22 + t * 0.000018);       // the whole system turns slowly
+    // faint star-glow
+    hsx.globalCompositeOperation = 'lighter';
+    [[150, 0.38], [70, 0.35]].forEach(function (L) { var g = hsx.createRadialGradient(0, 0, 4, 0, 0, L[0]); g.addColorStop(0, 'rgba(255,80,50,' + L[1] + ')'); g.addColorStop(1, 'rgba(255,80,50,0)'); hsx.fillStyle = g; hsx.beginPath(); hsx.arc(0, 0, L[0], 0, 6.2832); hsx.fill(); });
+    hsx.globalCompositeOperation = 'source-over';
+    var pos = hsys.P.map(function (p, i) {
+      p.a += p.w * dt * boost;
+      var rx = sc * (1.5 + i * 0.9) , ry = rx * 0.3;
+      return { x: Math.cos(p.ph + p.a) * rx, y: Math.sin(p.ph + p.a) * ry, z: Math.sin(p.ph + p.a), rx: rx, ry: ry, p: p };
+    });
+    hsx.strokeStyle = 'rgba(150,200,255,0.16)'; hsx.lineWidth = 1;
+    pos.forEach(function (q) { hsx.beginPath(); hsx.ellipse(0, 0, q.rx, q.ry, 0, 0, 6.2832); hsx.stroke(); });
+    pos.forEach(function (q) { if (q.z <= 0) hsx.drawImage(q.p.spr, q.x - q.p.r, q.y - q.p.r, q.p.r * 2, q.p.r * 2); });
+    hsx.save(); hsx.rotate(t * 0.00004); hsx.drawImage(hsys.star, -34, -34, 68, 68); hsx.restore();
+    pos.forEach(function (q) { if (q.z > 0) { var r = q.p.r * (1 + 0.1 * q.z); hsx.drawImage(q.p.spr, q.x - r, q.y - r, r * 2, r * 2); } });
+    hsx.restore();
+  }
+
   // ---- lay everything out along the page: one object for each stretch of scrolling, never repeated ----
   // the phone's address bar slides away as you scroll and fires resize events: the sky is sized to the tallest the screen gets
   var probe = document.createElement('div');
@@ -679,7 +841,7 @@
     var ext = o.ext || 220;
     if (y < -ext || y > H + ext) return;
     ensure(o);
-    var vis = ssm(Hh * 1.05, Hh * 0.5, y) * ssm(-Hh * 0.1, Hh * 0.3, y);   // in slowly from the bottom, away before the top
+    var vis = ssm(Hh * 1.05, Hh * 0.5, y) * ssm(-Hh * 0.1, Hh * 0.3, y) * (1 - featVis);   // in slowly from the bottom, away before the top; steps aside for the planet being described
     if (vis < 0.01) return;
     if (o.type === 'planet') {
       if (!o.ready) return;
@@ -747,6 +909,7 @@
     vel += ((sy - lastSy) / Math.max(dt, 0.001) - vel) * Math.min(1, dt * 5); lastSy = sy;      // how fast you are scrolling
     if (builds.length) builds.shift()();                                                           // start one sprite a frame
     for (var pq = 0; pq < objs.length; pq++) { var po = objs[pq]; if (po.paint) { if (stepPlanet(po.paint, 7)) { po.spr = po.paint.c; po.paint = null; po.ready = true; } break; } }   // paint a planet for a few milliseconds
+    painting = false; updateFeats(t, dt); drawHsys(t, dt);
     ctx.clearRect(0, 0, W, H);
     for (var n = 0; n < objs.length; n++) if (objs[n].type === 'nebula') drawObj(objs[n], t, dt);
     for (var i = 0; i < stars.length; i++) {
@@ -777,6 +940,7 @@
     plates.forEach(function (f) { pio.observe(f); });
   } else { plates.forEach(drawPlate); }
   var relayout;
+  window.addEventListener('resize', sizeFeats);
   window.addEventListener('resize', function () {
     if (window.innerWidth === W && Math.abs(viewH() - H) < 2) return;      // only a real change redraws the sky
     clearTimeout(relayout); relayout = setTimeout(layout, 150);
