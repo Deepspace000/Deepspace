@@ -736,6 +736,7 @@
   var TW = 512, TH = 256;
   var surf = null, cloudTex = null;
   var PL = { r: 50, cx: 0, cy: 0, S: 0, can: null, pctx: null, img: null, moons: [], last: -1e9 };
+  var scrollSm = 0;   // smoothed scroll position; scrolling carries the moons round their orbits
 
   // ---- 3D value noise ----
   function h3(x, y, z) {
@@ -939,14 +940,14 @@
     PL.pctx = PL.can.getContext('2d');
     PL.img = PL.pctx.createImageData(PL.S, PL.S);
     PL.moons = [
-      { a: r * 2.1, r: r * 0.21, w: 0.000070, ph: 0.9, tilt: -0.30, spr: makeMoon(r * 0.21, [176, 174, 168], 3, 5.2) },
-      { a: r * 3.1, r: r * 0.13, w: 0.000043, ph: 3.9, tilt: 0.20, spr: makeMoon(r * 0.13, [160, 126, 100], 8, 4.0) }
+      { a: r * 2.1, r: r * 0.21, w: 0.000070, k: 0.0042, ph: 0.9, tilt: -0.30, spr: makeMoon(r * 0.21, [176, 174, 168], 3, 5.2) },
+      { a: r * 3.1, r: r * 0.13, w: 0.000043, k: -0.0029, ph: 3.9, tilt: 0.20, spr: makeMoon(r * 0.13, [160, 126, 100], 8, 4.0) }
     ];
     if (surf && reduce) renderPlanet(1.2, 1.6);
   }
 
   function moonAt(m, t) {
-    var ang = m.ph + (reduce ? 0 : t * m.w);
+    var ang = m.ph + (reduce ? 0 : t * m.w + scrollSm * m.k);
     var x = m.a * Math.cos(ang), y = m.a * 0.3 * Math.sin(ang);
     var ct = Math.cos(m.tilt), st = Math.sin(m.tilt);
     return { x: PL.cx + x * ct - y * st, y: PL.cy - lift_() + x * st + y * ct, z: Math.sin(ang) };
@@ -957,7 +958,16 @@
     if (!surf) return;
     var fade = reduce ? 1 : Math.min(1, Math.max(0, (t - 1200) / 7000));
     if (fade <= 0) return;
-    if (!reduce && t - PL.last > 90) { renderPlanet(t * 0.00006, t * 0.00008 + 1); PL.last = t; }
+    // ease toward the real scroll position so the motion glides
+    var target = reduce ? 0 : (window.pageYOffset || 0);
+    var gap = target - scrollSm;
+    scrollSm += gap * 0.09;
+    var moving = Math.abs(gap) > 0.6;
+    // the globe turns a little as the page scrolls; redraw it faster while that is happening
+    if (!reduce && t - PL.last > (moving ? 33 : 90)) {
+      renderPlanet(t * 0.00006 + scrollSm * 0.0016, t * 0.00008 + 1 + scrollSm * 0.0022);
+      PL.last = t;
+    }
     var r = PL.r, cx = PL.cx, cy = PL.cy - lift_();
 
     ctx.save();
