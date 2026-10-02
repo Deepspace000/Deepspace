@@ -2690,20 +2690,21 @@ var Glare = (function () {
       });
       for (var i = 0; i < letters.length; i++) {
         var d = Math.abs(S.lx[i] - cx) / (span * 0.62);
-        flare(i, Math.max(0, (1 - d * 0.55)) * I, true);
+        flare(i, Math.max(0, (1 - d * 0.55)) * I * (self.gain || 1), true);
       }
     },
     end: function () { letters.forEach(function (_, i) { flare(i, 0); }); } };
 
   // 6. Prism and sunburst together: light breaks from behind the word as a band of spectrum colour runs through the letters
-  FX.both = { name: 'Prism + sunburst', dur: 3800, tail: 500,
+  FX.both = { name: 'Prism + sunburst', dur: 3800, tail: 500, gain: 0.68,
     init: function () { FX.sunburst.init(); },
     render: function (ms) {
       FX.sunburst.spectral = true;
+      FX.sunburst.gain = this.gain;
       FX.sunburst.render(ms * 0.95);                 // the burst peaks as the band reaches the middle of the word
       FX.prism.render(ms * (FX.prism.dur / this.dur));
     },
-    end: function () { FX.sunburst.spectral = false; FX.sunburst.end(); FX.prism.end(); } };
+    end: function () { FX.sunburst.spectral = false; FX.sunburst.gain = 1; FX.sunburst.end(); FX.prism.end(); } };
 
   function play(key) {
     var fx = FX[key];
@@ -2718,7 +2719,9 @@ var Glare = (function () {
       measure();
       ctx.clearRect(0, 0, S.W, S.H);
       ctx.globalCompositeOperation = 'lighter';
+      ctx.globalAlpha = fx.gain || 1;
       fx.render(ms);
+      ctx.globalAlpha = 1;
       ctx.globalCompositeOperation = 'source-over';
       if (ms < fx.dur + fx.tail) { requestAnimationFrame(frame); }
       else { ctx.clearRect(0, 0, S.W, S.H); if (fx.end) fx.end(); running = false; if (play.done) play.done(key); }
@@ -2732,7 +2735,9 @@ var Glare = (function () {
     size(); measure(); if (fx.init) fx.init();
     ctx.clearRect(0, 0, S.W, S.H);
     ctx.globalCompositeOperation = 'lighter';
+    ctx.globalAlpha = fx.gain || 1;
     fx.render(ms);
+    ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
   }
   function clearStill(key) { ctx.clearRect(0, 0, S.W, S.H); if (FX[key] && FX[key].end) FX[key].end(); }
