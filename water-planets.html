@@ -669,14 +669,13 @@
         f.moons.forEach(function (m) { var c = buildMoon(f.r * m.rf, m.seed, [190, 188, 180]); c.style.cssText = 'position:absolute;width:' + m.rf * f.r * 2 + 'px;height:' + m.rf * f.r * 2 + 'px;'; f.box.appendChild(c); m.el = c; });
       } }
       // how much of its entry is on screen decides how visible it is
-      var v = ssm(H * 0.95, H * 0.45, rect.top) * ssm(H * 0.05, H * 0.55, rect.bottom);
+      var v = ssm(H * 0.95, H * 0.45, rect.top) * ssm(H * 0.25, H * 0.95, rect.bottom);
       f.vis += (v - f.vis) * Math.min(1, dt * 2.5);                               // arrives and leaves slowly
       if (f.vis > best) best = f.vis;
       if (!f.ready) continue;
       f.box.style.opacity = f.vis.toFixed(3);
       if (f.vis < 0.01) continue;
-      var prog = Math.min(1, Math.max(0, (H * 0.5 - rect.top) / Math.max(1, rect.height)));
-      var cx = W * (0.5 + f.side * (W < 700 ? 0.22 : 0.3)), cy = H * 0.5 - rect.top + (prog - 0.5) * H * 0.22;
+      var cx = W * (0.5 + f.side * (W < 700 ? 0.22 : 0.3)), cy = Math.min(rect.height * 0.5, H * 0.5);
       f.box.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0)';
       f.moons.forEach(function (m) {
         m.ph += (0.28 * m.w + m.w * Math.min(vel * 0.0028, 5)) * dt;           // faster as you scroll
@@ -730,13 +729,12 @@
       el.style.cssText = 'position:absolute;width:' + earth.r * 2 + 'px;height:' + earth.r * 2 + 'px;left:' + (-earth.r) + 'px;top:' + (-earth.r) + 'px;filter:drop-shadow(0 0 ' + Math.round(earth.r * 0.3) + 'px rgba(255,90,30,0.45))';
       earth.box.appendChild(el); earth.ready = true;
     }
-    var v = ssm(H * 0.95, H * 0.45, rect.top) * ssm(H * 0.05, H * 0.55, rect.bottom);
+    var v = ssm(H * 0.95, H * 0.45, rect.top) * ssm(H * 0.25, H * 0.95, rect.bottom);
     earth.vis += (v - earth.vis) * Math.min(1, dt * 2.5);
     if (!earth.ready) return earth.vis;
     earth.box.style.opacity = earth.vis.toFixed(3);
     if (earth.vis > 0.01) {
-      var prog = Math.min(1, Math.max(0, (H * 0.9 - rect.top) / Math.max(1, rect.height + H * 0.8)));   // drifts all the way across as the story passes
-      var cx = W * (W < 700 ? 0.7 : 0.78) - prog * W * 0.18, cy = H * 0.5 - rect.top + (prog - 0.5) * H * 0.9;
+      var cx = W * (W < 700 ? 0.7 : 0.78), cy = Math.min(rect.height * 0.3, H * 0.5);   // it moves with the page, so it scrolls past without judder
       earth.box.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0)';
     }
     return earth.vis;
@@ -748,33 +746,39 @@
   function drawHsys(t, dt) {
     if (!hs) return;
     var rect = hs.parentNode.getBoundingClientRect();
-    var vc = Math.min(Math.max(H * 0.5 - rect.top, 0), rect.height);
     if (rect.bottom < -50 || rect.top > H + 50) return;
     var w = rect.width, h = rect.height, d2 = Math.min(dpr, 2);
     if (hs.width !== Math.round(w * d2) || hs.height !== Math.round(h * d2)) { hs.width = Math.round(w * d2); hs.height = Math.round(h * d2); }
     hsx.setTransform(d2, 0, 0, d2, 0, 0); hsx.clearRect(0, 0, w, h);
     if (!hsys) {
-      var kinds = [0, 1, 2, 3, 5, 6], sz = [15, 22, 12, 27, 18, 24], P = [];
-      for (var i = 0; i < 6; i++) P.push({ r: sz[i], a: 0, w: 0.5 / Math.pow(i + 1, 0.7) * (i % 2 ? -1 : 1), ph: i * 1.05 + 0.3, spr: buildPlanet({ r: sz[i], kind: kinds[i], seed: 11 + i * 29, tilt: 0.1 * i, phase: i, landLevel: 1.5 }) });
-      hsys = { star: buildSun({ r: 40, col: [255, 70, 50], seed: 7 }), P: P };
+      var kinds = [0, 1, 2, 3, 5, 6], sz = [30, 44, 26, 52, 36, 48], P = [];
+      for (var i = 0; i < 6; i++) P.push({ r: sz[i], a: 0, w: 0.34 / Math.pow(i + 1, 1.5) * (i % 2 ? 1.1 : 1), ph: i * 2.1 + 0.4, spr: buildPlanet({ r: sz[i], kind: kinds[i], seed: 11 + i * 29, tilt: 0.1 * i, phase: i, landLevel: 1.5 }) });
+      hsys = { star: buildSun({ r: 70, col: [255, 70, 50], seed: 7 }), P: P };
     }
-    var cx = w / 2, cy = Math.min(Math.max(vc, Math.min(w * 0.3, 230)), h - Math.min(w * 0.3, 230)), base = Math.min(w * 0.42, 420), sc = base / 6.4, boost = 1 + Math.min(vel * 0.0028, 5);
-    hsx.save(); hsx.translate(cx, cy); hsx.rotate(-0.22 + t * 0.000018);       // the whole system turns slowly
-    // faint star-glow
+    // a 3D view: orbits are circles in a plane tipped towards us, seen in perspective, and they run off the page
+    var cx = w / 2, cy = h * 0.42, boost = 1 + Math.min(vel * 0.0028, 5), T = 1.0 + Math.sin(t * 0.00004) * 0.07, sT = Math.sin(T), cT = Math.cos(T), D = w * 1.5, k = Math.min(1, w / 900 + 0.35);
+    function proj(X, Z) { var dep = -Z * cT, s = D / (D + dep); return { x: cx + X * s, y: cy + Z * sT * s, s: s, dep: dep }; }
     hsx.globalCompositeOperation = 'lighter';
-    [[150, 0.38], [70, 0.35]].forEach(function (L) { var g = hsx.createRadialGradient(0, 0, 4, 0, 0, L[0]); g.addColorStop(0, 'rgba(255,80,50,' + L[1] + ')'); g.addColorStop(1, 'rgba(255,80,50,0)'); hsx.fillStyle = g; hsx.beginPath(); hsx.arc(0, 0, L[0], 0, 6.2832); hsx.fill(); });
+    [[w * 0.32, 0.34], [w * 0.14, 0.34]].forEach(function (L) { var g = hsx.createRadialGradient(cx, cy, 4, cx, cy, L[0]); g.addColorStop(0, 'rgba(255,80,50,' + L[1] + ')'); g.addColorStop(1, 'rgba(255,80,50,0)'); hsx.fillStyle = g; hsx.beginPath(); hsx.arc(cx, cy, L[0], 0, 6.2832); hsx.fill(); });
     hsx.globalCompositeOperation = 'source-over';
     var pos = hsys.P.map(function (p, i) {
       p.a += p.w * dt * boost;
-      var rx = sc * (1.5 + i * 0.9) , ry = rx * 0.3;
-      return { x: Math.cos(p.ph + p.a) * rx, y: Math.sin(p.ph + p.a) * ry, z: Math.sin(p.ph + p.a), rx: rx, ry: ry, p: p };
+      var R = w * (0.2 + i * 0.2), q = proj(Math.cos(p.ph + p.a) * R, Math.sin(p.ph + p.a) * R); q.p = p; q.R = R; return q;
     });
-    hsx.strokeStyle = 'rgba(150,200,255,0.16)'; hsx.lineWidth = 1;
-    pos.forEach(function (q) { hsx.beginPath(); hsx.ellipse(0, 0, q.rx, q.ry, 0, 0, 6.2832); hsx.stroke(); });
-    pos.forEach(function (q) { if (q.z <= 0) hsx.drawImage(q.p.spr, q.x - q.p.r, q.y - q.p.r, q.p.r * 2, q.p.r * 2); });
-    hsx.save(); hsx.rotate(t * 0.00004); hsx.drawImage(hsys.star, -34, -34, 68, 68); hsx.restore();
-    pos.forEach(function (q) { if (q.z > 0) { var r = q.p.r * (1 + 0.1 * q.z); hsx.drawImage(q.p.spr, q.x - r, q.y - r, r * 2, r * 2); } });
-    hsx.restore();
+    hsx.lineWidth = 1;
+    pos.forEach(function (q) {                                                 // each orbit, as a ring in perspective
+      hsx.beginPath();
+      for (var n = 0; n <= 180; n++) { var a = n / 180 * 6.2832, o = proj(Math.cos(a) * q.R, Math.sin(a) * q.R); if (n) hsx.lineTo(o.x, o.y); else hsx.moveTo(o.x, o.y); }
+      hsx.strokeStyle = 'rgba(150,200,255,0.2)'; hsx.stroke();
+    });
+    pos.sort(function (a, b) { return b.dep - a.dep; });                       // far ones first
+    var drawn = false, sr = Math.max(26, w * 0.05);
+    function star() { var pu = 1 + 0.03 * Math.sin(t * 0.0015); hsx.save(); hsx.translate(cx, cy); hsx.rotate(t * 0.00004); hsx.drawImage(hsys.star, -sr * pu, -sr * pu, sr * 2 * pu, sr * 2 * pu); hsx.restore(); }
+    pos.forEach(function (q) {
+      if (!drawn && q.dep < 0) { star(); drawn = true; }                       // the star sits between far and near planets
+      var r = q.p.r * k * q.s; hsx.drawImage(q.p.spr, q.x - r, q.y - r, r * 2, r * 2);
+    });
+    if (!drawn) star();
   }
 
   // ---- lay everything out along the page: one object for each stretch of scrolling, never repeated ----
