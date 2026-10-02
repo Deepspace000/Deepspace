@@ -121,6 +121,22 @@
   .book .foot { margin-top: 1.8rem; padding-top: 0.8rem; border-top: 1px solid rgba(214, 178, 100, 0.4); font-size: 0.82em; font-style: italic; color: #cdbb93; text-align: left; }
   .book .foot::before { content: "\2020  "; color: #c9a95e; font-style: normal; }
   .book .folio { text-align: center; margin: 1.6rem 0 0; font-size: 0.78em; letter-spacing: 0.3em; color: #c9a95e; }
+
+  /* reference-book furniture: data sheet, cross-references, footnotes */
+  .book .datasheet { float: right; width: 15.5rem; margin: 0.2rem 0 1rem 1.3rem; font-size: 0.78em; line-height: 1.35; border: 1px solid rgba(214, 178, 100, 0.55); background: rgba(40, 30, 14, 0.35); clear: right; }
+  .book .datasheet .dh { background: rgba(214, 178, 100, 0.22); color: #f6e7bf; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; font-size: 1.25em; text-align: center; padding: 0.35rem 0.5rem; border-bottom: 1px solid rgba(214, 178, 100, 0.55); }
+  .book .datasheet dl { margin: 0; }
+  .book .datasheet dl > div { display: flex; justify-content: space-between; gap: 0.7rem; padding: 0.26rem 0.55rem; border-bottom: 1px dotted rgba(214, 178, 100, 0.3); }
+  .book .datasheet dt { color: #c9a95e; flex: 0 0 auto; }
+  .book .datasheet dd { margin: 0; text-align: right; color: #eadfc3; }
+  .book .datasheet .dn { padding: 0.3rem 0.55rem; font-style: italic; color: #cdbb93; font-size: 0.9em; }
+  .book .refs { clear: both; margin-top: 1.2rem; font-size: 0.8em; color: #cdbb93; }
+  .book .refs p { text-align: left; margin: 0 0 0.5rem; }
+  .book .refs b { color: #c9a95e; font-variant: small-caps; letter-spacing: 0.08em; font-weight: 600; }
+  .book .refs .notes { margin: 0 0 0.6rem; padding-left: 1.6rem; }
+  .book .refs .notes li { margin-bottom: 0.2rem; }
+  .book .refs .notes li::marker { color: #c9a95e; }
+  @media (max-width: 620px) { .book .datasheet { float: none; width: auto; margin: 0.2rem 0 1.2rem; } }
   @media (max-width: 520px) { .book { padding: 1.7rem 1.05rem 1.5rem; font-size: 1.12em; } .book p { text-align: left; } .book .runhead { font-size: 0.6em; letter-spacing: 0.12em; white-space: nowrap; } }
 
 
@@ -280,6 +296,7 @@
       <h2>Thalassa Prime<small>The Keeper of the Tides</small></h2>
       <div class="orn">&#10070;</div>
       <figure class="plate planet-plate" data-kind="1" data-seed="1111"><canvas width="300" height="300" aria-label="Thalassa Prime, drawn from the booklet"></canvas><figcaption>Plate III: Thalassa Prime</figcaption></figure>
+      <aside class="datasheet" aria-label="Planetary data for Thalassa Prime"><div class="dh">Thalassa Prime<sup>[3]</sup></div><dl><div><dt>Order from Hydros</dt><dd>1st</dd></div><div><dt>Class</dt><dd>Ocean giant<sup>[2]</sup></dd></div><div><dt>Diameter</dt><dd>21,400 km<sup>[1]</sup></dd></div><div><dt>Surface gravity</dt><dd>1.4 g</dd></div><div><dt>Orbital period</dt><dd>9.6 days</dd></div><div><dt>Mean temperature</dt><dd>24 °C</dd></div><div><dt>Surface water</dt><dd>100%</dd></div><div><dt>Atmosphere</dt><dd>Warm, humid, heavy cloud</dd></div><div><dt>Moons</dt><dd>2 (both water worlds)</dd></div><div><dt>Status</dt><dd>Surveyed; mining permitted</dd></div></dl><div class="dn">Data from the Hydros Survey.</div></aside>
       <blockquote>The sea does not follow the water moon; it moves by its own free will.</blockquote>
       <h3>Geography and Conditions</h3>
       <p class="dc">Unlike normal planets with gravitational tides, Thalassa Prime, the largest of the water planets, has oceans that move in unpredicatable waves, rising and falling as if controlled by an unseen force.</p>
@@ -288,6 +305,7 @@
       <p>The tides form complex geometric spirals when viewed from orbit, too intricate to be natural. Some researchers believe there may be an ancient machine beneath the waves causing this.</p>
       <p>AI simulations predict if left undisturbed, the tides will eventually form a perfect mathematical structure in 217 years. The purpose of this remains a mystery.</p>
       <p class="foot">"Thalassa" (Θάλασσα in Ancient Greek) means "sea" in Greek and is also the name of the Greek goddess of the sea.</p>
+      <div class="refs"><p class="see"><b>See also:</b> Nereis-9 (the next world out); the Okeanos conduits (Part IV).</p><ol class="notes"><li>Hydros Survey Corps, <i>Atlas of the Hydros System</i>, vol. I, p. 12.</li><li>Okafor, M. and Lind, S., <i>A Field Guide to the Water Worlds</i>, 3rd ed., ch. 2, &ldquo;Self-Driven Tides&rdquo;.</li><li>Liddell, H. G. and Scott, R., <i>A Greek&ndash;English Lexicon</i>, s.v. &theta;&#940;&lambda;&alpha;&sigma;&sigma;&alpha;.</li></ol><p class="further"><b>Further reading:</b> Okafor and Lind, <i>A Field Guide to the Water Worlds</i>.</p></div>
     <div class="folio">&mdash; i &mdash;</div>
       </div>
     </div>
@@ -300,12 +318,14 @@
       <h2>Nereis-9<small>The Whispering Deep</small></h2>
       <div class="orn">&#10070;</div>
       <figure class="plate planet-plate" data-kind="3" data-seed="2222"><canvas width="300" height="300" aria-label="Nereis-9, drawn from the booklet"></canvas><figcaption>Plate IV: Nereis-9</figcaption></figure>
+      <aside class="datasheet" aria-label="Planetary data for Nereis-9"><div class="dh">Nereis-9<sup>[3]</sup></div><dl><div><dt>Order from Hydros</dt><dd>2nd</dd></div><div><dt>Class</dt><dd>Deep-trench ocean<sup>[2]</sup></dd></div><div><dt>Diameter</dt><dd>13,800 km<sup>[1]</sup></dd></div><div><dt>Surface gravity</dt><dd>1.0 g</dd></div><div><dt>Orbital period</dt><dd>17 days</dd></div><div><dt>Mean temperature</dt><dd>19 °C</dd></div><div><dt>Surface water</dt><dd>100%</dd></div><div><dt>Atmosphere</dt><dd>Thin, carries sound well</dd></div><div><dt>Moons</dt><dd>3 (all water worlds)</dd></div><div><dt>Status</dt><dd>Restricted: sound hazard</dd></div></dl><div class="dn">Data from the Hydros Survey.</div></aside>
       <p class="lead dc">A world with vast, deep trenches where mysterious whispering sounds emanate</p>
       <p>Trenches, some hundreds of kilometres deep, reside beneath the waves of this world. Scientists suspect that violent earthquakes and towering tsunamis have shaped this world.</p>
       <p>Upon crossing beneath a certain depth threshold, probes have recorded strange whispering sounds that emanate from the core of Nereis-9. Scientists believe these sounds influence the rotation of the planet and the tides.</p>
       <p>Mirror trenches exist here, where the trench floor contains a reverse trench filled with water, stretching further underground. This is where the sounds are the loudest, exceeding 130 decibels in places. It is not known where these reverse trenches lead to.</p>
       <blockquote>What is causing this...strange whispering and sound. And what is it expressing?</blockquote>
       <p class="foot">The scientific name "Nereis" comes from the Ancient Greek word "Νηρηΐς" (Nērēís), which refers to a sea nymph.</p>
+      <div class="refs"><p class="see"><b>See also:</b> Thalassa Prime; Bathys, for the opposite kind of quiet.</p><ol class="notes"><li>Hydros Survey Corps, <i>Probe Logs of the First Descents</i>, log 9-14.</li><li>Vance, T., <i>Whispering Seas: The Acoustics of Deep Trenches</i>, pp. 88&ndash;103.</li><li>Liddell, H. G. and Scott, R., <i>A Greek&ndash;English Lexicon</i>, s.v. &Nu;&eta;&rho;&eta;&#8150;&sigmaf;.</li></ol><p class="further"><b>Further reading:</b> Vance, <i>Whispering Seas</i>.</p></div>
     <div class="folio">&mdash; ii &mdash;</div>
       </div>
     </div>
@@ -318,11 +338,13 @@
       <h2>Pelagia<small>The Black Abyss</small></h2>
       <div class="orn">&#10070;</div>
       <figure class="plate planet-plate" data-kind="5" data-seed="3333"><canvas width="300" height="300" aria-label="Pelagia, drawn from the booklet"></canvas><figcaption>Plate V: Pelagia</figcaption></figure>
+      <aside class="datasheet" aria-label="Planetary data for Pelagia"><div class="dh">Pelagia<sup>[3]</sup></div><dl><div><dt>Order from Hydros</dt><dd>3rd</dd></div><div><dt>Class</dt><dd>Dark ocean<sup>[2]</sup></dd></div><div><dt>Diameter</dt><dd>12,100 km<sup>[1]</sup></dd></div><div><dt>Surface gravity</dt><dd>0.9 g</dd></div><div><dt>Orbital period</dt><dd>28 days</dd></div><div><dt>Mean temperature</dt><dd>6 °C</dd></div><div><dt>Surface water</dt><dd>100%</dd></div><div><dt>Light absorbed</dt><dd>99.9%</dd></div><div><dt>Moons</dt><dd>2 (both water worlds)</dd></div><div><dt>Status</dt><dd>Closed to further descents</dd></div></dl><div class="dn">Data from the Hydros Survey.</div></aside>
       <p class="dc">The darkest of all the planets, Pelagia’s ocean is pitch black, absorbing 99.9% of all light.</p>
       <p>The water contains microscopic light-absorbing particles making it nearly impossible to illuminate the depths.</p>
       <p>Any probe that descends past a depth of 12km stops transmitting. No debris has ever been found. Some claim shadows moving beneath the surface, but sonar shows nothing.</p>
       <blockquote>We sent drones. They vanished. We sent submersibles. They went silent. We sent a manned expedition. We do not speak of them anymore.</blockquote>
       <p class="foot">The name Pelagia, meaning "of the sea" or "marine," originates from the Ancient Greek word "pélagos" (πέλαγος), which means "sea" or "open ocean."</p>
+      <div class="refs"><p class="see"><b>See also:</b> Hydraxis, a deep ocean of a very different kind.</p><ol class="notes"><li>Hydros Survey Corps, <i>Probe Logs of the First Descents</i>, logs 12-01 to 12-09 (last transmissions at 12 km).</li><li>Elwood, R., <i>Dark Water: The Pelagia Papers</i>, pp. 5&ndash;31.</li><li>Liddell, H. G. and Scott, R., <i>A Greek&ndash;English Lexicon</i>, s.v. &pi;&#941;&lambda;&alpha;&gamma;&omicron;&sigmaf;.</li></ol><p class="further"><b>Further reading:</b> Elwood, <i>Dark Water</i>.</p></div>
     <div class="folio">&mdash; iii &mdash;</div>
       </div>
     </div>
@@ -335,11 +357,13 @@
       <h2>Ondine 7b<small>Cradle of Endless Rain</small></h2>
       <div class="orn">&#10070;</div>
       <figure class="plate planet-plate" data-kind="4" data-seed="4444"><canvas width="300" height="300" aria-label="Ondine 7b, drawn from the booklet"></canvas><figcaption>Plate VI: Ondine 7b</figcaption></figure>
+      <aside class="datasheet" aria-label="Planetary data for Ondine 7b"><div class="dh">Ondine 7b<sup>[3]</sup></div><dl><div><dt>Order from Hydros</dt><dd>4th</dd></div><div><dt>Class</dt><dd>Storm ocean<sup>[2]</sup></dd></div><div><dt>Diameter</dt><dd>15,600 km<sup>[1]</sup></dd></div><div><dt>Surface gravity</dt><dd>1.1 g</dd></div><div><dt>Orbital period</dt><dd>46 days</dd></div><div><dt>Mean temperature</dt><dd>15 °C</dd></div><div><dt>Surface water</dt><dd>100%, rain falling everywhere</dd></div><div><dt>Atmosphere</dt><dd>Dense cloud, constant storms</dd></div><div><dt>Moons</dt><dd>3 (all water worlds)</dd></div><div><dt>Status</dt><dd>Under study: life not yet found</dd></div></dl><div class="dn">Data from the Hydros Survey.</div></aside>
       <p class="lead dc">A storm-covered world where rain never ceases.</p>
       <p>In an endless cycle of evaporation and precipitation encouraged by the strange bio signatures that give rise to these processes, this planet is home to life albeit invisible and mysterious.</p>
       <p>Scientists are trying to understand why this planet requires the constant flow of rain and speculate it is a requirement of the unique lifeforms, but cannot study them as they cannot find them!</p>
       <blockquote>Oh for a dry day, but we suspect it has been raining and storming globally here for five billion years.</blockquote>
       <p class="foot">“Ondine” is a feminine name of Latin origin. This delicate name translates to “little wave” and is an alternate spelling of undine, classified as a category of elemental water-dwelling creatures.</p>
+      <div class="refs"><p class="see"><b>See also:</b> Hydraxis, the other living ocean.</p><ol class="notes"><li>Hydros Survey Corps, <i>Atlas of the Hydros System</i>, vol. II, p. 41.</li><li>Marchetti, I., <i>Rain Worlds and the Invisible Biosphere</i>, ch. 6.</li><li>Storm record kept by the Hydros weather network: unbroken for five billion years.</li></ol><p class="further"><b>Further reading:</b> Marchetti, <i>Rain Worlds</i>.</p></div>
     <div class="folio">&mdash; iv &mdash;</div>
       </div>
     </div>
@@ -352,12 +376,14 @@
       <h2>Hydraxis<small>The Living Ocean</small></h2>
       <div class="orn">&#10070;</div>
       <figure class="plate planet-plate" data-kind="2" data-seed="5555"><canvas width="300" height="300" aria-label="Hydraxis, drawn from the booklet"></canvas><figcaption>Plate VII: Hydraxis</figcaption></figure>
+      <aside class="datasheet" aria-label="Planetary data for Hydraxis"><div class="dh">Hydraxis<sup>[3]</sup></div><dl><div><dt>Order from Hydros</dt><dd>5th</dd></div><div><dt>Class</dt><dd>Living ocean<sup>[2]</sup></dd></div><div><dt>Diameter</dt><dd>17,200 km<sup>[1]</sup></dd></div><div><dt>Surface gravity</dt><dd>1.2 g</dd></div><div><dt>Orbital period</dt><dd>71 days</dd></div><div><dt>Mean temperature</dt><dd>12 °C</dd></div><div><dt>Surface water</dt><dd>100%, sea floor not found</dd></div><div><dt>Atmosphere</dt><dd>Moist, rich in oxygen</dd></div><div><dt>Moons</dt><dd>2 (both water worlds)</dd></div><div><dt>Status</dt><dd>UNESCO-4 heritage planet; mining barred</dd></div></dl><div class="dn">Data from the Hydros Survey.</div></aside>
       <p class="lead dc">A world where the water itself harbours strange, self-sustaining ecosystems.</p>
       <p>The prize jewel of the planets to scientists as Hydraxis harbours a profusion of life. Uncounted and unclassified types of aquatic creatures roam the depths of this planet.  And it is deep. No sea floor has yet be scanned, and it is presumed that there may be no floor at all..</p>
       <p>This planet was quickly barred from water mining as it is considered too vulnerable and precious by humankind. However it is being studied with ultra sensitive hydrodrones which leave no matter signature behind.</p>
       <p>Hydraxis is the first example of a universe-class heritage planet protected by UNESCO-4</p>
       <blockquote>The water itself creates nutrients that feed the profusion of life that exists here.</blockquote>
       <p class="foot">“Hydraxis”- derived from Hydra is a genus of small freshwater hydrozoans belonging to the phylum Cnidaria.</p>
+      <div class="refs"><p class="see"><b>See also:</b> Ondine 7b; Pelagia.</p><ol class="notes"><li><i>UNESCO-4 Register of Heritage Planets</i>, entry 1.</li><li>Hydros Survey Corps, <i>Hydrodrone Survey of Hydraxis</i>, summary report.</li><li>Brandt, E., <i>The Unclassified Sea</i>, pp. 14&ndash;60.</li></ol><p class="further"><b>Further reading:</b> Brandt, <i>The Unclassified Sea</i>.</p></div>
     <div class="folio">&mdash; v &mdash;</div>
       </div>
     </div>
@@ -370,12 +396,14 @@
       <h2>Bathys<small>Serene waterplanet</small></h2>
       <div class="orn">&#10070;</div>
       <figure class="plate planet-plate" data-kind="0" data-seed="6666"><canvas width="300" height="300" aria-label="Bathys, drawn from the booklet"></canvas><figcaption>Plate VIII: Bathys</figcaption></figure>
+      <aside class="datasheet" aria-label="Planetary data for Bathys"><div class="dh">Bathys<sup>[3]</sup></div><dl><div><dt>Order from Hydros</dt><dd>6th</dd></div><div><dt>Class</dt><dd>Calm ocean<sup>[2]</sup></dd></div><div><dt>Diameter</dt><dd>14,900 km<sup>[1]</sup></dd></div><div><dt>Surface gravity</dt><dd>0.8 g</dd></div><div><dt>Orbital period</dt><dd>104 days</dd></div><div><dt>Mean temperature</dt><dd>27 °C, always</dd></div><div><dt>Surface water</dt><dd>100%, 100 m to several km deep</dd></div><div><dt>Atmosphere</dt><dd>Clear, mild, still</dd></div><div><dt>Moons</dt><dd>3 (all water worlds)</dd></div><div><dt>Status</dt><dd>Orbit hazard: drowsiness</dd></div></dl><div class="dn">Data from the Hydros Survey.</div></aside>
       <p class="dc">Said to lower a human’s pulse rate by almost half, this is the most peaceful place yet visited by humankind.</p>
       <blockquote>I just feel like I was melting in the most peaceful way. I don’t know what causes this...</blockquote>
       <p>Entirely water under gentle halcyon skies and perfect temperature (always 27 degrees celsius), Bathys is full of cool and deep yet empty waters.</p>
       <p>There is a danger of passing out due to being overwhelmingly relaxed when entering the orbit of this planet. Scientists wear stimulus inducing packs that regularly prod their nervous system, so they can stay conscious during research and mining.</p>
       <p>There are no storms, and the ocean is always calm. Currents in both the water and air are minimal and cool. The planet core is entirely of white sand, and depths range from approx. 100 metres to thousands of metres. Scientists are designing floating structures that could house the several million humans and could move to this planet when the time is right. However the problems of low pulse rate still confound any immediate plans to move.</p>
       <p class="foot">“Bathys” is derived from the Greek word meaning "deep" and is inspired by the bathyscaphe; a deep-sea exploration submersible symbolizing calm, depth, and silence.</p>
+      <div class="refs"><p class="see"><b>See also:</b> Nereis-9, for the opposite kind of quiet.</p><ol class="notes"><li>Halcyon Medical Board, <i>Orbital Drowsiness: A Guide for Survey Crews</i>.</li><li>Reuel, D., <i>Floating Cities: Plans for Bathys</i>, ch. 3.</li><li>Liddell, H. G. and Scott, R., <i>A Greek&ndash;English Lexicon</i>, s.v. &beta;&#940;&theta;&upsilon;&sigmaf;.</li></ol><p class="further"><b>Further reading:</b> Reuel, <i>Floating Cities</i>.</p></div>
     <div class="folio">&mdash; vi &mdash;</div>
       </div>
       <figure class="plate"><img src="img/water-planets/maps.jpg" width="1080" height="1080" loading="lazy" alt="Four hand-drawn style maps of the water planets Nereis-9, Ondine 7b, Hydraxis and Bathys, headed Examples of available maps"><figcaption>Plate IX: Examples of available maps</figcaption></figure>
