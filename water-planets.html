@@ -537,8 +537,7 @@
   // Everything is unique and passes once as you scroll, at its own depth. Moons orbit faster the faster you scroll.
   var cv = document.getElementById('sky'), ctx = cv.getContext('2d');
   var layer = document.createElement('div'); layer.id = 'skyobjs'; layer.setAttribute('aria-hidden', 'true'); cv.parentNode.insertBefore(layer, cv.nextSibling);
-  var scrollLinked = !!(window.CSS && CSS.supports && CSS.supports('animation-timeline: scroll()'));
-  if (scrollLinked) document.documentElement.classList.add('sp');
+  var scrollLinked = false;
   var W = 0, H = 0, dpr = 1, stars = [], objs = [], sy = 0, ssy = -1, vel = 0, lastSy = 0, lastT = 0, spin = 0, builds = [];
   window.addEventListener('scroll', function () { sy = window.pageYOffset || 0; }, { passive: true });
 
@@ -911,6 +910,7 @@
       o.cx = o.el.getContext('2d'); layer.appendChild(o.el);
       var span = (Hs + 2 * ext) / par;                                 // how much scrolling it takes to cross the screen
       o.worldY = (cursor + span / 2) * par + Hs / 2;
+      o.at = cursor + span / 2; o.sp = span; o.yb = Hs * (0.3 + 0.4 * ((o.seed * 37 % 100) / 100));   // where in the page it belongs, and where on the screen it hangs
       cursor += span + Hs * 0.3;                                       // a gap before the next one, so never two at once
       objs.push(o);
     }
@@ -937,13 +937,13 @@
   }
 
   function drawObj(o, t, dt) {
-    var wy = o.worldY - sy * o.par, ext = o.ext || 220, el = o.el;
-    if (wy < -ext || wy > H + ext) { if (el._on) { el._on = false; el.style.visibility = 'hidden'; } return; }
+    var ext = o.ext || 220, el = o.el, u = (sy - o.at) / (o.sp * 0.5);                   // -1 to 1 while you read past it
+    if (u < -1.2 || u > 1.2) { if (el._on) { el._on = false; el.style.visibility = 'hidden'; } return; }
     ensure(o);
-    var vis = ssm(H * 1.05, H * 0.5, wy) * ssm(-H * 0.1, H * 0.3, wy) * (1 - featVis);   // in slowly from the bottom, away before the top; steps aside for the planet being described
+    var vis = ssm(-1, -0.5, u) * ssm(1, 0.5, u) * (1 - featVis);                        // fades in and out in place, steps aside for the planet being described
     if (vis < 0.01 || !o.ready) { if (el._on) { el._on = false; el.style.visibility = 'hidden'; } return; }
     if (!el._on) { el._on = true; el.style.visibility = 'visible'; }
-    if (!scrollLinked) el.style.transform = 'translate3d(0,' + (wy - ext).toFixed(1) + 'px,0)';
+    el.style.transform = 'translate3d(0,' + (o.yb - ext + Math.sin(t * 0.00006 + o.seed) * H * 0.025).toFixed(1) + 'px,0)';   // only a slow drift of its own
     var c2 = o.cx; c2.setTransform(o.k, 0, 0, o.k, 0, 0); c2.clearRect(0, 0, 2 * ext, 2 * ext);
     drawBody(o, t, dt, c2, ext, ext, vis);
   }
