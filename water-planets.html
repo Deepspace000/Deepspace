@@ -703,7 +703,7 @@
       if (!f.ready) continue;
       f.box.style.opacity = f.vis.toFixed(3);
       if (f.vis < 0.01) continue;
-      var cx = W * (0.5 + f.side * (W < 700 ? 0.22 : 0.3)), cy = Math.min(rect.height * 0.5, H * 0.5);
+      var cx = W * (0.5 + f.side * (W < 700 ? 0.22 : 0.3)), cy = Math.min(rect.height * 0.5, H * 0.5), wd = wander(f.phase, W); cx += wd[0]; cy += wd[1];
       f.box.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0)';
       f.moons.forEach(function (m) {
         m.ph += (0.28 * m.w + m.w * Math.min(vel * 0.0028, 5)) * dt;           // faster as you scroll
@@ -713,6 +713,7 @@
         m.el.style.zIndex = Math.sin(m.ph) > 0 ? 2 : 0;
       });
     }
+    drift += dt * (0.3 + Math.min(vel * 0.0012, 1.5));
     featVis = Math.max(best, updateEarth(t, dt));
   }
   // ---- Part I: Earth, ravaged by heat, drifts slowly past behind the story ----
@@ -756,18 +757,23 @@
       var el = buildEarth(Math.min(130, Math.round(earth.r * Math.min(dpr, 1.5))));
       el.style.cssText = 'position:absolute;width:' + earth.r * 2 + 'px;height:' + earth.r * 2 + 'px;left:' + (-earth.r) + 'px;top:' + (-earth.r) + 'px;filter:drop-shadow(0 0 ' + Math.round(earth.r * 0.3) + 'px rgba(255,90,30,0.45))';
       earth.box.appendChild(el); earth.ready = true;
+      earth.moonR = earth.r * 0.14; earth.moonPh = 1; earth.moon = buildMoon(earth.moonR, 77, [200, 190, 175]); earth.moon.style.cssText = 'position:absolute;width:' + earth.moonR * 2 + 'px;height:' + earth.moonR * 2 + 'px;'; earth.box.appendChild(earth.moon);
     }
     var v = ssm(H * 0.95, H * 0.45, rect.top) * ssm(H * 0.25, H * 0.95, rect.bottom);
     earth.vis += (v - earth.vis) * Math.min(1, dt * 2.5);
     if (!earth.ready) return earth.vis;
     earth.box.style.opacity = earth.vis.toFixed(3);
     if (earth.vis > 0.01) {
-      var cx = W * (W < 700 ? 0.7 : 0.78), cy = Math.min(rect.height * 0.3, H * 0.5);   // it moves with the page, so it scrolls past without judder
+      var cx = W * (W < 700 ? 0.7 : 0.78), cy = Math.min(rect.height * 0.3, H * 0.5), wd = wander(2.1, W); cx += wd[0]; cy += wd[1];   // it moves with the page and drifts on its own
       earth.box.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0)';
+      earth.moonPh += (0.3 + Math.min(vel * 0.0028, 5)) * dt;
+      earth.moon.style.transform = 'translate3d(' + (Math.cos(earth.moonPh) * earth.r * 1.7 - earth.moonR).toFixed(1) + 'px,' + (Math.sin(earth.moonPh) * earth.r * 0.45 - earth.moonR).toFixed(1) + 'px,0)';
+      earth.moon.style.zIndex = Math.sin(earth.moonPh) > 0 ? 2 : 0;
     }
     return earth.vis;
   }
-  var painting = false, featVis = 0;
+  var painting = false, featVis = 0, drift = 0;
+  function wander(ph, W2) { return [Math.sin(drift * 0.9 + ph) * W2 * 0.05, Math.cos(drift * 0.7 + ph * 1.7) * 70]; }
 
   // ---- the Hydros system: planets orbit the red dwarf, and orbit faster as you scroll ----
   var hs = document.querySelector('.hsys'), hsx = hs && hs.getContext('2d'), hsys = null;
