@@ -172,7 +172,7 @@
   @keyframes flick { 0% { opacity: 0.1; } 12% { opacity: 1; } 18% { opacity: 0.25; } 30% { opacity: 1; } 38% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 1; } }
 
   /* stars and small planets drift over everything, very faintly */
-  #sky { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; mix-blend-mode: screen; }
+  #sky { position: fixed; top: 0; left: 0; width: 100%; height: 100%; height: 100lvh; z-index: 3; pointer-events: none; mix-blend-mode: screen; }
 </style>
 </head>
 <body>
@@ -494,13 +494,13 @@
 
   // ---- water planets: several kinds, each rendered once with its own seed, light and weather ----
   var KINDS = [
-    { name: 'turquoise', deep: [8, 70, 110],  shallow: [40, 190, 190], land: [210, 190, 140], cloud: 0.58, bands: 0 },
-    { name: 'deep blue', deep: [6, 24, 90],    shallow: [30, 90, 200],  land: [150, 170, 200], cloud: 0.6,  bands: 0 },
-    { name: 'emerald',   deep: [6, 70, 60],    shallow: [60, 200, 140], land: [200, 220, 150], cloud: 0.56, bands: 0 },
-    { name: 'ice',       deep: [90, 150, 190], shallow: [210, 240, 250], land: [255, 255, 255], cloud: 0.7,  bands: 0, ice: true },
-    { name: 'storm',     deep: [50, 20, 90],   shallow: [200, 90, 190], land: [255, 190, 230], cloud: 0.5,  bands: 1 },
-    { name: 'abyss',     deep: [2, 8, 20],     shallow: [20, 60, 90],   land: [255, 220, 120], cloud: 0.75, bands: 0 },
-    { name: 'amber sea', deep: [90, 40, 10],   shallow: [230, 140, 60], land: [255, 230, 170], cloud: 0.6,  bands: 1 }
+    { name: 'azure',    deep: [6, 40, 110],  shallow: [40, 140, 235],  land: [190, 225, 255], cloud: 0.58, bands: 0 },
+    { name: 'cobalt',   deep: [4, 16, 80],   shallow: [30, 70, 190],   land: [160, 185, 235], cloud: 0.6,  bands: 0 },
+    { name: 'cyan',     deep: [4, 70, 100],  shallow: [60, 200, 230],  land: [215, 245, 250], cloud: 0.56, bands: 0 },
+    { name: 'ice',      deep: [80, 130, 190], shallow: [200, 230, 250], land: [255, 255, 255], cloud: 0.7,  bands: 0, ice: true },
+    { name: 'indigo',   deep: [20, 20, 90],  shallow: [90, 100, 220],  land: [190, 195, 255], cloud: 0.5,  bands: 1 },
+    { name: 'midnight', deep: [2, 8, 28],    shallow: [18, 50, 110],   land: [120, 170, 240], cloud: 0.75, bands: 0 },
+    { name: 'sky',      deep: [30, 90, 170], shallow: [130, 200, 255], land: [235, 248, 255], cloud: 0.6,  bands: 0 }
   ];
   function buildPlanet(o) {
     var R = Math.min(90, Math.max(12, Math.round(o.r * dpr))), S = R * 2, c = document.createElement('canvas');   // drawn once, at a size a phone can make quickly
@@ -541,18 +541,8 @@
     x2.putImageData(img, 0, 0);
     return c;
   }
-  function buildMoon(r, seed, tint) {
-    var R = Math.max(4, Math.round(r * dpr)), S = R * 2, c = document.createElement('canvas');
-    c.width = c.height = S; var x2 = c.getContext('2d'), img = x2.createImageData(S, S), d = img.data;
-    for (var py = 0; py < S; py++) for (var px = 0; px < S; px++) {
-      var nx = (px + 0.5 - R) / R, ny = (py + 0.5 - R) / R, rr = nx * nx + ny * ny, i = (py * S + px) * 4;
-      if (rr > 1) continue;
-      var nz = Math.sqrt(1 - rr), n = fbm(nx * 3 + seed, ny * 3 + seed, nz * 3, 4);
-      var cr = Math.abs(fbm(nx * 6 + seed * 2, ny * 6, nz * 6, 2) - 0.5), dark = ssm(0.12, 0.0, cr) * 0.35;
-      var k = (0.1 + 0.9 * ssm(-0.1, 0.6, nx * -0.6 + ny * -0.5 + nz * 0.6)) * (0.7 + 0.5 * n) * (1 - dark);
-      d[i] = tint[0] * k; d[i + 1] = tint[1] * k; d[i + 2] = tint[2] * k; d[i + 3] = 255 * Math.min(1, (1 - Math.sqrt(rr)) * R / 1.4);
-    }
-    x2.putImageData(img, 0, 0); return c;
+  function buildMoon(r, seed, tint) {                  // a small blue water world, like its planet
+    return buildPlanet({ r: Math.max(r, 8), kind: seed % 7, seed: seed % 211 + 5, tilt: (seed % 7) * 0.1 - 0.3, phase: (seed % 13) * 0.5, landLevel: 0.64 });
   }
   function buildAsteroid(r, seed) {
     var R = Math.max(5, Math.round(r * dpr)), S = R * 2 + 4, c = document.createElement('canvas');
@@ -582,32 +572,39 @@
   }
 
   // ---- lay everything out along the page: one object for each stretch of scrolling, never repeated ----
+  // the phone's address bar slides away as you scroll and fires resize events: the sky is sized to the tallest the screen gets
+  var probe = document.createElement('div');
+  probe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:100lvh;visibility:hidden;pointer-events:none;';
+  document.body.appendChild(probe);
+  function viewH() { return Math.max(window.innerHeight, probe.offsetHeight || 0); }
   function layout() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
-    W = window.innerWidth; H = window.innerHeight;
+    W = window.innerWidth; H = viewH();
     cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     var rnd = rng(20250815), maxScroll = Math.max(1, document.documentElement.scrollHeight - H), small = W < 700;
     stars = [];
     var ns = Math.round(Math.min(150, Math.max(60, W * H / 5200)));
     for (var i = 0; i < ns; i++) { var ly = rnd(); stars.push({ x: rnd() * W, y: rnd() * H, r: 0.4 + rnd() * 1.3, par: ly < 0.6 ? 0.04 : (ly < 0.9 ? 0.1 : 0.22), t: rnd() * 6.28, f: 0.6 + rnd() * 1.8, a: 0.35 + rnd() * 0.5 }); }
     objs = [];
-    var count = Math.max(10, Math.round(maxScroll / (small ? 520 : 640))), order = [];
-    var recipe = ['planet', 'planet', 'nebula', 'planet', 'sun', 'asteroids', 'planet', 'nebula', 'planet', 'asteroids', 'sun', 'planet'];
+    var count = Math.max(6, Math.round(maxScroll / (H * 0.8))), order = [];
+    var recipe = ['planet', 'nebula', 'planet', 'asteroids', 'planet', 'sun', 'planet', 'nebula'];
     for (var q = 0; q < count; q++) order.push(recipe[q % recipe.length]);
-    var kindBag = [], pn = 0;
+    var kindBag = [], pn = 0, sizes = [];
+    for (var zz = 0; zz < count; zz++) sizes.push((small ? 26 : 34) + (zz / Math.max(1, count - 1)) * (small ? 78 : 118));
+    for (var z2 = sizes.length - 1; z2 > 0; z2--) { var w2 = Math.floor(rnd() * (z2 + 1)); var t2 = sizes[z2]; sizes[z2] = sizes[w2]; sizes[w2] = t2; }
     for (var n2 = 0; n2 < count; n2++) {
       var type = order[n2], par = 0.14 + rnd() * 0.32, at = (n2 + 0.5) / count * maxScroll;
       var edge = rnd() < 0.5 ? -1 : 1, xr = small ? 0.12 + rnd() * 0.76 : (edge < 0 ? -0.04 + rnd() * 0.26 : 0.78 + rnd() * 0.26);
       var o = { type: type, par: par, x: xr * W, worldY: at * par + (0.2 + 0.6 * rnd()) * H, seed: Math.floor(rnd() * 9999) + 1 };
       if (type === 'planet') {
         if (!kindBag.length) { kindBag = [0, 1, 2, 3, 4, 5, 6]; for (var z = kindBag.length - 1; z > 0; z--) { var w = Math.floor(rnd() * (z + 1)); var tmp = kindBag[z]; kindBag[z] = kindBag[w]; kindBag[w] = tmp; } }
-        o.kind = kindBag.pop(); o.r = (small ? 34 : 52) + rnd() * (small ? 36 : 64); o.tilt = (rnd() - 0.5) * 1.0; o.phase = rnd() * 6.28; o.landLevel = 0.6 + rnd() * 0.12;
+        o.kind = kindBag.pop(); o.r = sizes[n2]; o.tilt = (rnd() - 0.5) * 1.0; o.phase = rnd() * 6.28; o.landLevel = 0.6 + rnd() * 0.12;
         o.ring = rnd() < 0.3; o.drift = (rnd() - 0.5) * 8; o.moons = [];
         var nm = Math.floor(rnd() * 3.2);
         for (var m = 0; m < nm; m++) o.moons.push({ a: o.r * (1.7 + m * 0.75 + rnd() * 0.3), r: o.r * (0.1 + rnd() * 0.12), ph: rnd() * 6.28, w: (0.25 + rnd() * 0.5) * (m % 2 ? -1 : 1), tilt: (rnd() - 0.5) * 0.7,
                                     tint: [[190, 188, 180], [170, 140, 110], [150, 170, 190], [200, 190, 160]][Math.floor(rnd() * 4)], seed: Math.floor(rnd() * 999) });
       } else if (type === 'nebula') {
-        var pal = [[[40, 110, 255], [150, 60, 255]], [[30, 220, 190], [40, 110, 255]], [[255, 90, 170], [150, 60, 255]], [[255, 150, 60], [255, 70, 110]], [[60, 255, 160], [20, 150, 200]]][Math.floor(rnd() * 5)];
+        var pal = [[[40, 110, 255], [90, 70, 255]], [[30, 190, 230], [40, 110, 255]], [[70, 140, 255], [140, 90, 255]], [[20, 90, 200], [60, 200, 230]], [[100, 170, 255], [30, 60, 190]]][Math.floor(rnd() * 5)];
         o.c1 = pal[0]; o.c2 = pal[1]; o.r = (small ? 150 : 230) + rnd() * 150; o.rot = rnd() * 6.28;
       } else if (type === 'sun') {
         var suns = [[255, 244, 210], [255, 190, 90], [255, 110, 70], [170, 210, 255], [255, 240, 150]];
@@ -677,6 +674,7 @@
 
   function frame(t) {
     var dt = Math.min((t - (lastT || t)) / 1000, 0.1); lastT = t;
+    sy = window.pageYOffset || 0;
     vel += ((sy - lastSy) / Math.max(dt, 0.001) - vel) * Math.min(1, dt * 5); lastSy = sy;      // how fast you are scrolling
     if (builds.length) builds.shift()();                                                           // build one sprite a frame
     ctx.clearRect(0, 0, W, H);
@@ -710,7 +708,10 @@
     plates.forEach(function (f) { pio.observe(f); });
   } else { plates.forEach(drawPlate); }
   var relayout;
-  window.addEventListener('resize', function () { clearTimeout(relayout); relayout = setTimeout(layout, 150); });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth === W && Math.abs(viewH() - H) < 2) return;      // only a real change redraws the sky
+    clearTimeout(relayout); relayout = setTimeout(layout, 150);
+  });
   window.addEventListener('load', function () { setTimeout(layout, 300); });          // images have changed the page height by now
   layout(); requestAnimationFrame(frame);
 })();
