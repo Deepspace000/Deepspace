@@ -60,6 +60,7 @@
     inset: 0;
     width: 100%;
     height: 100%;
+    height: 100lvh;   /* the tallest the screen gets, so the sky never resizes while you scroll on a phone */
     z-index: 0;
     display: block;
   }
@@ -1350,10 +1351,22 @@
     }
   }
 
+  // On a phone the address bar slides away as you scroll and fires resize events. The sky must not rebuild
+  // (new stars, planet set up again) for that, so it is sized to the tallest the screen gets and only a real change redraws it.
+  var probe = document.createElement('div');
+  probe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:100lvh;visibility:hidden;pointer-events:none;';
+  document.body.appendChild(probe);
+  function viewH() { return Math.max(window.innerHeight, probe.offsetHeight || 0); }
+  function onResize() {
+    readScroll();
+    if (window.innerWidth === w && Math.abs(viewH() - h) < 2) return;
+    resize();
+  }
+
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     w = window.innerWidth;
-    h = window.innerHeight;
+    h = viewH();
     canvas.width = w * dpr;
     canvas.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -1633,7 +1646,7 @@
     var ct = Math.cos(m.tilt), st = Math.sin(m.tilt);
     return { x: PL.cx + x * ct - y * st, y: PL.cy - lift_() + x * st + y * ct, z: Math.sin(ang) };
   }
-  function lift_() { return reduce ? 0 : Math.min((window.pageYOffset || 0) * 0.03, h * 0.15); }
+  function lift_() { return 0; }   // the planet does not move when the page scrolls
 
   function drawPlanet(t) {
     if (!surf) return;
@@ -1644,9 +1657,9 @@
     var gap = target - scrollSm;
     scrollSm += gap * 0.09;
     var moving = Math.abs(gap) > 0.6;
-    // the globe turns a little as the page scrolls; redraw it faster while that is happening
-    if (!reduce && t - PL.last > (moving ? 33 : 90)) {
-      renderPlanet(t * 0.00006 + scrollSm * 0.0016, t * 0.00008 + 1 + scrollSm * 0.0022);
+    // the globe turns slowly with time only, so scrolling never makes it redraw or jump
+    if (!reduce && t - PL.last > 90) {
+      renderPlanet(t * 0.00006, t * 0.00008 + 1);
       PL.last = t;
     }
     var r = PL.r, cx = PL.cx, cy = PL.cy - lift_();
@@ -1705,7 +1718,7 @@
     readScroll();
     if (reduce) { progress = target; draw(performance.now()); }
   }, { passive: true });
-  window.addEventListener('resize', function () { readScroll(); resize(); });
+  window.addEventListener('resize', onResize);
   readScroll();
   progress = target;
   resize();
