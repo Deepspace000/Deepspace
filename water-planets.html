@@ -137,6 +137,7 @@
   /* chapter openers: a full-width picture with the part title laid over it */
   .chapter { position: relative; min-height: 42vh; display: flex; align-items: flex-end; justify-content: center; text-align: center; padding: 3rem 1.25rem 2.2rem;
     background: linear-gradient(rgba(5, 13, 24, 0.05) 30%, rgba(5, 13, 24, 0.82)), var(--img, none) center / cover no-repeat; border-top: 1px solid rgba(214, 178, 100, 0.35); border-bottom: 1px solid rgba(214, 178, 100, 0.35); }
+  .chapter.chapter-ships { min-height: 0; aspect-ratio: 1080 / 470; background: var(--img) center / cover no-repeat; align-items: flex-start; padding-top: 1rem; }
   .chapter.story-head { min-height: 22vh; background: linear-gradient(rgba(5, 13, 24, 0.4), rgba(5, 13, 24, 0.7)); }
   .chapter .part { display: block; font-size: 0.72em; letter-spacing: 0.34em; text-transform: uppercase; color: #d9bd7a; }
   .chapter h2 { margin: 0.2rem 0 0; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; font-size: clamp(2.1rem, 8vw, 3.6rem); letter-spacing: 0.04em; color: #fff3d0; text-shadow: 0 2px 22px rgba(0, 0, 0, 0.85); }
@@ -366,7 +367,7 @@
     </div>
   </section>
 
-  <div class="chapter" role="img" aria-label="A huge circular floating platform above the clouds" style="--img:url(img/water-planets/ship-tranquility.jpg)"><div class="chapter-in"><span class="part">Part IV</span><h2>The Ships</h2></div></div>
+  <div class="chapter chapter-ships" role="img" aria-label="The Ships: blue light beams over a circuit pattern" style="--img:url(img/water-planets/ships-opener.jpg)"><div class="chapter-in"><span class="part">Part IV</span><h2 class="sr">The Ships</h2></div></div>
 
   <section id="ships" class="band" style="--bg-img:url(img/water-planets/bg-21.jpg)">
     <div class="wrap">
@@ -380,32 +381,33 @@
       <figure class="plate narrow"><img src="img/water-planets/freighter-ocean.jpg" width="460" height="456" loading="lazy" alt="A large flying saucer-shaped tanker hovering over a green sea, drawing up water in beams"><figcaption>Plate XII: A tanker at work</figcaption></figure>
 
       <h3>Hydroskim drones</h3>
-      <figure class="plate"><img src="img/water-planets/ship-hydroskimmer.jpg" width="1080" height="440" loading="lazy" alt="A white drone skimming the ocean surface"><figcaption>Plate XIII: The hydroskim drone</figcaption></figure>
+      <figure class="plate"><img src="img/water-planets/ship-hydroskimmer.jpg" width="1080" height="700" loading="lazy" alt="HYDROSKIM DRONES: a white drone skimming the ocean surface"><figcaption>Plate XIII: The hydroskim drone</figcaption></figure>
       <p>Lightweight, autonomous water harvesters such as the Hydrospheric Extraction Drones Class (aka Hydroskimmer) pictured here.</p>
       <p>Small fast-moving drones that skim the ocean surface extracting only the necessary amounts of water vapour or liquid.</p>
       <p>Uses nanofiltration to remove impurities before sending water to storage ships.</p>
 
       <h3>Deep current surveyors</h3>
-      <figure class="plate"><img src="img/water-planets/ship-surveyor.jpg" width="1080" height="460" loading="lazy" alt="A glowing submarine in dark blue water"><figcaption>Plate XIV: The deep current surveyor</figcaption></figure>
+      <figure class="plate"><img src="img/water-planets/ship-surveyor.jpg" width="1080" height="710" loading="lazy" alt="DEEP CURRENT SURVEYORS: a glowing submarine in dark blue water"><figcaption>Plate XIV: The deep current surveyor</figcaption></figure>
       <p>These AI-controlled submarines such as the Pantheon-Class Hadal Submersible are used for deep sea exploration. They use sonar to map underwater currents and features then collect data on marine life and water composition in order to ensure safe water extraction. They glow faintly in bioluminescent waters, blending in with the environment.</p>
 
       <h3>The aether striders <small class="note">(zero-g peripheral planar hyudroharvesters)</small></h3>
-      <figure class="plate"><img src="img/water-planets/ship-aether-strider.jpg" width="1080" height="330" loading="lazy" alt="A silver airship floating above a green ocean"><figcaption>Plate XV: The aether strider</figcaption></figure>
+      <figure class="plate"><img src="img/water-planets/ship-aether-strider.jpg" width="1080" height="665" loading="lazy" alt="THE AETHER STRIDERS: a silver airship floating above a green ocean"><figcaption>Plate XV: The aether strider</figcaption></figure>
       <p>Massive, silent airships such as the Peripheral PLANAR Hydroharvesters hover above the oceans, extracting water from the atmosphere through condensation panels. They are completely non-invasive and use wind currents to move rather than thrusters. Releases mist back into the atmosphere to maintain planetary balance.</p>
 
       <h3>The tranquility harvesters <small class="note">(floating processing stations)</small></h3>
+      <figure class="plate"><img src="img/water-planets/ship-tranquility.jpg" width="1080" height="745" loading="lazy" alt="THE TRANQUILITY HARVESTERS (floating processing stations): a huge circular platform floating above the clouds"><figcaption>Plate XVI: The tranquility harvester</figcaption></figure>
       <p>A massive city-sized platform that purifies and stores harvested water before transport. Uses anti-gravity stabilisers to minimise interaction with the water’s surface. Powered by solar panel engines and geothermal energy from the planet’s core.</p>
 
       <h3>Cryo-vault freighters <small class="note">(interstellar ice transport ships)</small></h3>
-      <figure class="plate"><img src="img/water-planets/ship-cryovault.jpg" width="1080" height="475" loading="lazy" alt="A freighter carrying a huge block of ice over the sea"><figcaption>Plate XVI: The cryo-vault freighter</figcaption></figure>
+      <figure class="plate"><img src="img/water-planets/ship-cryovault.jpg" width="1080" height="730" loading="lazy" alt="CRYO-VAULT FREIGHTERS: a freighter carrying a huge block of ice over the sea"><figcaption>Plate XVII: The cryo-vault freighter</figcaption></figure>
       <p>These ships (CryoVault Transport Array Model CX22 pictured) transport massive frozen water chunks off-world back to Earth, keeping them in suspended animation to stop them from melting. They have a sleek monolithic design with built-in AI to chart the safest routes. Uses gravity-assist manoeuvres to minimise fuel use.</p>
 
       <h3>The Okeanos conduits <small class="note">(planetary water regulators)</small></h3>
-      <figure class="plate"><img src="img/water-planets/ship-okeanos.jpg" width="1080" height="465" loading="lazy" alt="A round white platform standing on a calm sea"><figcaption>Plate XVII: The Okeanos conduit</figcaption></figure>
+      <figure class="plate"><img src="img/water-planets/ship-okeanos.jpg" width="1080" height="680" loading="lazy" alt="THE OKEANOS CONDUITS: a round white platform standing on a calm sea"><figcaption>Plate XVIII: The Okeanos conduit</figcaption></figure>
       <p>A self-sustaining AI system that ensures planetary balance. When water is removed, it replenishes the ecosystem through artificial rainfall. Uses ultra-precise weather control to stabilise planet locations after extraction. Monitors local hydrology to prevent ecosystem collapse.</p>
 
       <h3>Microbial engineers <small class="note">(nano-scale purifiers working inside water itself)</small></h3>
-      <figure class="plate"><img src="img/water-planets/ship-microbial.jpg" width="1080" height="830" loading="lazy" alt="Red spiked nano-machines floating in clear blue water"><figcaption>Plate XVIII: Microbial engineers</figcaption></figure>
+      <figure class="plate"><img src="img/water-planets/ship-microbial.jpg" width="1080" height="1080" loading="lazy" alt="MICROBIAL ENGINEERS: red spiked nano-machines floating in clear blue water"><figcaption>Plate XIX: Microbial engineers</figcaption></figure>
       <p>Micro-Particle Refiners SFPA: Tiny self-replicating machines that remove harmful elements from the water without disturbing natural microbial life. Their work is crucial for safe consumption and life preservation. They disassemble themselves and actually decay when their work is done leaving no trace due to their synthesized organic construction.</p>
 
       <h3>Exosphere glider <small class="note">(communication satellite)</small></h3>
