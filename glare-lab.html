@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>deepspace, light effects</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap" rel="stylesheet">
+<style>
+  :root { --mist: #8fb4cc; --text: #c8d3de; --dim: #8296aa; --line: rgba(143,180,204,0.22); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: #04070d; }
+  body {
+    min-height: 100vh;
+    color: var(--text);
+    font-family: "Poppins", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 300;
+    background:
+      radial-gradient(1px 1px at 12% 18%, rgba(200,225,240,.7), transparent),
+      radial-gradient(1px 1px at 78% 12%, rgba(200,225,240,.6), transparent),
+      radial-gradient(1.2px 1.2px at 34% 71%, rgba(200,225,240,.6), transparent),
+      radial-gradient(1px 1px at 90% 64%, rgba(200,225,240,.5), transparent),
+      radial-gradient(1px 1px at 55% 40%, rgba(200,225,240,.5), transparent),
+      radial-gradient(1px 1px at 7% 86%, rgba(200,225,240,.5), transparent),
+      radial-gradient(ellipse at 50% 40%, #0b1a2c 0%, #060c16 55%, #03060b 100%);
+  }
+  .stage { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1rem 3rem; text-align: center; }
+  h1 { font-weight: 200; font-size: clamp(2.24rem, 8.68vw, 5.88rem); line-height: 1; color: #e4edf4; white-space: nowrap; position: relative; cursor: pointer; }
+  h1 .l { display: inline-block; margin-right: 0.62em; }
+  h1 .l:last-child { margin-right: 0; }
+  .sub { margin-top: 3.4rem; font-size: 0.9rem; letter-spacing: 0.32em; color: var(--dim); }
+  .picks { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem 1.4rem; margin-top: 1.6rem; max-width: 40rem; }
+  .picks button {
+    font: inherit; font-size: 0.95rem; letter-spacing: 0.06em; color: var(--text); cursor: pointer;
+    background: rgba(143,180,204,0.06); border: 1px solid var(--line); border-radius: 999px; padding: 0.55rem 1.3rem;
+    transition: background .5s, color .5s, border-color .5s;
+  }
+  .picks button:hover, .picks button:focus-visible { background: rgba(143,180,204,0.16); color: #fff; border-color: rgba(143,180,204,0.55); outline: none; }
+  .picks button.on { background: rgba(143,180,204,0.22); color: #fff; border-color: rgba(190,225,255,0.7); }
+  .picks button:disabled { opacity: 0.45; cursor: default; }
+  .hint { margin-top: 2rem; font-size: 0.8rem; line-height: 1.7; color: var(--dim); max-width: 30rem; }
+</style>
+</head>
+<body>
+<main class="stage">
+  <h1 id="logo" aria-label="deepspace"><span class="l" style="--i:0" aria-hidden="true">d</span><span class="l" style="--i:1" aria-hidden="true">e</span><span class="l" style="--i:2" aria-hidden="true">e</span><span class="l" style="--i:3" aria-hidden="true">p</span><span class="l" style="--i:4" aria-hidden="true">s</span><span class="l" style="--i:5" aria-hidden="true">p</span><span class="l" style="--i:6" aria-hidden="true">a</span><span class="l" style="--i:7" aria-hidden="true">c</span><span class="l" style="--i:8" aria-hidden="true">e</span></h1>
+  <p class="sub">choose a light</p>
+  <div class="picks" id="picks"></div>
+  <p class="hint">Tap a name to play it on the logo. Tap the logo to play the last one again. Tell me which you like best, or which parts of each.</p>
+</main>
+<script>
+// ---- Light effects for the logo. Each one is played over the word on a see-through canvas. ----
+var Glare = (function () {
+  var h1 = document.querySelector('h1');
+  var letters = Array.prototype.slice.call(h1.querySelectorAll('.l'));
+  var cv = document.createElement('canvas');
+  cv.setAttribute('aria-hidden', 'true');
+  cv.style.cssText = 'position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:3;mix-blend-mode:screen;';
+  document.body.appendChild(cv);
+  var ctx = cv.getContext('2d');
+  var S = { hh: 0, cy: 0, xs: 0, xe: 0, lx: [], hl: 0, hw: 0, W: 0, H: 0 };
+  var running = false;
+
+  function size() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    S.W = window.innerWidth; S.H = window.innerHeight;
+    cv.width = Math.round(S.W * dpr); cv.height = Math.round(S.H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function measure() {
+    var hr = h1.getBoundingClientRect();
+    S.hh = hr.height; S.cy = hr.top + hr.height / 2; S.hl = hr.left; S.hw = hr.width;
+    S.lx = letters.map(function (l) { var r = l.getBoundingClientRect(); return r.left + r.width / 2; });
+    S.xs = S.lx[0] - S.hh * 0.3; S.xe = S.lx[S.lx.length - 1] + S.hh * 0.3;
+  }
+
+  function ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+  function mixc(a, b, f) { return Math.round(a + (b - a) * f); }
+
+  // ---- drawing helpers (all additive) ----
+  function glow(x, y, rx, ry, c, a) {
+    if (a <= 0.003) return;
+    ctx.save(); ctx.translate(x, y); ctx.scale(rx, ry);
+    var g = ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
+    g.addColorStop(0, 'rgba(' + c + ',' + a + ')');
+    g.addColorStop(0.35, 'rgba(' + c + ',' + (a * 0.32) + ')');
+    g.addColorStop(1, 'rgba(' + c + ',0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, 1, 0, 6.2832); ctx.fill();
+    ctx.restore();
+  }
+  function ray(x, y, ang, len, thick, c, a) {
+    if (a <= 0.003) return;
+    ctx.save(); ctx.translate(x, y); ctx.rotate(ang);
+    var g = ctx.createLinearGradient(-len, 0, len, 0);
+    g.addColorStop(0, 'rgba(' + c + ',0)'); g.addColorStop(0.5, 'rgba(' + c + ',' + a + ')'); g.addColorStop(1, 'rgba(' + c + ',0)');
+    ctx.fillStyle = g; ctx.fillRect(-len, -thick / 2, len * 2, thick);
+    ctx.restore();
+  }
+  function star(x, y, sz, a, rot) {
+    ray(x, y, rot, sz, 1.6, '255,255,255', a);
+    ray(x, y, rot + Math.PI / 2, sz * 0.8, 1.4, '210,235,255', a * 0.9);
+    ray(x, y, rot + Math.PI / 4, sz * 0.45, 1, '170,215,255', a * 0.55);
+    ray(x, y, rot - Math.PI / 4, sz * 0.45, 1, '255,190,235', a * 0.5);
+    glow(x, y, sz * 0.22, sz * 0.22, '255,255,255', a * 0.9);
+  }
+  // letters: a flare of white with colour fringes at strength g (0 to 1)
+  function flare(i, g, warm) {
+    var st = letters[i].style;
+    if (g < 0.02) { st.color = ''; st.textShadow = ''; return; }
+    st.color = 'rgb(' + mixc(228, 255, g) + ',' + mixc(237, 255, g) + ',' + mixc(244, 255, g) + ')';
+    var core = warm ? '255,226,170' : '255,255,255';
+    st.textShadow = '0 0 ' + Math.round(8 + 30 * g) + 'px rgba(' + core + ',' + (0.95 * g).toFixed(2) + '), ' +
+      (-3.5 * g).toFixed(1) + 'px 0 ' + Math.round(10 * g + 2) + 'px rgba(70,225,255,' + (0.75 * g).toFixed(2) + '), ' +
+      (3.5 * g).toFixed(1) + 'px 0 ' + Math.round(10 * g + 2) + 'px rgba(255,80,200,' + (0.6 * g).toFixed(2) + ')';
+  }
+  // letters: a band of colour that runs through the whole word. stops are [offset, colour] around the band centre p (px from the word's left).
+  function band(p, half, stops, base) {
+    var parts = [base + ' 0px'];
+    var any = false;
+    stops.forEach(function (s) { parts.push(s[1] + ' ' + (p + s[0] * half).toFixed(1) + 'px'); });
+    parts.push(base + ' ' + (p + half * 1.01).toFixed(1) + 'px');
+    parts.push(base + ' ' + S.hw + 'px');
+    var bg = 'linear-gradient(100deg,' + parts.join(',') + ')';
+    for (var i = 0; i < letters.length; i++) {
+      var st = letters[i].style, r = letters[i].getBoundingClientRect();
+      st.backgroundImage = bg;
+      st.backgroundSize = S.hw + 'px 100%';
+      st.backgroundPosition = (-(r.left - S.hl)).toFixed(1) + 'px 0';
+      st.backgroundRepeat = 'no-repeat';
+      st.webkitBackgroundClip = 'text'; st.backgroundClip = 'text';
+      st.webkitTextFillColor = 'transparent';
+    }
+  }
+  function unband() {
+    letters.forEach(function (l) {
+      var st = l.style;
+      st.backgroundImage = ''; st.backgroundSize = ''; st.backgroundPosition = ''; st.backgroundRepeat = '';
+      st.webkitBackgroundClip = ''; st.backgroundClip = ''; st.webkitTextFillColor = '';
+    });
+  }
+
+  // ---- the effects ----
+  var FX = {};
+
+  // 1. Lens flare: a hot core, long streaks, a turning star, ghosts on the far side, then glitter
+  FX.lens = { name: 'Lens flare', dur: 3600, tail: 1300,
+    init: function () {
+      this.sparks = [];
+      var order = letters.map(function (_, i) { return i; }).sort(function () { return Math.random() - 0.5; }).slice(0, 7);
+      var self = this;
+      order.forEach(function (i, k) {
+        self.sparks.push({ i: i, dx: (Math.random() - 0.5) * 0.25, dy: (Math.random() - 0.62) * 0.5,
+                           at: 3600 * (0.5 + 0.13 * k) + Math.random() * 120, life: 520 + Math.random() * 420, size: 0.22 + Math.random() * 0.3 });
+      });
+    },
+    render: function (ms) {
+      var hh = S.hh, cy = S.cy, t = Math.min(ms / this.dur, 1), span = S.xe - S.xs;
+      var sx = S.xs - 0.12 * span + ease(t) * 1.24 * span;
+      var sy = cy + Math.sin(t * 5.2) * hh * 0.05 - (t - 0.5) * hh * 0.3;
+      var I = ms < this.dur ? Math.pow(Math.sin(Math.PI * t), 1.15) : 0;
+      if (I > 0) {
+        glow(sx, sy, hh * 1.5, hh * 1.1, '120,185,255', 0.5 * I);
+        glow(sx, sy, hh * 0.7, hh * 0.55, '235,245,255', 0.85 * I);
+        glow(sx, sy, hh * 0.22, hh * 0.22, '255,255,255', I);
+        glow(sx, sy, span * 0.42, 3.4, '215,235,255', 0.95 * I);
+        glow(sx, sy, span * 0.62, 11, '90,200,255', 0.32 * I);
+        glow(sx, sy, 3.2, hh * 1.7, '255,255,255', 0.55 * I);
+        star(sx, sy, hh * 1.25 * (0.65 + 0.35 * I), I, t * 0.9);
+        var cx = (S.xs + S.xe) / 2, vx = cx - sx, vy = cy - sy;
+        [[0.55, 0.20, '90,230,210', 0.20], [0.95, 0.34, '255,120,200', 0.16], [1.45, 0.14, '255,190,90', 0.22], [1.9, 0.5, '110,150,255', 0.12], [-0.5, 0.26, '120,255,200', 0.14]].forEach(function (g) {
+          var gx = sx + vx * g[0], gy = sy + vy * g[0], r = hh * g[1];
+          glow(gx, gy, r, r, g[2], g[3] * I);
+          ctx.strokeStyle = 'rgba(' + g[2] + ',' + (g[3] * 1.4 * I) + ')'; ctx.lineWidth = 1.2;
+          ctx.beginPath(); ctx.arc(gx, gy, r * 0.95, 0, 6.2832); ctx.stroke();
+        });
+      }
+      this.sparks.forEach(function (sp) {
+        var u = (ms - sp.at) / sp.life;
+        if (u <= 0 || u >= 1) return;
+        var a = Math.pow(Math.sin(Math.PI * u), 2);
+        star(S.lx[sp.i] + sp.dx * hh, cy + sp.dy * hh, hh * sp.size * (0.6 + 0.4 * a), a, u * 0.8);
+      });
+      for (var i = 0; i < letters.length; i++) {
+        var d = (S.lx[i] - sx) / (hh * 1.05);
+        flare(i, ms < this.dur ? Math.exp(-d * d) * (0.35 + 0.65 * I) : 0);
+      }
+    },
+    end: function () { letters.forEach(function (_, i) { flare(i, 0); }); } };
+
+  // 2. Chrome: the letters turn to polished metal as a bright band runs through them
+  FX.chrome = { name: 'Chrome', dur: 3000, tail: 300,
+    init: function () {},
+    render: function (ms) {
+      var t = Math.min(ms / this.dur, 1), e = ease(t), hh = S.hh;
+      var half = S.hw * 0.2;
+      var p = -half + e * (S.hw + half * 2);
+      var I = Math.sin(Math.PI * t);
+      band(p, half, [[-0.95, '#cfdce9'], [-0.62, '#8da3ba'], [-0.34, '#3f566e'], [-0.12, '#c9def2'], [0, '#ffffff'], [0.14, '#eaf6ff'], [0.34, '#5c7a99'], [0.6, '#2e4258'], [0.82, '#a9c0d6']], '#e4edf4');
+      var sx = S.hl + p;
+      glow(sx, S.cy, hh * 1.3, hh * 0.9, '150,200,255', 0.30 * I);
+      glow(sx, S.cy, span(), 2.6, '235,245,255', 0.55 * I);
+      function span() { return S.hw * 0.22; }
+      ray(sx, S.cy, 0, hh * 1.1, 1.4, '255,255,255', 0.7 * I);
+      ray(sx, S.cy, Math.PI / 2, hh * 0.9, 1.2, '210,235,255', 0.6 * I);
+    },
+    end: function () { unband(); } };
+
+  // 3. Prism: a band of spectrum colours slides through, like light through glass
+  FX.prism = { name: 'Prism', dur: 3200, tail: 300,
+    init: function () {},
+    render: function (ms) {
+      var t = Math.min(ms / this.dur, 1), e = ease(t), hh = S.hh;
+      var half = S.hw * 0.24;
+      var p = -half + e * (S.hw + half * 2);
+      var I = Math.sin(Math.PI * t);
+      band(p, half, [[-0.9, '#6bf3ff'], [-0.6, '#6f86ff'], [-0.3, '#c46bff'], [-0.05, '#ffffff'], [0.2, '#ff7ac6'], [0.48, '#ffd27a'], [0.75, '#b8ffd9']], '#e4edf4');
+      var sx = S.hl + p;
+      glow(sx - hh * 0.5, S.cy, hh * 1.0, hh * 0.8, '100,230,255', 0.22 * I);
+      glow(sx, S.cy, hh * 1.0, hh * 0.8, '210,120,255', 0.24 * I);
+      glow(sx + hh * 0.5, S.cy, hh * 1.0, hh * 0.8, '255,190,120', 0.22 * I);
+      glow(sx, S.cy, hh * 0.3, hh * 0.3, '255,255,255', 0.6 * I);
+    },
+    end: function () { unband(); } };
+
+  // 4. Glitter: small stars catch the light and flicker across the word, left to right
+  FX.glitter = { name: 'Glitter', dur: 3400, tail: 800,
+    init: function () {
+      this.sparks = [];
+      for (var k = 0; k < 20; k++) {
+        var f = (k + Math.random() * 0.8) / 20;
+        this.sparks.push({ f: f, y: (Math.random() - 0.6) * 0.62, at: 150 + f * 2700 + Math.random() * 150,
+                           life: 420 + Math.random() * 520, size: 0.16 + Math.random() * 0.34 });
+      }
+    },
+    render: function (ms) {
+      var hh = S.hh, span = S.xe - S.xs, glowL = letters.map(function () { return 0; });
+      var self = this;
+      this.sparks.forEach(function (sp) {
+        var u = (ms - sp.at) / sp.life;
+        if (u <= 0 || u >= 1) return;
+        var a = Math.pow(Math.sin(Math.PI * u), 2), x = S.xs + sp.f * span;
+        star(x, S.cy + sp.y * hh, hh * sp.size * (0.55 + 0.45 * a), a, u * 1.1);
+        for (var i = 0; i < letters.length; i++) {
+          var d = Math.abs(S.lx[i] - x) / (hh * 0.5);
+          if (d < 1) glowL[i] = Math.max(glowL[i], a * (1 - d) * 0.8);
+        }
+      });
+      for (var i = 0; i < letters.length; i++) flare(i, glowL[i]);
+    },
+    end: function () { letters.forEach(function (_, i) { flare(i, 0); }); } };
+
+  // 5. Sunburst: light breaks from behind the word, rays fanning out, the letters lit from within
+  FX.sunburst = { name: 'Sunburst', dur: 3600, tail: 600,
+    init: function () {
+      this.rays = [];
+      for (var k = 0; k < 30; k++) this.rays.push({ a: Math.random() * 6.2832, len: 0.5 + Math.random() * 1.1, w: 0.8 + Math.random() * 1.8, s: (Math.random() - 0.5) * 0.5, c: Math.random() });
+    },
+    render: function (ms) {
+      var t = Math.min(ms / this.dur, 1), hh = S.hh, cx = (S.xs + S.xe) / 2, cy = S.cy, span = S.xe - S.xs;
+      var up = Math.min(t / 0.38, 1), down = t > 0.5 ? 1 - (t - 0.5) / 0.5 : 1;
+      var I = Math.pow(ease(up), 1.1) * Math.max(down, 0);
+      glow(cx, cy, span * 0.55 * (0.5 + 0.5 * up), hh * 1.8 * (0.5 + 0.5 * up), '255,220,170', 0.42 * I);
+      glow(cx, cy, span * 0.28, hh * 0.9, '255,244,225', 0.6 * I);
+      glow(cx, cy, hh * 0.5, hh * 0.5, '255,255,255', 0.9 * I);
+      glow(cx, cy, span * 0.5, 4, '255,240,215', 0.7 * I);
+      this.rays.forEach(function (r) {
+        var ang = r.a + r.s * t, L = span * r.len * 0.55 * (0.4 + 0.6 * up);
+        ray(cx, cy, ang, L, r.w, r.c < 0.65 ? '255,238,205' : (r.c < 0.85 ? '170,210,255' : '255,190,225'), 0.34 * I);
+      });
+      for (var i = 0; i < letters.length; i++) {
+        var d = Math.abs(S.lx[i] - cx) / (span * 0.62);
+        flare(i, Math.max(0, (1 - d * 0.55)) * I, true);
+      }
+    },
+    end: function () { letters.forEach(function (_, i) { flare(i, 0); }); } };
+
+  function play(key) {
+    var fx = FX[key];
+    if (!fx || running) return false;
+    running = true;
+    size(); measure();
+    if (fx.init) fx.init();
+    var t0 = null;
+    function frame(now) {
+      if (t0 === null) t0 = now;
+      var ms = now - t0;
+      measure();
+      ctx.clearRect(0, 0, S.W, S.H);
+      ctx.globalCompositeOperation = 'lighter';
+      fx.render(ms);
+      ctx.globalCompositeOperation = 'source-over';
+      if (ms < fx.dur + fx.tail) { requestAnimationFrame(frame); }
+      else { ctx.clearRect(0, 0, S.W, S.H); if (fx.end) fx.end(); running = false; if (play.done) play.done(key); }
+    }
+    requestAnimationFrame(frame);
+    return true;
+  }
+  // a single still frame, for checking how an effect looks at a given moment
+  function still(key, ms) {
+    var fx = FX[key]; if (!fx) return;
+    size(); measure(); if (fx.init) fx.init();
+    ctx.clearRect(0, 0, S.W, S.H);
+    ctx.globalCompositeOperation = 'lighter';
+    fx.render(ms);
+    ctx.globalCompositeOperation = 'source-over';
+  }
+  function clearStill(key) { ctx.clearRect(0, 0, S.W, S.H); if (FX[key] && FX[key].end) FX[key].end(); }
+  return { play: play, still: still, clearStill: clearStill, names: Object.keys(FX), label: function (k) { return FX[k].name; }, fx: FX, running: function () { return running; }, S: S, size: size, measure: measure };
+})();
+
+(function () {
+  var box = document.getElementById('picks');
+  var logo = document.getElementById('logo');
+  var last = 'lens', btns = {};
+  function mark(k) { Object.keys(btns).forEach(function (n) { btns[n].classList.toggle('on', n === k); }); }
+  function lock(on) { Object.keys(btns).forEach(function (n) { btns[n].disabled = on; }); }
+  function run(k) {
+    if (Glare.running()) return;
+    last = k; mark(k);
+    Glare.play.done = function () { lock(false); };
+    lock(true);
+    Glare.play(k);
+  }
+  Glare.names.forEach(function (k, i) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.textContent = (i + 1) + '. ' + Glare.label(k);
+    b.addEventListener('click', function () { run(k); });
+    box.appendChild(b); btns[k] = b;
+  });
+  var all = document.createElement('button');
+  all.type = 'button'; all.textContent = 'play all five';
+  all.addEventListener('click', function () {
+    if (Glare.running()) return;
+    var i = 0;
+    (function next() {
+      if (i >= Glare.names.length) { lock(false); return; }
+      var k = Glare.names[i++]; last = k; mark(k); lock(true);
+      Glare.play.done = function () { setTimeout(next, 700); };
+      Glare.play(k);
+    })();
+  });
+  box.appendChild(all);
+  logo.addEventListener('click', function () { run(last); });
+})();
+</script>
+</body>
+</html>
