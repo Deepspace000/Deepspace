@@ -754,6 +754,18 @@
     }
     x2.putImageData(img, 0, 0); return c;
   }
+  function buildDeadMoon(R) {                                  // the Moon: grey rock, craters, no water
+    var S = R * 2, c = document.createElement('canvas'); c.width = c.height = S;
+    var x2 = c.getContext('2d'), img = x2.createImageData(S, S), d = img.data, L = [-0.62, -0.5, 0.6], ll = Math.sqrt(0.9944);
+    for (var py = 0; py < S; py++) for (var px = 0; px < S; px++) {
+      var nx = (px + 0.5 - R) / R, ny = (py + 0.5 - R) / R, rr = nx * nx + ny * ny, i = (py * S + px) * 4;
+      if (rr > 1) continue;
+      var nz = Math.sqrt(1 - rr), mare = ssm(0.5, 0.62, fbm(nx * 1.8 + 3, ny * 1.8, nz * 1.8, 4)), cr = Math.abs(fbm(nx * 8 + 9, ny * 8, nz * 8, 3) - 0.5), pit = ssm(0.06, 0.0, cr) * 0.3;
+      var v = (0.62 - mare * 0.22 + (fbm(nx * 14, ny * 14, nz * 14, 3) - 0.5) * 0.25 - pit) * (0.05 + 0.95 * ssm(-0.1, 0.5, (nx * L[0] + ny * L[1] + nz * L[2]) / ll)) * 255;
+      d[i] = v * 1.02; d[i + 1] = v * 0.98; d[i + 2] = v * 0.93; d[i + 3] = 255 * Math.min(1, (1 - Math.sqrt(rr)) * R / 1.4);
+    }
+    x2.putImageData(img, 0, 0); return c;
+  }
   var earth = null, storyBand = document.getElementById('story');
   function updateEarth(t, dt) {
     if (!storyBand) return 0;
@@ -769,7 +781,7 @@
       var el = buildEarth(Math.min(130, Math.round(earth.r * Math.min(dpr, 1.5))));
       el.style.cssText = 'position:absolute;width:' + earth.r * 2 + 'px;height:' + earth.r * 2 + 'px;left:' + (-earth.r) + 'px;top:' + (-earth.r) + 'px;filter:drop-shadow(0 0 ' + Math.round(earth.r * 0.3) + 'px rgba(255,90,30,0.45))';
       earth.box.appendChild(el); earth.ready = true;
-      earth.moonR = earth.r * 0.14; earth.moonPh = 1; earth.moon = buildMoon(earth.moonR, 77, [200, 190, 175]); earth.moon.style.cssText = 'position:absolute;width:' + earth.moonR * 2 + 'px;height:' + earth.moonR * 2 + 'px;'; earth.box.appendChild(earth.moon);
+      earth.moonR = earth.r * 0.14; earth.moonPh = 1; earth.moon = buildDeadMoon(Math.max(10, Math.round(earth.moonR * Math.min(dpr, 2)))); earth.moon.style.cssText = 'position:absolute;width:' + earth.moonR * 2 + 'px;height:' + earth.moonR * 2 + 'px;'; earth.box.appendChild(earth.moon);
     }
     var v = ssm(H * 0.95, H * 0.45, rect.top) * ssm(H * 0.25, H * 0.95, rect.bottom);
     if (!earth.ready) { earth.vis = 0; return 0; }
