@@ -338,7 +338,7 @@
   .hero-cover {
     display: block;
     padding: 0;
-    margin-bottom: 3rem;
+    margin-bottom: 0;
     background-image: none;
     text-align: center;
     opacity: 0;
@@ -349,7 +349,7 @@
   .hero-cover img {
     display: block;
     margin: 0 auto;
-    width: min(64vw, 380px, 42svh);
+    width: min(64vw, 380px, 38svh);
     height: auto;
     aspect-ratio: 1 / 1;
     object-fit: cover;
@@ -378,7 +378,7 @@
   }
 
   /* ---------- Comments beside the new album ---------- */
-  .hero-cover { order: 1; }
+  .hero-feature { order: 1; margin-bottom: 3rem; display: flex; flex-direction: column; align-items: center; }
   .hero h1 { order: 2; }
   .hero .sub { order: 3; }
   .flank {
@@ -402,7 +402,7 @@
       align-content: center;
       justify-items: center;
     }
-    .hero-cover { grid-column: 2; grid-row: 1; margin-bottom: 0; }
+    .hero-feature { grid-column: 2; grid-row: 1; margin-bottom: 0; }
     .hero h1 { grid-column: 1 / -1; grid-row: 2; margin-top: 3rem; }
     .hero .sub { grid-column: 1 / -1; grid-row: 3; }
     .flank { grid-row: 1; width: auto; max-width: 23rem; margin-top: 0; align-self: center; }
@@ -516,6 +516,21 @@
     margin: 3.4rem 0 0.8rem;
   }
   .quick + h3.group { margin-top: 0; }
+  /* ---------- Projekt logo under the feature album ---------- */
+  .hero-logo {
+    display: block;
+    width: 120px;
+    margin-top: 1.5rem;
+    padding: 0;
+    background-image: none;
+    opacity: 0;
+    animation: fade 4s ease forwards;
+    animation-delay: 2.6s;
+  }
+  .hero-logo:hover, .hero-logo:focus-visible { background-image: none; }
+  .hero-logo img { display: block; width: 100%; height: auto; opacity: 0.8; transition: opacity 1s ease; }
+  .hero-logo:hover img, .hero-logo:focus-visible img { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { .hero-logo { animation: none; opacity: 1; } }
 </style>
 </head>
 <body>
@@ -525,6 +540,7 @@
 <main>
   <header class="hero">
     <div class="flank left" id="flank-left" role="group" aria-label="Listener comments on The Atlas Sector"></div>
+    <div class="hero-feature">
     <a class="hero-cover" href="https://projektrecords.bandcamp.com/album/the-atlas-sector"
        data-view="https://bandcamp.com/EmbeddedPlayer/album=295441197/size=large/bgcol=0a1320/linkcol=8fb4cc/tracklist=true/artwork=small/transparent=true/"
        data-kind="embed" target="_blank" rel="noopener" aria-label="Listen to The Atlas Sector">
@@ -532,6 +548,9 @@
            onerror="this.parentNode.classList.add('nocover');this.remove()">
       <span class="hc-cap">The Atlas Sector, new album</span>
     </a>
+    <a class="hero-logo" id="hero-logo" href="https://projektrecords.bandcamp.com/album/the-atlas-sector" target="_blank" rel="noopener"
+       aria-label="The Atlas Sector on the Projekt Records Bandcamp" title="Projekt Records"></a>
+    </div>
     <div class="flank right" id="flank-right" role="group" aria-label="More listener comments on The Atlas Sector"></div>
     <h1 aria-label="deepspace">
       <span class="l" style="--i:0" aria-hidden="true">d</span><span class="l" style="--i:1" aria-hidden="true">e</span><span class="l" style="--i:2" aria-hidden="true">e</span><span class="l" style="--i:3" aria-hidden="true">p</span><span class="l" style="--i:4" aria-hidden="true">s</span><span class="l" style="--i:5" aria-hidden="true">p</span><span class="l" style="--i:6" aria-hidden="true">a</span><span class="l" style="--i:7" aria-hidden="true">c</span><span class="l" style="--i:8" aria-hidden="true">e</span>
@@ -1323,6 +1342,16 @@
     if (player) row.appendChild(player);
     (/^Projekt/.test(a.l) ? listProjekt : listIndie).appendChild(row);
   });
+
+  // ---- Projekt logo under the feature album ----
+  (function () {
+    var hl = document.getElementById('hero-logo');
+    if (!hl) return;
+    var im = new Image();
+    im.alt = 'Projekt Records'; im.width = 120; im.height = 36;
+    im.src = PROJEKT_LOGO;
+    hl.appendChild(im);
+  })();
 
   // ---- Comments either side of the new album at the top ----
   (function () {
