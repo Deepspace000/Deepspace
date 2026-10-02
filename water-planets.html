@@ -513,7 +513,7 @@
   // ---- the sky behind the page: stars, nebulae, suns, asteroids and many different water planets ----
   // Everything is unique and passes once as you scroll, at its own depth. Moons orbit faster the faster you scroll.
   var cv = document.getElementById('sky'), ctx = cv.getContext('2d');
-  var W = 0, H = 0, dpr = 1, stars = [], objs = [], sy = 0, vel = 0, lastSy = 0, lastT = 0, spin = 0, builds = [];
+  var W = 0, H = 0, dpr = 1, stars = [], objs = [], sy = 0, ssy = -1, vel = 0, lastSy = 0, lastT = 0, spin = 0, builds = [];
   window.addEventListener('scroll', function () { sy = window.pageYOffset || 0; }, { passive: true });
 
   function rng(seed) {
@@ -875,7 +875,7 @@
   }
 
   function drawObj(o, t, dt) {
-    var Hh = H, y = o.worldY - sy * o.par, x = o.x;
+    var Hh = H, y = o.worldY - ssy * o.par, x = o.x;
     var ext = o.ext || 220;
     if (y < -ext || y > H + ext) return;
     ensure(o);
@@ -944,7 +944,9 @@
   function frame(t) {
     var dt = Math.min((t - (lastT || t)) / 1000, 0.1); lastT = t;
     sy = window.pageYOffset || 0;
-    vel += ((sy - lastSy) / Math.max(dt, 0.001) - vel) * Math.min(1, dt * 5); lastSy = sy;      // how fast you are scrolling
+    if (ssy < 0) ssy = sy;
+    ssy += (sy - ssy) * Math.min(1, dt * 9);                                                      // the sky follows the scroll smoothly, so uneven scroll events cannot make it jump
+    vel += (Math.abs(sy - lastSy) / Math.max(dt, 0.001) - vel) * Math.min(1, dt * 2.5); lastSy = sy;      // how fast you are scrolling
     if (builds.length) builds.shift()();                                                           // start one sprite a frame
     for (var pq = 0; pq < objs.length; pq++) { var po = objs[pq]; if (po.paint) { if (stepPlanet(po.paint, 7)) { po.spr = po.paint.c; po.paint = null; po.ready = true; } break; } }   // paint a planet for a few milliseconds
     painting = false; updateFeats(t, dt); drawHsys(t, dt);
