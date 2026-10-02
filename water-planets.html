@@ -176,7 +176,15 @@
   .chapter h2 { margin: 0.2rem 0 0; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; font-size: clamp(2.1rem, 8vw, 3.6rem); letter-spacing: 0.04em; color: #fff3d0; text-shadow: 0 2px 22px rgba(0, 0, 0, 0.85); }
 
   /* the planet being described sits in the background of its own section */
-  .fplanet { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 0; pointer-events: none; will-change: transform, opacity; opacity: 0; }
+  .band { overflow: hidden; overflow: clip; }
+  .fhold { position: sticky; top: 0; width: 100%; height: 100vh; height: 100lvh; margin-bottom: -100vh; margin-bottom: -100lvh; z-index: 0; pointer-events: none; opacity: 0; }
+  .fdrift { position: absolute; inset: 0; }
+  @keyframes fdrift { from { transform: translate3d(0, -26vh, 0); } to { transform: translate3d(0, 26vh, 0); } }
+  @supports (animation-timeline: view()) {
+    .band.has-planet { view-timeline: --bnd block; }
+    .fdrift { animation: fdrift linear both; animation-timeline: --bnd; animation-range: cover 0% cover 100%; }
+  }
+  .fplanet { position: absolute; left: 0; top: 50%; width: 0; height: 0; pointer-events: none; will-change: transform; }
   .fplanet canvas { position: absolute; display: block; }
   .band.has-planet .book { background:
       linear-gradient(90deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0) 7%, rgba(0, 0, 0, 0) 93%, rgba(0, 0, 0, 0.3)),
@@ -679,14 +687,18 @@
 
   // ---- the planet being described hangs in the background of its own entry ----
   var feats = [];
+  function makeHold(band) {                       // a holder that sticks to the screen while the section passes, so its planet is always in view
+    var hold = document.createElement('div'), dr = document.createElement('div'), box = document.createElement('div');
+    hold.className = 'fhold'; dr.className = 'fdrift'; box.className = 'fplanet'; hold.setAttribute('aria-hidden', 'true');
+    dr.appendChild(box); hold.appendChild(dr); band.insertBefore(hold, band.querySelector('.wrap')); return [hold, box];
+  }
   ['thalassa', 'nereis', 'pelagia', 'ondine', 'hydraxis', 'bathys'].forEach(function (id, n) {
     var band = document.getElementById(id), fig = band && band.querySelector('.planet-plate');
     if (!band || !fig) return;
     band.classList.add('has-planet');
-    var box = document.createElement('div'); box.className = 'fplanet'; box.setAttribute('aria-hidden', 'true');
-    band.insertBefore(box, band.querySelector('.wrap'));
+    var hd = makeHold(band), box = hd[1];
     var seed = +fig.getAttribute('data-seed'), rr = rng(seed);
-    var f = { band: band, box: box, kind: +fig.getAttribute('data-kind'), seed: seed % 977 + 3, side: n % 2 ? -1 : 1, tilt: (rr() - 0.5) * 0.8, phase: rr() * 6.28, vis: 0, r: 0, started: false, moons: [] };
+    var f = { band: band, box: box, hold: hd[0], kind: +fig.getAttribute('data-kind'), seed: seed % 977 + 3, side: n % 2 ? -1 : 1, tilt: (rr() - 0.5) * 0.8, phase: rr() * 6.28, vis: 0, r: 0, started: false, moons: [] };
     var nm = 2 + (n % 2);
     for (var m = 0; m < nm; m++) f.moons.push({ a: 1.6 + m * 0.55 + rr() * 0.2, rf: 0.08 + rr() * 0.07, ph: rr() * 6.28, w: (0.22 + rr() * 0.3) * (m % 2 ? -1 : 1), tilt: (rr() - 0.5) * 0.6, seed: Math.floor(rr() * 999) });
     feats.push(f);
@@ -720,9 +732,9 @@
       f.vis += (v - f.vis) * Math.min(1, dt * 1.6);                               // arrives and leaves slowly
       if (f.vis > best) best = f.vis;
       if (!f.ready) continue;
-      f.box.style.opacity = f.vis.toFixed(3);
+      f.hold.style.opacity = f.vis.toFixed(3);
       if (f.vis < 0.01) continue;
-      var cx = W * (0.5 + f.side * (W < 700 ? 0.22 : 0.3)), cy = Math.min(rect.height * 0.5, H * 0.5), wd = wander(f.phase, W); cx += wd[0]; cy += wd[1];
+      var cx = W * (0.5 + f.side * (W < 700 ? 0.22 : 0.3)), cy = 0, wd = wander(f.phase, W); cx += wd[0]; cy += wd[1];
       f.box.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0)';
       f.moons.forEach(function (m) {
         m.ph += (0.28 * m.w + m.w * Math.min(vel * 0.0028, 5)) * dt;           // faster as you scroll
@@ -778,9 +790,8 @@
     if (!storyBand) return 0;
     var rect = storyBand.getBoundingClientRect();
     if (!earth) {
-      earth = { vis: 0, box: document.createElement('div') };
-      earth.box.className = 'fplanet'; earth.box.setAttribute('aria-hidden', 'true');
-      storyBand.classList.add('has-planet'); storyBand.insertBefore(earth.box, storyBand.querySelector('.wrap'));
+      var hd = makeHold(storyBand); earth = { vis: 0, box: hd[1], hold: hd[0] };
+      storyBand.classList.add('has-planet');
     }
     var near = rect.top < H * 2 && rect.bottom > -H;
     if (near && !earth.ready) {
@@ -793,9 +804,9 @@
     var v = ssm(H * 0.95, H * 0.45, rect.top) * ssm(H * 0.25, H * 0.95, rect.bottom);
     if (!earth.ready) { earth.vis = 0; return 0; }
     earth.vis += (v - earth.vis) * Math.min(1, dt * 1.6);
-    earth.box.style.opacity = earth.vis.toFixed(3);
+    earth.hold.style.opacity = earth.vis.toFixed(3);
     if (earth.vis > 0.01) {
-      var cx = W * (W < 700 ? 0.7 : 0.78), cy = Math.min(rect.height * 0.3, H * 0.5), wd = wander(2.1, W); cx += wd[0]; cy += wd[1];   // it moves with the page and drifts on its own
+      var cx = W * (W < 700 ? 0.7 : 0.78), cy = 0, wd = wander(2.1, W); cx += wd[0]; cy += wd[1];   // it moves with the page and drifts on its own
       earth.box.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0)';
       earth.moonPh += (0.3 + Math.min(vel * 0.0028, 5)) * dt;
       earth.moon.style.transform = 'translate3d(' + (Math.cos(earth.moonPh) * earth.r * 1.7 - earth.moonR).toFixed(1) + 'px,' + (Math.sin(earth.moonPh) * earth.r * 0.45 - earth.moonR).toFixed(1) + 'px,0)';
