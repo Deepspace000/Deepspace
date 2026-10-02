@@ -504,44 +504,65 @@
     { name: 'midnight', deep: [2, 8, 28],    shallow: [18, 50, 110],   land: [120, 170, 240], cloud: 0.75, bands: 0 },
     { name: 'sky',      deep: [30, 90, 170], shallow: [130, 200, 255], land: [235, 248, 255], cloud: 0.6,  bands: 0 }
   ];
-  function buildPlanet(o) {
-    var R = Math.min(90, Math.max(12, Math.round(o.r * dpr))), S = R * 2, c = document.createElement('canvas');   // drawn once, at a size a phone can make quickly
-    c.width = c.height = S; var x2 = c.getContext('2d'), img = x2.createImageData(S, S), d = img.data;
-    var K = KINDS[o.kind], seed = o.seed, L = [-0.62, -0.5, 0.6], ll = Math.sqrt(L[0] * L[0] + L[1] * L[1] + L[2] * L[2]); L = [L[0] / ll, L[1] / ll, L[2] / ll];
-    var ct = Math.cos(o.tilt), st = Math.sin(o.tilt);
-    for (var py = 0; py < S; py++) {
+  // A planet is painted row by row, so a phone can do it a little each frame without stuttering.
+  function startPlanet(o, maxR) {
+    var R = Math.min(maxR || 150, Math.max(12, Math.round(o.r * dpr))), S = R * 2, c = document.createElement('canvas');
+    c.width = c.height = S; var x2 = c.getContext('2d');
+    var L = [-0.62, -0.5, 0.6], ll = Math.sqrt(L[0] * L[0] + L[1] * L[1] + L[2] * L[2]);
+    return { c: c, x2: x2, img: x2.createImageData(S, S), R: R, S: S, K: KINDS[o.kind], o: o, y: 0, L: [L[0] / ll, L[1] / ll, L[2] / ll], ct: Math.cos(o.tilt), st: Math.sin(o.tilt),
+             // a hurricane or two, somewhere on the planet
+             storm: [Math.cos(o.seed) * 0.5, Math.sin(o.seed * 1.7) * 0.6] };
+  }
+  function stepPlanet(g, budget) {
+    var t0 = performance.now(), R = g.R, S = g.S, K = g.K, o = g.o, d = g.img.data, L = g.L, seed = o.seed;
+    while (g.y < S) {
+      var py = g.y;
       for (var px = 0; px < S; px++) {
         var nx = (px + 0.5 - R) / R, ny = (py + 0.5 - R) / R, rr = nx * nx + ny * ny, i = (py * S + px) * 4;
         if (rr > 1) continue;
         var nz = Math.sqrt(1 - rr);
-        var rx = nx * ct - ny * st, ry = nx * st + ny * ct;                 // tilt the world
-        var ang = o.phase, rz = nz * Math.cos(ang) - rx * Math.sin(ang), rx2 = nz * Math.sin(ang) + rx * Math.cos(ang);
-        var h = fbm(rx2 * 1.7 + seed, ry * 1.7 + seed * 1.3, rz * 1.7 + seed * 0.7, 5);
-        var col;
-        if (K.bands) {
-          var b = 0.5 + 0.5 * Math.sin(ry * 9 + fbm(rx2 * 2 + seed, ry * 3, rz * 2, 4) * 5);
-          col = mix(K.deep, K.shallow, b); col = mix(col, K.land, ssm(0.62, 0.9, b * 0.7 + h * 0.5) * 0.7);
-        } else {
-          col = mix(K.deep, K.shallow, ssm(0.35, 0.62, h));
-          if (h > o.landLevel) col = mix(col, K.land, ssm(o.landLevel, o.landLevel + 0.05, h));
-          if (K.ice) { var cr = Math.abs(fbm(rx2 * 4 + seed, ry * 4, rz * 4, 3) - 0.5); col = mix(col, [40, 90, 130], ssm(0.04, 0.0, cr) * 0.8); }
-        }
-        var cl = fbm(rx2 * 3.2 + seed * 2, ry * 3.6 + 9, rz * 3.2 + seed, 5);
-        var ca = ssm(K.cloud, K.cloud + 0.16, cl) * (K.bands ? 0.35 : 0.8);
+        var rx = nx * g.ct - ny * g.st, ry = nx * g.st + ny * g.ct;
+        var rz = nz * Math.cos(o.phase) - rx * Math.sin(o.phase), rx2 = nz * Math.sin(o.phase) + rx * Math.cos(o.phase);
+        // ocean colour: warped currents, deep trenches and shallow shelves
+        var wx = fbm(rx2 * 1.4 + seed, ry * 1.4, rz * 1.4, 3) - 0.5;
+        var h = fbm(rx2 * 2.0 + wx * 1.6 + seed, ry * 2.0 + wx * 1.6 + seed * 1.3, rz * 2.0 + seed * 0.7, 6);
+        var col = mix(K.deep, K.shallow, ssm(0.32, 0.66, h));
+        var fine = fbm(rx2 * 11 + seed, ry * 11, rz * 11, 3);                        // fine ripples in the colour
+        col = mix(col, K.shallow, (fine - 0.5) * 0.28 + 0.0);
+        // clouds: warped swirls, a thin high layer on top, and a cyclone with a clear eye
+        var cwx = fbm(rx2 * 2 + seed * 3, ry * 2, rz * 2, 3) - 0.5;
+        var cl = fbm(rx2 * 3.4 + cwx * 2.4 + seed * 2, ry * 3.9 + cwx * 2.4 + 9, rz * 3.4 + seed, 6);
+        var vx = rx2 - g.storm[0], vy = ry - g.storm[1], vr = Math.sqrt(vx * vx + vy * vy), va = Math.atan2(vy, vx);
+        var spiral = 0.5 + 0.5 * Math.sin(va * 2 - vr * 18 + cl * 3);
+        var cyc = (1 - ssm(0.0, 0.42, vr)) * ssm(0.06, 0.16, vr) * spiral;
+        var ca = Math.min(1, ssm(K.cloud, K.cloud + 0.14, cl) * 0.85 + cyc * 0.8);
+        var hi = ssm(0.62, 0.8, fbm(rx2 * 7 + seed, ry * 7 + 3, rz * 7, 4)) * 0.35;   // wispy cirrus
+        ca = Math.min(1, ca + hi * (1 - ca));
         col = mix(col, [255, 255, 255], ca);
         var dif = nx * L[0] + ny * L[1] + nz * L[2];
-        var k = 0.05 + 0.95 * ssm(-0.12, 0.55, dif);
-        var spec = Math.pow(Math.max(0, 2 * dif * nz - L[2]), 22) * (1 - ca) * 0.85;   // sunlight glinting on open ocean
-        var rim = Math.pow(1 - nz, 2.4) * ssm(-0.3, 0.6, dif) * 0.9;
+        var k = 0.04 + 0.96 * ssm(-0.1, 0.5, dif);
+        // sunlight glinting on the open water, broken up by waves
+        var wav = 0.55 + 0.9 * fbm(rx2 * 38 + seed, ry * 38, rz * 38, 2);
+        var spec = Math.pow(Math.max(0, 2 * dif * nz - L[2]), 26) * (1 - ca) * 0.95 * wav;
+        // glowing haze at the edge of the sky, whiter on the lit side
+        var rim = Math.pow(1 - nz, 2.2) * ssm(-0.35, 0.55, dif);
+        var rim2 = Math.pow(1 - nz, 5) * 0.6;
+        // the night side is not black: living water glows faintly
+        var night = ssm(0.15, -0.35, dif) * ssm(0.6, 0.78, fbm(rx2 * 13 + seed * 2, ry * 13, rz * 13, 3)) * (1 - ca) * 0.5;
         var a = 255 * Math.min(1, (1 - Math.sqrt(rr)) * R / 1.6);
-        d[i] = Math.min(255, col[0] * k + spec * 255 + rim * 110);
-        d[i + 1] = Math.min(255, col[1] * k + spec * 255 + rim * 170);
-        d[i + 2] = Math.min(255, col[2] * k + spec * 255 + rim * 255);
+        d[i] = Math.min(255, col[0] * k + spec * 255 + rim * 120 + rim2 * 150 + night * 40);
+        d[i + 1] = Math.min(255, col[1] * k + spec * 255 + rim * 175 + rim2 * 210 + night * 190);
+        d[i + 2] = Math.min(255, col[2] * k + spec * 255 + rim * 255 + rim2 * 255 + night * 200);
         d[i + 3] = a;
       }
+      g.y++;
+      if (performance.now() - t0 > budget) return false;
     }
-    x2.putImageData(img, 0, 0);
-    return c;
+    g.x2.putImageData(g.img, 0, 0);
+    return true;
+  }
+  function buildPlanet(o) {                              // all at once: for the small moons and the plates
+    var g = startPlanet(o, 120); while (!stepPlanet(g, 1e9)) { } return g.c;
   }
   function buildMoon(r, seed, tint) {                  // a small blue water world, like its planet
     return buildPlanet({ r: Math.max(r, 8), kind: seed % 7, seed: seed % 211 + 5, tilt: (seed % 7) * 0.1 - 0.3, phase: (seed % 13) * 0.5, landLevel: 1.5 });
@@ -627,7 +648,7 @@
         var pal = [[[40, 110, 255], [90, 70, 255]], [[30, 190, 230], [40, 110, 255]], [[70, 140, 255], [140, 90, 255]], [[20, 90, 200], [60, 200, 230]], [[100, 170, 255], [30, 60, 190]]][Math.floor(rnd() * 5)];
         o.c1 = pal[0]; o.c2 = pal[1]; o.r = (small ? 150 : 230) + rnd() * 120; o.rot = rnd() * 6.28; ext = o.r;
       } else if (type === 'sun') {
-        var suns = [[255, 244, 210], [255, 190, 90], [255, 110, 70], [170, 210, 255], [255, 240, 150]];
+        var suns = [[255, 80, 55], [240, 55, 40], [255, 100, 60], [225, 60, 50], [255, 70, 45]];   // red suns
         o.col = suns[Math.floor(rnd() * suns.length)]; o.r = (small ? 22 : 30) + rnd() * 30; o.rays = 5 + Math.floor(rnd() * 4); o.ph = rnd() * 6.28; ext = o.r * 5;
       } else {
         o.rocks = []; var nr = 7 + Math.floor(rnd() * 8);
@@ -644,8 +665,8 @@
 
   function ensure(o) {                                  // build each sprite once, one at a time, as it comes near
     if (o.ready || o.queued) return; o.queued = true;
-    builds.push(function () {
-      if (o.type === 'planet') { o.spr = buildPlanet(o); o.moons.forEach(function (m) { m.spr = buildMoon(m.r, m.seed, m.tint); }); }
+    builds.push(function work() {
+      if (o.type === 'planet') { o.moons.forEach(function (m) { m.spr = buildMoon(m.r, m.seed, m.tint); }); o.paint = startPlanet(o, W < 700 ? 120 : 160); return; }
       else if (o.type === 'nebula') o.spr = buildNebula(o);
       else if (o.type === 'sun') o.spr = buildSun(o);
       else if (o.type === 'asteroids') o.rocks.forEach(function (r) { r.spr = buildAsteroid(r.r, r.seed); });
@@ -724,7 +745,8 @@
     var dt = Math.min((t - (lastT || t)) / 1000, 0.1); lastT = t;
     sy = window.pageYOffset || 0;
     vel += ((sy - lastSy) / Math.max(dt, 0.001) - vel) * Math.min(1, dt * 5); lastSy = sy;      // how fast you are scrolling
-    if (builds.length) builds.shift()();                                                           // build one sprite a frame
+    if (builds.length) builds.shift()();                                                           // start one sprite a frame
+    for (var pq = 0; pq < objs.length; pq++) { var po = objs[pq]; if (po.paint) { if (stepPlanet(po.paint, 7)) { po.spr = po.paint.c; po.paint = null; po.ready = true; } break; } }   // paint a planet for a few milliseconds
     ctx.clearRect(0, 0, W, H);
     for (var n = 0; n < objs.length; n++) if (objs[n].type === 'nebula') drawObj(objs[n], t, dt);
     for (var i = 0; i < stars.length; i++) {
