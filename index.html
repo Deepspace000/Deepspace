@@ -676,6 +676,7 @@
     canvas.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     seed();
+    setupPlanet();
     draw(performance.now());
   }
 
@@ -729,80 +730,275 @@
     drawPlanet(t);
   }
 
-  // A quiet planet rising in the lower left, lit from the upper right.
+  // =====================================================================
+  //  A small water world with two moons
+  // =====================================================================
+  var TW = 512, TH = 256;
+  var surf = null, cloudTex = null;
+  var PL = { r: 50, cx: 0, cy: 0, S: 0, can: null, pctx: null, img: null, moons: [], last: -1e9 };
+
+  // ---- 3D value noise ----
+  function h3(x, y, z) {
+    var n = Math.imul(x | 0, 374761393) ^ Math.imul(y | 0, 668265263) ^ Math.imul(z | 0, 1274126177);
+    n = Math.imul(n ^ (n >>> 13), 1274126177);
+    n ^= n >>> 16;
+    return (n >>> 0) / 4294967295;
+  }
+  function vnoise(x, y, z) {
+    var xi = Math.floor(x), yi = Math.floor(y), zi = Math.floor(z);
+    var xf = x - xi, yf = y - yi, zf = z - zi;
+    var u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf), q = zf * zf * (3 - 2 * zf);
+    var a = h3(xi, yi, zi), b = h3(xi + 1, yi, zi), c = h3(xi, yi + 1, zi), d = h3(xi + 1, yi + 1, zi);
+    var e = h3(xi, yi, zi + 1), f = h3(xi + 1, yi, zi + 1), g = h3(xi, yi + 1, zi + 1), h = h3(xi + 1, yi + 1, zi + 1);
+    var x1 = a + (b - a) * u, x2 = c + (d - c) * u, x3 = e + (f - e) * u, x4 = g + (h - g) * u;
+    var y1 = x1 + (x2 - x1) * v, y2 = x3 + (x4 - x3) * v;
+    return y1 + (y2 - y1) * q;
+  }
+  function fbm(x, y, z, oct) {
+    var sum = 0, amp = 0.5, f = 1, norm = 0;
+    for (var i = 0; i < oct; i++) {
+      sum += amp * vnoise(x * f, y * f, z * f);
+      norm += amp; amp *= 0.5; f *= 2.03;
+    }
+    return sum / norm;
+  }
+  function sm(a, b, x) { var t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+  function mx(a, b, t) { return a + (b - a) * t; }
+
+  // ---- surface and cloud maps, made once ----
+  function buildTextures() {
+    surf = new Uint8ClampedArray(TW * TH * 4);
+    cloudTex = new Uint8ClampedArray(TW * TH);
+    var SEA = 0.5;
+    for (var j = 0; j < TH; j++) {
+      var lat = (j + 0.5) / TH * Math.PI - Math.PI / 2;
+      var cl = Math.cos(lat), py = Math.sin(lat);
+      for (var i = 0; i < TW; i++) {
+        var lon = i / TW * 6.2832;
+        var px = cl * Math.sin(lon), pz = cl * Math.cos(lon);
+
+        var e = fbm(px * 2.1 + 11.3, py * 2.1 + 4.7, pz * 2.1 + 7.9, 6);
+        e += (fbm(px * 7 + 3, py * 7 + 9, pz * 7 + 1, 3) - 0.5) * 0.14;
+        var dry = fbm(px * 2.6 + 40, py * 2.6 + 20, pz * 2.6 + 5, 4);
+        var iceLine = 0.84 + (fbm(px * 6 + 1, py * 6 + 2, pz * 6 + 3, 3) - 0.5) * 0.14;
+        var polar = Math.abs(py);
+
+        var r, g, b, ocean = 0;
+        if (e < SEA) {
+          var d = Math.min(1, (SEA - e) / 0.2);
+          r = mx(26, 4, d); g = mx(104, 22, d); b = mx(138, 52, d);
+          ocean = 255;
+          if (polar > iceLine - 0.05) {
+            var si = sm(iceLine - 0.05, iceLine + 0.02, polar);
+            r = mx(r, 214, si); g = mx(g, 228, si); b = mx(b, 238, si); ocean = 255 * (1 - si);
+          }
+        } else {
+          var h = (e - SEA) / (1 - SEA);
+          var dryness = sm(0.42, 0.66, dry) * sm(0.15, 0.4, polar) * (1 - sm(0.55, 0.8, polar));
+          r = mx(44, 168, dryness); g = mx(86, 140, dryness); b = mx(50, 92, dryness);
+          var rock = sm(0.3, 0.66, h);
+          r = mx(r, 112, rock); g = mx(g, 104, rock); b = mx(b, 92, rock);
+          var snow = sm(0.7, 0.88, h);
+          r = mx(r, 238, snow); g = mx(g, 241, snow); b = mx(b, 245, snow);
+          var beach = 1 - sm(0.0, 0.05, h);
+          r = mx(r, 196, beach * 0.8); g = mx(g, 182, beach * 0.8); b = mx(b, 134, beach * 0.8);
+          if (polar > iceLine) {
+            var ip = sm(iceLine, iceLine + 0.05, polar);
+            r = mx(r, 232, ip); g = mx(g, 239, ip); b = mx(b, 246, ip);
+          }
+        }
+        var o = (j * TW + i) * 4;
+        surf[o] = r; surf[o + 1] = g; surf[o + 2] = b; surf[o + 3] = ocean;
+
+        var c = fbm(px * 3.2 + 20, py * 5.6 + 30, pz * 3.2 + 40, 5);
+        cloudTex[j * TW + i] = sm(0.5, 0.72, c) * 238;
+      }
+    }
+  }
+
+  // ---- the globe, drawn from the maps with light and atmosphere ----
+  function renderPlanet(rot, crot) {
+    if (!surf) return;
+    var S = PL.S, d = PL.img.data, half = S / 2;
+    var tilt = 0.42, ct = Math.cos(tilt), st = Math.sin(tilt);
+    var Lx = 0.62, Ly = 0.42, Lz = 0.66;
+    var hl = Math.sqrt(Lx * Lx + Ly * Ly + (Lz + 1) * (Lz + 1));
+    var Hx = Lx / hl, Hy = Ly / hl, Hz = (Lz + 1) / hl;
+    for (var y = 0; y < S; y++) {
+      var ny = -((y + 0.5) - half) / half;
+      for (var x = 0; x < S; x++) {
+        var nx = ((x + 0.5) - half) / half;
+        var d2 = nx * nx + ny * ny;
+        var o = (y * S + x) * 4;
+        if (d2 >= 1) { d[o + 3] = 0; continue; }
+        var dist = Math.sqrt(d2);
+        var alpha = Math.min(1, (1 - dist) * half);
+        var nz = Math.sqrt(1 - d2);
+
+        var rx = nx * ct - ny * st, ry = nx * st + ny * ct;
+        var lat = Math.asin(ry);
+        var lon = Math.atan2(rx, nz);
+        var v = (lat / Math.PI + 0.5) * TH - 0.5;
+        var y0 = Math.floor(v), ty = v - y0, y1 = y0 + 1;
+        if (y0 < 0) y0 = 0; if (y1 > TH - 1) y1 = TH - 1; if (y0 > TH - 1) y0 = TH - 1;
+
+        // surface
+        var uu = ((lon + rot) / 6.2832 + 0.5) * TW - 0.5;
+        var x0 = Math.floor(uu), tx = uu - x0;
+        x0 = ((x0 % TW) + TW) % TW; var x1 = (x0 + 1) % TW;
+        var i00 = (y0 * TW + x0) * 4, i10 = (y0 * TW + x1) * 4, i01 = (y1 * TW + x0) * 4, i11 = (y1 * TW + x1) * 4;
+        var w00 = (1 - tx) * (1 - ty), w10 = tx * (1 - ty), w01 = (1 - tx) * ty, w11 = tx * ty;
+        var R = surf[i00] * w00 + surf[i10] * w10 + surf[i01] * w01 + surf[i11] * w11;
+        var G = surf[i00 + 1] * w00 + surf[i10 + 1] * w10 + surf[i01 + 1] * w01 + surf[i11 + 1] * w11;
+        var B = surf[i00 + 2] * w00 + surf[i10 + 2] * w10 + surf[i01 + 2] * w01 + surf[i11 + 2] * w11;
+        var oc = (surf[i00 + 3] * w00 + surf[i10 + 3] * w10 + surf[i01 + 3] * w01 + surf[i11 + 3] * w11) / 255;
+
+        // clouds drift a little faster than the ground
+        var cu = ((lon + crot) / 6.2832 + 0.5) * TW - 0.5;
+        var cx0 = Math.floor(cu), ctx_ = cu - cx0;
+        cx0 = ((cx0 % TW) + TW) % TW; var cx1 = (cx0 + 1) % TW;
+        var c00 = y0 * TW + cx0, c10 = y0 * TW + cx1, c01 = y1 * TW + cx0, c11 = y1 * TW + cx1;
+        var cv = (cloudTex[c00] * (1 - ctx_) * (1 - ty) + cloudTex[c10] * ctx_ * (1 - ty) +
+                  cloudTex[c01] * (1 - ctx_) * ty + cloudTex[c11] * ctx_ * ty) / 255;
+
+        // light
+        var diff = nx * Lx + ny * Ly + nz * Lz;
+        var lit = sm(-0.1, 0.5, diff);
+        var k = 0.04 + 0.96 * lit;
+
+        var spec = 0;
+        if (oc > 0.02) {
+          var nh = nx * Hx + ny * Hy + nz * Hz;
+          if (nh > 0) spec = Math.pow(nh, 70) * 0.6 * oc * (1 - cv);
+        }
+        var cb = 0.05 + 0.95 * lit;
+        var rr = R * k, gg = G * k, bb = B * k;
+        rr = mx(rr, 238 * cb, cv * 0.9); gg = mx(gg, 242 * cb, cv * 0.9); bb = mx(bb, 248 * cb, cv * 0.9);
+        rr += spec * 255; gg += spec * 255; bb += spec * 255;
+
+        // thin blue atmosphere at the edge
+        var rim = Math.pow(1 - nz, 2.4) * (0.1 + 0.9 * lit) * 1.2;
+        rr += 62 * rim; gg += 124 * rim; bb += 196 * rim;
+
+        // calm the colours so the planet sits quietly in the blue night
+        var lum = 0.3 * rr + 0.59 * gg + 0.11 * bb;
+        rr = mx(rr, lum * 0.92, 0.26); gg = mx(gg, lum * 1.0, 0.26); bb = mx(bb, lum * 1.12, 0.26);
+        d[o] = rr; d[o + 1] = gg; d[o + 2] = bb; d[o + 3] = alpha * 255;
+      }
+    }
+    PL.pctx.putImageData(PL.img, 0, 0);
+  }
+
+  // ---- a small cratered moon, lit once ----
+  function makeMoon(rm, base, seed, scale) {
+    var S = Math.max(10, Math.ceil(rm * 2 * dpr));
+    var cv = document.createElement('canvas');
+    cv.width = cv.height = S;
+    var c2 = cv.getContext('2d');
+    var img = c2.createImageData(S, S), d = img.data, half = S / 2;
+    var Lx = 0.62, Ly = 0.42, Lz = 0.66;
+    for (var y = 0; y < S; y++) {
+      var ny = -((y + 0.5) - half) / half;
+      for (var x = 0; x < S; x++) {
+        var nx = ((x + 0.5) - half) / half;
+        var d2 = nx * nx + ny * ny, o = (y * S + x) * 4;
+        if (d2 >= 1) { d[o + 3] = 0; continue; }
+        var nz = Math.sqrt(1 - d2);
+        var alpha = Math.min(1, (1 - Math.sqrt(d2)) * half);
+        var rock = fbm(nx * 3 + seed, ny * 3 + seed * 2, nz * 3 + seed * 3, 4);
+        // craters: nearest point in a jittered 3D grid
+        var qx = (nx + 1.3) * scale, qy = (ny + 1.7) * scale, qz = (nz + 2.1) * scale;
+        var cx0 = Math.floor(qx), cy0 = Math.floor(qy), cz0 = Math.floor(qz), best = 9;
+        for (var a = -1; a <= 1; a++) for (var b = -1; b <= 1; b++) for (var c = -1; c <= 1; c++) {
+          var gx = cx0 + a, gy = cy0 + b, gz = cz0 + c;
+          var fx = gx + h3(gx + seed * 7, gy, gz), fy = gy + h3(gx, gy + seed * 7, gz + 5), fz = gz + h3(gx + 9, gy, gz + seed * 7);
+          var dd = Math.sqrt((qx - fx) * (qx - fx) + (qy - fy) * (qy - fy) + (qz - fz) * (qz - fz));
+          if (dd < best) best = dd;
+        }
+        var bowl = 1 - sm(0.0, 0.3, best);
+        var lip = sm(0.26, 0.33, best) * (1 - sm(0.33, 0.44, best));
+        var tone = (0.8 + 0.3 * rock) * (1 - 0.3 * bowl + 0.2 * lip);
+        var diff = nx * Lx + ny * Ly + nz * Lz;
+        var k = 0.05 + 0.95 * sm(-0.1, 0.55, diff);
+        d[o] = base[0] * tone * k; d[o + 1] = base[1] * tone * k; d[o + 2] = base[2] * tone * k; d[o + 3] = alpha * 255;
+      }
+    }
+    c2.putImageData(img, 0, 0);
+    return cv;
+  }
+
+  function setupPlanet() {
+    var base = Math.min(w, h);
+    var r = Math.max(38, Math.min(base * 0.062, 74));
+    PL.r = r;
+    if (w >= 900) { PL.cx = Math.max(w * 0.13, r * 3.4); PL.cy = Math.max(h * 0.2, r * 2.4); }
+    else { PL.cx = w * 0.72; PL.cy = h * 0.86; }
+    PL.S = Math.ceil(r * 2 * dpr);
+    PL.can = document.createElement('canvas');
+    PL.can.width = PL.can.height = PL.S;
+    PL.pctx = PL.can.getContext('2d');
+    PL.img = PL.pctx.createImageData(PL.S, PL.S);
+    PL.moons = [
+      { a: r * 2.1, r: r * 0.21, w: 0.000070, ph: 0.9, tilt: -0.30, spr: makeMoon(r * 0.21, [176, 174, 168], 3, 5.2) },
+      { a: r * 3.1, r: r * 0.13, w: 0.000043, ph: 3.9, tilt: 0.20, spr: makeMoon(r * 0.13, [160, 126, 100], 8, 4.0) }
+    ];
+    if (surf && reduce) renderPlanet(1.2, 1.6);
+  }
+
+  function moonAt(m, t) {
+    var ang = m.ph + (reduce ? 0 : t * m.w);
+    var x = m.a * Math.cos(ang), y = m.a * 0.3 * Math.sin(ang);
+    var ct = Math.cos(m.tilt), st = Math.sin(m.tilt);
+    return { x: PL.cx + x * ct - y * st, y: PL.cy - lift_() + x * st + y * ct, z: Math.sin(ang) };
+  }
+  function lift_() { return reduce ? 0 : Math.min((window.pageYOffset || 0) * 0.03, h * 0.15); }
+
   function drawPlanet(t) {
+    if (!surf) return;
     var fade = reduce ? 1 : Math.min(1, Math.max(0, (t - 1200) / 7000));
     if (fade <= 0) return;
-    var base = Math.min(w, h);
-    var r = Math.max(150, Math.min(base * 0.46, 430));
-    var lift = reduce ? 0 : Math.min((window.pageYOffset || 0) * 0.04, h * 0.2);
-    var cx = w * 0.09;
-    var cy = h * 0.95 - lift;
+    if (!reduce && t - PL.last > 90) { renderPlanet(t * 0.00006, t * 0.00008 + 1); PL.last = t; }
+    var r = PL.r, cx = PL.cx, cy = PL.cy - lift_();
 
     ctx.save();
-    ctx.globalAlpha = fade * 0.78;
+    ctx.globalAlpha = fade * 0.92;
 
-    // solid body, so stars behind it are hidden
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, 6.2832);
-    ctx.fillStyle = '#050a12';
-    ctx.fill();
-
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, 6.2832);
-    ctx.clip();
-
-    // light side
-    var g = ctx.createRadialGradient(cx + r * 0.45, cy - r * 0.45, r * 0.05, cx + r * 0.1, cy - r * 0.1, r * 1.15);
-    g.addColorStop(0, 'rgba(150,190,214,0.50)');
-    g.addColorStop(0.35, 'rgba(52,92,120,0.50)');
-    g.addColorStop(0.72, 'rgba(14,30,48,0.60)');
-    g.addColorStop(1, 'rgba(4,9,16,0.80)');
-    ctx.fillStyle = g;
-    ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
-
-    // soft cloud bands that drift very slowly
-    ctx.translate(cx, cy);
-    ctx.rotate(-0.38);
-    var drift = reduce ? 0 : t * 0.0000025;
-    for (var i = -9; i <= 9; i++) {
-      var th = r * (0.06 + ((i * 37) % 5 + 5) % 5 * 0.012);
-      var y = i * r * 0.115 + Math.sin(drift * 40 + i * 1.3) * r * 0.012;
-      var a = 0.05 + 0.05 * Math.abs(Math.sin(i * 1.7));
-      var light = (i % 2 === 0);
-      var col = light ? '120,172,204' : '6,14,26';
-      var bg = ctx.createLinearGradient(0, y, 0, y + th);
-      bg.addColorStop(0, 'rgba(' + col + ',0)');
-      bg.addColorStop(0.5, 'rgba(' + col + ',' + (light ? a : a * 2.2) + ')');
-      bg.addColorStop(1, 'rgba(' + col + ',0)');
-      ctx.fillStyle = bg;
-      ctx.fillRect(-r * 1.2, y, r * 2.4, th);
-    }
-    ctx.rotate(0.38);
-    ctx.translate(-cx, -cy);
-
-    // night side
-    var sh = ctx.createRadialGradient(cx + r * 0.3, cy - r * 0.3, r * 0.2, cx - r * 0.1, cy + r * 0.1, r * 1.75);
-    sh.addColorStop(0, 'rgba(2,4,8,0)');
-    sh.addColorStop(0.5, 'rgba(2,4,8,0.22)');
-    sh.addColorStop(1, 'rgba(2,4,8,0.88)');
-    ctx.fillStyle = sh;
-    ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
-    ctx.restore();
-
-    // thin glow of atmosphere around the edge
+    // faint glow
     ctx.globalCompositeOperation = 'lighter';
-    var rim = ctx.createRadialGradient(cx, cy, r * 0.9, cx, cy, r * 1.14);
-    rim.addColorStop(0, 'rgba(143,180,204,0)');
-    rim.addColorStop(0.42, 'rgba(143,180,204,0.22)');
-    rim.addColorStop(1, 'rgba(143,180,204,0)');
-    ctx.fillStyle = rim;
-    ctx.beginPath();
-    ctx.arc(cx, cy, r * 1.14, 0, 6.2832);
-    ctx.fill();
+    var gl = ctx.createRadialGradient(cx, cy, r * 0.9, cx, cy, r * 2.6);
+    gl.addColorStop(0, 'rgba(90,150,200,0.10)');
+    gl.addColorStop(1, 'rgba(90,150,200,0)');
+    ctx.fillStyle = gl;
+    ctx.beginPath(); ctx.arc(cx, cy, r * 2.6, 0, 6.2832); ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+
+    // orbit lines
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(143,180,204,0.08)';
+    PL.moons.forEach(function (m) {
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, m.a, m.a * 0.3, m.tilt, 0, 6.2832);
+      ctx.stroke();
+    });
+
+    var pos = PL.moons.map(function (m) { return moonAt(m, t); });
+    function moon(i) {
+      var m = PL.moons[i], p = pos[i], rr = m.r * (1 + 0.1 * p.z);
+      ctx.drawImage(m.spr, p.x - rr, p.y - rr, rr * 2, rr * 2);
+    }
+    PL.moons.forEach(function (m, i) { if (pos[i].z <= 0) moon(i); });   // behind
+    ctx.drawImage(PL.can, cx - r, cy - r, r * 2, r * 2);                 // planet
+    PL.moons.forEach(function (m, i) { if (pos[i].z > 0) moon(i); });    // in front
+
     ctx.restore();
   }
+
+  // build the maps just after the page appears, then draw
+  setTimeout(function () {
+    buildTextures();
+    setupPlanet();
+    draw(performance.now());
+  }, 60);
 
   function loop(t) {
     draw(t);
