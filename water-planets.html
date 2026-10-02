@@ -779,7 +779,7 @@
     if (near && !earth.ready) {
       earth.r = W < 700 ? Math.min(W * 0.42, 180) : Math.min(230, Math.max(120, W * 0.17));
       var el = buildEarth(Math.min(130, Math.round(earth.r * Math.min(dpr, 1.5))));
-      el.style.cssText = 'position:absolute;width:' + earth.r * 2 + 'px;height:' + earth.r * 2 + 'px;left:' + (-earth.r) + 'px;top:' + (-earth.r) + 'px;filter:drop-shadow(0 0 ' + Math.round(earth.r * 0.3) + 'px rgba(255,90,30,0.45))';
+      el.style.cssText = 'position:absolute;z-index:1;width:' + earth.r * 2 + 'px;height:' + earth.r * 2 + 'px;left:' + (-earth.r) + 'px;top:' + (-earth.r) + 'px;filter:drop-shadow(0 0 ' + Math.round(earth.r * 0.3) + 'px rgba(255,90,30,0.45))';
       earth.box.appendChild(el); earth.ready = true;
       earth.moonR = earth.r * 0.14; earth.moonPh = 1; earth.moon = buildDeadMoon(Math.max(10, Math.round(earth.moonR * Math.min(dpr, 2)))); earth.moon.style.cssText = 'position:absolute;width:' + earth.moonR * 2 + 'px;height:' + earth.moonR * 2 + 'px;'; earth.box.appendChild(earth.moon);
     }
