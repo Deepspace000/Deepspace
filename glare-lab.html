@@ -48,7 +48,7 @@
   <h1 id="logo" aria-label="deepspace"><span class="l" style="--i:0" aria-hidden="true">d</span><span class="l" style="--i:1" aria-hidden="true">e</span><span class="l" style="--i:2" aria-hidden="true">e</span><span class="l" style="--i:3" aria-hidden="true">p</span><span class="l" style="--i:4" aria-hidden="true">s</span><span class="l" style="--i:5" aria-hidden="true">p</span><span class="l" style="--i:6" aria-hidden="true">a</span><span class="l" style="--i:7" aria-hidden="true">c</span><span class="l" style="--i:8" aria-hidden="true">e</span></h1>
   <p class="sub">choose a light</p>
   <div class="picks" id="picks"></div>
-  <p class="hint">Tap a name to play it on the logo. Tap the logo to play the last one again. Tell me which you like best, or which parts of each.</p>
+  <p class="hint">Tap a name to play it on the logo. Tap the logo to play the last one again. Tell me which you like best, or which parts of each. Number 6 is 3 and 5 together.</p>
 </main>
 <script>
 // ---- Light effects for the logo. Each one is played over the word on a see-through canvas. ----
@@ -143,6 +143,7 @@ var Glare = (function () {
 
   // ---- the effects ----
   var FX = {};
+  var SPECTRUM = ['110,235,255', '120,150,255', '200,125,255', '255,135,200', '255,212,130', '255,246,228'];
 
   // 1. Lens flare: a hot core, long streaks, a turning star, ghosts on the far side, then glitter
   FX.lens = { name: 'Lens flare', dur: 3600, tail: 1300,
@@ -265,9 +266,11 @@ var Glare = (function () {
       glow(cx, cy, span * 0.28, hh * 0.9, '255,244,225', 0.6 * I);
       glow(cx, cy, hh * 0.5, hh * 0.5, '255,255,255', 0.9 * I);
       glow(cx, cy, span * 0.5, 4, '255,240,215', 0.7 * I);
+      var self = this;
       this.rays.forEach(function (r) {
         var ang = r.a + r.s * t, L = span * r.len * 0.55 * (0.4 + 0.6 * up);
-        ray(cx, cy, ang, L, r.w, r.c < 0.65 ? '255,238,205' : (r.c < 0.85 ? '170,210,255' : '255,190,225'), 0.34 * I);
+        var col = self.spectral ? SPECTRUM[Math.min(5, Math.floor(r.c * 6))] : (r.c < 0.65 ? '255,238,205' : (r.c < 0.85 ? '170,210,255' : '255,190,225'));
+        ray(cx, cy, ang, L, r.w, col, (self.spectral ? 0.3 : 0.34) * I);
       });
       for (var i = 0; i < letters.length; i++) {
         var d = Math.abs(S.lx[i] - cx) / (span * 0.62);
@@ -275,6 +278,16 @@ var Glare = (function () {
       }
     },
     end: function () { letters.forEach(function (_, i) { flare(i, 0); }); } };
+
+  // 6. Prism and sunburst together: light breaks from behind the word as a band of spectrum colour runs through the letters
+  FX.both = { name: 'Prism + sunburst', dur: 3800, tail: 500,
+    init: function () { FX.sunburst.init(); },
+    render: function (ms) {
+      FX.sunburst.spectral = true;
+      FX.sunburst.render(ms * 0.95);                 // the burst peaks as the band reaches the middle of the word
+      FX.prism.render(ms * (FX.prism.dur / this.dur));
+    },
+    end: function () { FX.sunburst.spectral = false; FX.sunburst.end(); FX.prism.end(); } };
 
   function play(key) {
     var fx = FX[key];
@@ -313,7 +326,7 @@ var Glare = (function () {
 (function () {
   var box = document.getElementById('picks');
   var logo = document.getElementById('logo');
-  var last = 'lens', btns = {};
+  var last = 'both', btns = {};
   function mark(k) { Object.keys(btns).forEach(function (n) { btns[n].classList.toggle('on', n === k); }); }
   function lock(on) { Object.keys(btns).forEach(function (n) { btns[n].disabled = on; }); }
   function run(k) {
@@ -330,7 +343,7 @@ var Glare = (function () {
     box.appendChild(b); btns[k] = b;
   });
   var all = document.createElement('button');
-  all.type = 'button'; all.textContent = 'play all five';
+  all.type = 'button'; all.textContent = 'play all';
   all.addEventListener('click', function () {
     if (Glare.running()) return;
     var i = 0;
