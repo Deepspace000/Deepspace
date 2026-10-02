@@ -560,6 +560,113 @@
   .a-links svg { display: block; width: 100%; height: 100%; fill: currentColor; }
   .icons a { opacity: 0.7; transition: color 0.9s ease, opacity 0.9s ease; }
   .icons a:hover, .icons a:focus-visible { opacity: 1; }
+
+  /* ---------- Watch: Netflix-style rails ---------- */
+  .rails {
+    width: min(calc(100vw - 2rem), 60rem);
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .rail-title {
+    font-weight: 300;
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    color: var(--dim);
+    margin: 2.2rem 0 0.3rem 4px;
+  }
+  .rails .rail-block:first-child .rail-title { margin-top: 0; }
+  .rail { position: relative; }
+  .rail-track {
+    display: flex;
+    gap: 0.95rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding: 18px 4px 14px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .rail-track::-webkit-scrollbar { display: none; }
+  .vcard {
+    flex: 0 0 clamp(190px, 24vw, 250px);
+    scroll-snap-align: start;
+    display: block;
+    padding: 0;
+    background-image: none;
+  }
+  .vcard:hover, .vcard:focus-visible { background-image: none; }
+  .vc-thumb {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #0b1624;
+    transition: transform 0.5s cubic-bezier(.2,.6,.2,1), box-shadow 0.5s ease;
+  }
+  .vc-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.9) brightness(0.82);
+    transition: filter 0.6s ease;
+  }
+  .vc-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to top, rgba(4,7,13,0.55), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .vc-play svg { width: 38px; height: 38px; fill: #ffffff; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6)); }
+  .vc-badge {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    padding: 2px 8px;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: #e4edf4;
+    background: rgba(4, 7, 13, 0.72);
+    border-radius: 2px;
+  }
+  .vcard:hover .vc-thumb, .vcard:focus-visible .vc-thumb {
+    transform: scale(1.07);
+    box-shadow: 0 12px 38px rgba(0, 0, 0, 0.65);
+  }
+  .vcard:hover .vc-thumb img, .vcard:focus-visible .vc-thumb img { filter: saturate(1) brightness(1); }
+  .vcard:hover .vc-play, .vcard:focus-visible .vc-play { opacity: 1; }
+  .vcard:focus-visible { outline: 1px solid var(--mist); outline-offset: 6px; }
+  .vc-title { display: block; margin-top: 0.8rem; font-size: 0.88rem; line-height: 1.4; color: var(--text); transition: color 0.8s ease; }
+  .vc-sub { display: block; font-size: 0.75rem; line-height: 1.5; color: var(--dim); }
+  .vcard:hover .vc-title, .vcard:focus-visible .vc-title { color: #ffffff; }
+
+  .rail-btn {
+    position: absolute;
+    top: 18px;
+    bottom: 62px;
+    width: 46px;
+    padding: 0;
+    border: 0;
+    color: #ffffff;
+    cursor: pointer;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .rail-btn[hidden] { display: none; }
+  .rail-btn svg { width: 28px; height: 28px; fill: currentColor; }
+  .rail-btn.prev { left: 0; background: linear-gradient(to right, rgba(4,7,13,0.9), rgba(4,7,13,0)); }
+  .rail-btn.next { right: 0; background: linear-gradient(to left, rgba(4,7,13,0.9), rgba(4,7,13,0)); }
+  .rail:hover .rail-btn, .rail-btn:focus-visible { opacity: 1; }
+  @media (hover: none) { .rail-btn { display: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .vc-thumb, .vcard:hover .vc-thumb { transition: none; transform: none; }
+  }
 </style>
 </head>
 <body>
@@ -612,54 +719,66 @@
 
     <section id="watch">
       <h2>watch</h2>
-      <ul>
-        <li>
-          <a href="https://www.youtube.com/playlist?list=PLC-ueUAKetVIsy7Mz1Hu1Z9lEkFUtPRQT" data-view="https://www.youtube.com/embed/videoseries?list=PLC-ueUAKetVIsy7Mz1Hu1Z9lEkFUtPRQT" data-kind="embed" target="_blank" rel="noopener">Deepspace videos</a>
-          <span class="note">34 videos on YouTube</span>
-        </li>
-        <li>
-          <a href="https://youtube.com/playlist?list=PLC-ueUAKetVLUp8Kro-l4x7xT5nLPBdIc" data-view="https://www.youtube.com/embed/videoseries?list=PLC-ueUAKetVLUp8Kro-l4x7xT5nLPBdIc" data-kind="embed" target="_blank" rel="noopener">Neon Blue Utopia videos</a>
-          <span class="note">A playlist for the 2024 album</span>
-        </li>
-      </ul>
-      <ul class="videos">
-        <li>
-          <a class="vid" href="https://www.youtube.com/watch?v=fqwIbqaYP4g" data-view="https://www.youtube.com/embed/fqwIbqaYP4g?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Utopia=Visions">
-            <img class="v-thumb" src="https://i.ytimg.com/vi/fqwIbqaYP4g/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-meta"><span class="v-name">Utopia=Visions</span><span class="note">from Neon Blue Utopia</span></span>
+      <div class="rails">
+      <div class="rail-block">
+        <h3 class="rail-title">playlists</h3>
+        <div class="rail">
+          <button class="rail-btn prev" type="button" aria-label="Scroll left" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 5.4 14 4l-8 8 8 8 1.4-1.4L8.8 12z"/></svg></button>
+          <div class="rail-track">
+          <a class="vcard pl" href="https://www.youtube.com/playlist?list=PLC-ueUAKetVIsy7Mz1Hu1Z9lEkFUtPRQT" data-view="https://www.youtube.com/embed/videoseries?list=PLC-ueUAKetVIsy7Mz1Hu1Z9lEkFUtPRQT" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Deepspace videos">
+            <span class="vc-thumb"><img src="https://i.ytimg.com/vi/fqwIbqaYP4g/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'"><span class="vc-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span><span class="vc-badge">34 videos</span></span>
+            <span class="vc-title">Deepspace videos</span>
+            <span class="vc-sub">all of the videos</span>
           </a>
-        </li>
-        <li>
-          <a class="vid" href="https://www.youtube.com/watch?v=PnXr_Fkzpu4" data-view="https://www.youtube.com/embed/PnXr_Fkzpu4?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Parkour on Lazarus Heights">
-            <img class="v-thumb" src="https://i.ytimg.com/vi/PnXr_Fkzpu4/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-meta"><span class="v-name">Parkour on Lazarus Heights</span><span class="note">from Neon Blue Utopia</span></span>
+          <a class="vcard pl" href="https://youtube.com/playlist?list=PLC-ueUAKetVLUp8Kro-l4x7xT5nLPBdIc" data-view="https://www.youtube.com/embed/videoseries?list=PLC-ueUAKetVLUp8Kro-l4x7xT5nLPBdIc" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Neon Blue Utopia videos">
+            <span class="vc-thumb"><img src="https://i.ytimg.com/vi/hvMmEgfJuhE/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'"><span class="vc-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span><span class="vc-badge">playlist</span></span>
+            <span class="vc-title">Neon Blue Utopia videos</span>
+            <span class="vc-sub">playlist</span>
           </a>
-        </li>
-        <li>
-          <a class="vid" href="https://www.youtube.com/watch?v=hvMmEgfJuhE" data-view="https://www.youtube.com/embed/hvMmEgfJuhE?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Rainy Megacity 7 Precinct">
-            <img class="v-thumb" src="https://i.ytimg.com/vi/hvMmEgfJuhE/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-meta"><span class="v-name">Rainy Megacity 7 Precinct</span><span class="note">from Neon Blue Utopia</span></span>
+          </div>
+          <button class="rail-btn next" type="button" aria-label="Scroll right"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.6 5.4 10 4l8 8-8 8-1.4-1.4 6.6-6.6z"/></svg></button>
+        </div>
+      </div>
+      <div class="rail-block">
+        <h3 class="rail-title">videos</h3>
+        <div class="rail">
+          <button class="rail-btn prev" type="button" aria-label="Scroll left" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 5.4 14 4l-8 8 8 8 1.4-1.4L8.8 12z"/></svg></button>
+          <div class="rail-track">
+          <a class="vcard" href="https://www.youtube.com/watch?v=fqwIbqaYP4g" data-view="https://www.youtube.com/embed/fqwIbqaYP4g?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Utopia=Visions">
+            <span class="vc-thumb"><img src="https://i.ytimg.com/vi/fqwIbqaYP4g/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'"><span class="vc-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></span>
+            <span class="vc-title">Utopia=Visions</span>
+            <span class="vc-sub">Neon Blue Utopia</span>
           </a>
-        </li>
-        <li>
-          <a class="vid" href="https://www.youtube.com/watch?v=IovVNuh2SYg" data-view="https://www.youtube.com/embed/IovVNuh2SYg?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch HyperdriveEngage">
-            <img class="v-thumb" src="https://i.ytimg.com/vi/IovVNuh2SYg/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-meta"><span class="v-name">HyperdriveEngage</span><span class="note">from The Black Orchid Galaxies</span></span>
+          <a class="vcard" href="https://www.youtube.com/watch?v=PnXr_Fkzpu4" data-view="https://www.youtube.com/embed/PnXr_Fkzpu4?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Parkour on Lazarus Heights">
+            <span class="vc-thumb"><img src="https://i.ytimg.com/vi/PnXr_Fkzpu4/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'"><span class="vc-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></span>
+            <span class="vc-title">Parkour on Lazarus Heights</span>
+            <span class="vc-sub">Neon Blue Utopia</span>
           </a>
-        </li>
-        <li>
-          <a class="vid" href="https://www.youtube.com/watch?v=ORFVcdp7KOw" data-view="https://www.youtube.com/embed/ORFVcdp7KOw?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Inflorescence">
-            <img class="v-thumb" src="https://i.ytimg.com/vi/ORFVcdp7KOw/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-meta"><span class="v-name">Inflorescence</span><span class="note">from The Architecture of Flowers</span></span>
+          <a class="vcard" href="https://www.youtube.com/watch?v=hvMmEgfJuhE" data-view="https://www.youtube.com/embed/hvMmEgfJuhE?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Rainy Megacity 7 Precinct">
+            <span class="vc-thumb"><img src="https://i.ytimg.com/vi/hvMmEgfJuhE/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'"><span class="vc-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></span>
+            <span class="vc-title">Rainy Megacity 7 Precinct</span>
+            <span class="vc-sub">Neon Blue Utopia</span>
           </a>
-        </li>
-        <li>
-          <a class="vid" href="https://www.youtube.com/watch?v=qYor5vTOxx8" data-view="https://www.youtube.com/embed/qYor5vTOxx8?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Dreaming Stalks">
-            <img class="v-thumb" src="https://i.ytimg.com/vi/qYor5vTOxx8/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-meta"><span class="v-name">Dreaming Stalks</span><span class="note">from The Architecture of Flowers</span></span>
+          <a class="vcard" href="https://www.youtube.com/watch?v=IovVNuh2SYg" data-view="https://www.youtube.com/embed/IovVNuh2SYg?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch HyperdriveEngage">
+            <span class="vc-thumb"><img src="https://i.ytimg.com/vi/IovVNuh2SYg/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'"><span class="vc-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></span>
+            <span class="vc-title">HyperdriveEngage</span>
+            <span class="vc-sub">The Black Orchid Galaxies</span>
           </a>
-        </li>
-      </ul>
+          <a class="vcard" href="https://www.youtube.com/watch?v=ORFVcdp7KOw" data-view="https://www.youtube.com/embed/ORFVcdp7KOw?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Inflorescence">
+            <span class="vc-thumb"><img src="https://i.ytimg.com/vi/ORFVcdp7KOw/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'"><span class="vc-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></span>
+            <span class="vc-title">Inflorescence</span>
+            <span class="vc-sub">The Architecture of Flowers</span>
+          </a>
+          <a class="vcard" href="https://www.youtube.com/watch?v=qYor5vTOxx8" data-view="https://www.youtube.com/embed/qYor5vTOxx8?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Dreaming Stalks">
+            <span class="vc-thumb"><img src="https://i.ytimg.com/vi/qYor5vTOxx8/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'"><span class="vc-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></span>
+            <span class="vc-title">Dreaming Stalks</span>
+            <span class="vc-sub">The Architecture of Flowers</span>
+          </a>
+          </div>
+          <button class="rail-btn next" type="button" aria-label="Scroll right"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.6 5.4 10 4l8 8-8 8-1.4-1.4 6.6-6.6z"/></svg></button>
+        </div>
+      </div>
+      </div>
     </section>
 
     <section id="words">
@@ -1539,6 +1658,28 @@
     if (e.target === body && v.classList.contains('embed')) close();
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+})();
+</script>
+
+
+<script>
+(function () {
+  // Arrows scroll each rail; they hide at the ends.
+  document.querySelectorAll('.rail').forEach(function (rail) {
+    var track = rail.querySelector('.rail-track');
+    var prev = rail.querySelector('.rail-btn.prev');
+    var next = rail.querySelector('.rail-btn.next');
+    function update() {
+      var max = track.scrollWidth - track.clientWidth;
+      prev.hidden = track.scrollLeft < 6;
+      next.hidden = track.scrollLeft > max - 6 || max < 6;
+    }
+    prev.addEventListener('click', function () { track.scrollBy({ left: -track.clientWidth * 0.8, behavior: 'smooth' }); });
+    next.addEventListener('click', function () { track.scrollBy({ left: track.clientWidth * 0.8, behavior: 'smooth' }); });
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  });
 })();
 </script>
 
