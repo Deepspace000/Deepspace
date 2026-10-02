@@ -485,14 +485,31 @@
     .v-thumb { width: 104px; height: 58px; }
   }
 .c-who a { color: var(--dim); }
-  h3.group {
-    font-weight: 300;
-    font-size: 0.85rem;
-    letter-spacing: 0.3em;
-    color: var(--dim);
-    margin: 3.4rem 0 0.8rem;
+
+  /* ---------- Projekt logo on Projekt releases ---------- */
+  .album { grid-template-columns: 88px 1fr auto; }
+  .label-logo {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    align-self: center;
+    display: block;
+    width: 44px;
+    height: 44px;
+    margin-left: 1rem;
+    padding: 0;
+    background-image: none;
+    opacity: 0.72;
+    transition: opacity 1s ease;
   }
-  .quick + h3.group { margin-top: 0; }
+  .label-logo:hover, .label-logo:focus-visible { opacity: 1; background-image: none; }
+  .label-logo img { display: block; width: 44px; height: 44px; object-fit: cover; border-radius: 2px; }
+  .label-logo.as-text { width: auto; height: auto; font-size: 0.8rem; letter-spacing: 0.2em; color: var(--dim); }
+  @media (max-width: 520px) {
+    .album { grid-template-columns: 72px 1fr auto; }
+    .label-logo, .label-logo img { width: 36px; height: 36px; }
+    .label-logo { margin-left: 0.6rem; }
+  }
 </style>
 </head>
 <body>
@@ -522,7 +539,7 @@
       <h2>about</h2>
       <p>deepspace is the ambient project of Mirko Ruckels, an Australian musician living in Brisbane.</p>
       <p>Since 2006 he has made slow, spacious music from synthesizers, software and acoustic instruments. Many pieces picture places like empty rooms, night cities, deep water and far planets.</p>
-      <p>His albums are released independently and on Projekt Records.</p>
+      <p>His albums are released on Projekt Records and independently.</p>
     </section>
 
     <section id="music">
@@ -533,10 +550,7 @@
         <a href="https://www.youtube.com/@Deepspace_Music" target="_blank" rel="noopener">YouTube</a>
         <a href="https://www.projekt.com/" target="_blank" rel="noopener">Projekt</a>
       </p>
-      <h3 class="group">projekt</h3>
-      <ol id="albums-projekt" class="albums"></ol>
-      <h3 class="group">independent</h3>
-      <ol id="albums-indie" class="albums"></ol>
+      <ol id="albums" class="albums"></ol>
     </section>
 
     <section id="watch">
@@ -1159,8 +1173,7 @@
     return n;
   }
 
-  var listProjekt = document.getElementById('albums-projekt');
-  var listIndie = document.getElementById('albums-indie');
+  var list = document.getElementById('albums');
 
   // ---- Bandcamp player, opened inside the page ----
   function buildPlayer(a) {
@@ -1285,8 +1298,21 @@
       info.appendChild(actions);
       row.appendChild(info);
     }
+    if (/^Projekt/.test(a.l)) {
+      var logo = el('a', 'label-logo');
+      logo.href = a.u; logo.target = '_blank'; logo.rel = 'noopener';
+      logo.setAttribute('aria-label', a.t + ' on the Projekt Records Bandcamp');
+      logo.title = 'Projekt Records';
+      var lim = new Image();
+      lim.alt = 'Projekt Records'; lim.width = 44; lim.height = 44;
+      lim.decoding = 'async'; lim.loading = 'lazy'; lim.referrerPolicy = 'no-referrer';
+      lim.onerror = function () { lim.remove(); logo.textContent = 'Projekt'; logo.classList.add('as-text'); };
+      lim.src = 'https://f4.bcbits.com/img/0019063774_23.jpg';
+      logo.appendChild(lim);
+      row.appendChild(logo);
+    }
     if (player) row.appendChild(player);
-    (/^Projekt/.test(a.l) ? listProjekt : listIndie).appendChild(row);
+    list.appendChild(row);
   });
 
   // ---- Comments either side of the new album at the top ----
