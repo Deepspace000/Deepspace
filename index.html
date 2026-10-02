@@ -4,26 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>deepspace</title>
-<meta name="description" content="Ambient music by Mirko Ruckels from Brisbane, Australia. New album The Atlas Sector, out now on Projekt Records, with a free gamebook.">
+<meta name="description" content="deepspace is the ambient music project of Mirko Ruckels, based in Brisbane, Australia.">
 <meta name="theme-color" content="#04070d">
-<link rel="canonical" href="https://deepspace000.github.io/Deepspace/">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="deepspace">
-<meta property="og:locale" content="en_AU">
-<meta property="og:title" content="deepspace, ambient music">
-<meta property="og:description" content="Ambient music by Mirko Ruckels from Brisbane, Australia. New album The Atlas Sector, out now on Projekt Records, with a free gamebook.">
-<meta property="og:url" content="https://deepspace000.github.io/Deepspace/">
-<meta property="og:image" content="https://deepspace000.github.io/Deepspace/img/og.jpg">
-<meta property="og:image:secure_url" content="https://deepspace000.github.io/Deepspace/img/og.jpg">
-<meta property="og:image:type" content="image/jpeg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="deepspace, ambient music. The Atlas Sector cover art beside the deepspace name, on a starry blue sky.">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="deepspace, ambient music">
-<meta name="twitter:description" content="Ambient music by Mirko Ruckels from Brisbane, Australia. New album The Atlas Sector, out now on Projekt Records, with a free gamebook.">
-<meta name="twitter:image" content="https://deepspace000.github.io/Deepspace/img/og.jpg">
-<meta name="twitter:image:alt" content="deepspace, ambient music. The Atlas Sector cover art beside the deepspace name, on a starry blue sky.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2304070d'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%238fb4cc'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -138,168 +120,6 @@
   ul { list-style: none; }
   li + li { margin-top: 1.6rem; }
 
-  h3 {
-    font-weight: 300;
-    font-size: 0.82rem;
-    letter-spacing: 0.22em;
-    color: var(--dim);
-    margin: 2.8rem 0 1.2rem;
-  }
-  h2 + h3 { margin-top: 0; }
-  .reviews li + li { margin-top: 0.95rem; }
-
-  /* interviews and reviews: publication logo, album cover */
-  .logo { width: 22px; height: 22px; flex: none; object-fit: contain; border-radius: 3px; background: #0b1624; opacity: 0.9; }
-  .pub { display: flex; align-items: center; gap: 0.7rem; }
-  .srcs li { display: flex; align-items: flex-start; gap: 0.9rem; }
-  .srcs .logo { width: 28px; height: 28px; margin-top: 0.1rem; }
-  .rv { display: flex; align-items: center; gap: 0.9rem; }
-  .rv-cover { width: 56px; height: 56px; flex: none; border-radius: 2px; overflow: hidden; background: #0b1624; }
-  .rv-cover img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.85) brightness(0.9); }
-  .rv-cover.blank { background: radial-gradient(circle at 50% 42%, rgba(143,180,204,0.30), transparent 62%), linear-gradient(160deg, #0c1a2b, #060b14); }
-
-  /* photos: one wide picture, a row of three, a row of four, centred and a little wider than the text */
-  .gallery {
-    position: relative;
-    left: 50%;
-    width: min(860px, calc(100vw - 4rem));
-    transform: translateX(-50%);
-    display: grid;
-    gap: 0.9rem;
-  }
-  .gallery figure { margin: 0; }
-  .gallery img {
-    display: block;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 2px;
-    background: #0b1624;
-    filter: saturate(0.92) brightness(0.95);
-    transition: filter 1s ease;
-  }
-  .gallery img:hover { filter: none; }
-  .g-hero img { aspect-ratio: 16 / 9; }
-  .g-row { display: grid; gap: 0.9rem; }
-  .g3 { grid-template-columns: repeat(3, 1fr); }
-  .g3 img { aspect-ratio: 1 / 1; }
-  .g4 { grid-template-columns: repeat(4, 1fr); }
-  .g4 img { aspect-ratio: 4 / 5; }
-  .gallery figcaption, .g-cap { margin: 0.5rem 0 0; font-size: 0.78rem; line-height: 1.5; color: var(--dim); text-align: center; }
-  .g-cap { margin: -0.3rem 0 0.4rem; }
-  @media (max-width: 520px) { .g4 { grid-template-columns: repeat(2, 1fr); } }
-  @media (prefers-reduced-motion: reduce) { .gallery img { transition: none; } }
-
-  /* video rail, scrolls sideways */
-  .rail-wrap {
-    position: relative;
-    left: 50%;
-    width: min(1180px, calc(100vw - 4rem));
-    margin-top: 2.6rem;
-    transform: translateX(-50%);
-  }
-  .rail {
-    display: grid;
-    grid-template-rows: repeat(2, auto);
-    grid-auto-flow: column;
-    grid-auto-columns: 300px;
-    gap: 1.5rem 1.1rem;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x proximity;
-    scroll-behavior: smooth;
-    overscroll-behavior-x: contain;
-    padding-bottom: 1rem;
-    scrollbar-width: thin;
-    scrollbar-color: var(--line) transparent;
-  }
-  .rail:focus-visible { outline: 1px solid var(--mist); outline-offset: 4px; }
-  .vcard { display: block; padding: 0; background-image: none; scroll-snap-align: start; }
-  .vcard img {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    border-radius: 2px;
-    background: #0b1624;
-    filter: saturate(0.85) brightness(0.9);
-    transition: filter 1.2s ease, transform 0.6s ease;
-  }
-  .vcard .v-name { display: block; margin-top: 0.6rem; font-size: 0.98rem; line-height: 1.4; transition: color 0.9s ease; }
-  .vcard .note { margin-top: 0.1rem; font-size: 0.82rem; }
-  .vcard:hover, .vcard:focus-visible { background-image: none; }
-  .vcard:hover img, .vcard:focus-visible img { filter: none; transform: scale(1.03); }
-  .vcard:hover .v-name, .vcard:focus-visible .v-name { color: #ffffff; }
-  .rail-btn {
-    position: absolute;
-    top: 0;
-    z-index: 2;
-    bottom: 1rem;
-    width: 3.2rem;
-    border: 0;
-    color: #ffffff;
-    font-size: 2rem;
-    line-height: 1;
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  .rail-btn.prev { left: 0; background: linear-gradient(to right, rgba(4,7,13,0.92), rgba(4,7,13,0)); }
-  .rail-btn.next { right: 0; background: linear-gradient(to left, rgba(4,7,13,0.92), rgba(4,7,13,0)); }
-  .rail-wrap:hover .rail-btn, .rail-btn:focus-visible { opacity: 1; }
-  @media (hover: none) { .rail-btn { display: none; } }
-  @media (max-width: 520px) { .rail { grid-auto-columns: 240px; } }
-  @media (prefers-reduced-motion: reduce) { .rail { scroll-behavior: auto; } .vcard img { transition: none; } }
-
-  /* interviews: a photo from each */
-  .srcs li { align-items: center; }
-  .s-photo { width: 84px; height: 84px; flex: none; object-fit: cover; object-position: 50% 25%; border-radius: 2px; background: #0b1624; filter: saturate(0.92) brightness(0.95); }
-  .s-photo.round { border-radius: 50%; }
-
-  /* a quote at the top right of the interviews */
-  #interviews { position: relative; }
-  .pull { margin: 0 0 2.4rem; padding-left: 1rem; border-left: 1px solid var(--line); }
-  .pull-q { font-size: 1.2rem; line-height: 1.5; color: #e4edf4; }
-  .pull-by { margin-top: 0.7rem; font-size: 0.82rem; line-height: 1.6; color: var(--dim); }
-  @media (min-width: 1100px) {
-    .pull { position: absolute; top: 0; left: calc(100% + 2.5rem); width: 15rem; margin: 0; }
-  }
-
-  /* story: a cover to the right of each */
-  .st { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; }
-  .st > div { min-width: 0; }
-  .st-cover { width: 76px; height: 76px; flex: none; border-radius: 2px; overflow: hidden; background: #0b1624; }
-  .st-cover img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.85) brightness(0.9); }
-
-  /* press material */
-  .press { display: grid; gap: 1.1rem; }
-  .press-card { display: flex; align-items: center; gap: 1.1rem; }
-  .press-card .thumb { width: 76px; height: 76px; flex: none; border-radius: 2px; overflow: hidden; background: #0b1624; }
-  .press-card .thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
-  .press-card .meta { min-width: 0; }
-  .press-card .acts { display: flex; flex-wrap: wrap; gap: 0.2rem 1.4rem; margin-top: 0.3rem; font-size: 0.9rem; }
-  .press-bio p { max-width: 34rem; }
-  .press-bio .note { margin-top: 0.8rem; }
-  .press h3 { margin-top: 2rem; }
-
-  /* colours taken from each album cover */
-  .album, .rv, .st { --accent: #8fb4cc; }
-  .a-title { color: color-mix(in srgb, var(--accent) 38%, #e4edf4); }
-  .cover, .rv-cover, .st-cover {
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 32%, transparent), 0 8px 24px -10px color-mix(in srgb, var(--accent) 55%, transparent);
-  }
-  .comments li {
-    padding: 0.75rem 0.95rem;
-    border-radius: 3px;
-    border-left: 2px solid var(--cbar, var(--line));
-    background: var(--cbg, transparent);
-  }
-  .comments li + li { margin-top: 0.7rem; }
-  .c-text { color: var(--ctext, var(--text)); }
-  .c-who { color: var(--cwho, var(--dim)); }
-  .comments { border-left: 0; padding-left: 0; }
-
   .note {
     display: block;
     color: var(--dim);
@@ -357,40 +177,14 @@
   .albums { list-style: none; }
   .album {
     display: grid;
-    grid-template-columns: 144px 1fr;
-    column-gap: 1.5rem;
+    grid-template-columns: 88px 1fr;
+    column-gap: 1.3rem;
     align-items: center;
     padding: 1.1rem 0;
   }
-  /* streaming links, to the right of each title */
-  .a-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.3rem 1rem; }
-  .a-head .a-title { flex: 1; min-width: 0; }
-  .svcs {
-    flex: none;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.7rem;
-    margin-top: 0.25rem;
-  }
-  .svc {
-    display: block;
-    width: 22px;
-    height: 22px;
-    padding: 0;
-    background-image: none;
-    transition: filter 0.6s ease, transform 0.6s ease;
-  }
-  .svc.bandcamp { color: #629aa9; }
-  .svc.spotify { color: #1db954; }
-  .svc.applemusic { color: #fa243c; }
-  .svc.youtube { color: #ff0000; }
-  .svc svg { display: block; width: 100%; height: 100%; fill: currentColor; }
-  .svc:hover, .svc:focus-visible { background-image: none; filter: brightness(1.3); transform: scale(1.12); }
-  .svc:focus-visible { outline: 1px solid var(--mist); outline-offset: 3px; }
   .cover {
-    width: 144px;
-    height: 144px;
+    width: 88px;
+    height: 88px;
     display: block;
     overflow: hidden;
     border-radius: 2px;
@@ -469,11 +263,8 @@
   .c-who { display: block; font-size: 0.78rem; line-height: 1.6; color: var(--dim); margin-top: 0.2rem; }
 
   @media (max-width: 520px) {
-    .album { grid-template-columns: 104px 1fr; column-gap: 1rem; }
-    .a-head { flex-direction: column; }
-    .svcs { margin-top: 0.1rem; }
-    .cover { width: 104px; height: 104px; }
-    .svc { width: 18px; height: 18px; }
+    .album { grid-template-columns: 72px 1fr; column-gap: 1rem; }
+    .cover { width: 72px; height: 72px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .panel, .album.open .panel { transition-duration: 0.01s; transition-delay: 0s; }
@@ -514,36 +305,6 @@
   .linkbtn:focus-visible { outline: 1px solid var(--mist); outline-offset: 5px; }
 
   html.lock, html.lock body { overflow: hidden; }
-
-  /* leave the page, or see it here */
-  .choice {
-    position: fixed;
-    inset: 0;
-    z-index: 12;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    background: rgba(4, 7, 13, 0.82);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s ease, visibility 0s linear 0.5s;
-  }
-  .choice.on { opacity: 1; visibility: visible; transition: opacity 0.5s ease; }
-  .choice-box {
-    width: 100%;
-    max-width: 26rem;
-    padding: 1.7rem 1.7rem 1.5rem;
-    background: #0a1320;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-  }
-  .choice-q { color: #e4edf4; line-height: 1.6; }
-  .choice-sub { color: var(--dim); font-size: 0.86rem; line-height: 1.7; margin-top: 0.6rem; }
-  .choice-btns { display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem 1.8rem; margin-top: 1.5rem; font-size: 0.92rem; }
-  .choice-btns .cancel { color: var(--dim); margin-left: auto; }
-  @media (prefers-reduced-motion: reduce) { .choice, .choice.on { transition-duration: 0.01s; transition-delay: 0s; } }
-
   .viewer {
     position: fixed;
     inset: 0;
@@ -569,39 +330,6 @@
   .v-frame { width: 100%; height: 100%; border: 0; background: #ffffff; color-scheme: normal; }
   .viewer.embed .v-body { align-items: center; padding: 1.5rem; }
   .viewer.embed .v-frame { max-width: 720px; height: min(78vh, 440px); background: transparent; border-radius: 4px; }
-
-  /* pages (reviews, interviews, stories) open in a floating window: drag the bar, scroll the page, pull the corner to resize */
-  .viewer.win {
-    inset: auto;
-    top: 0;
-    left: 0;
-    width: min(860px, 94vw);
-    height: min(84vh, 920px);
-    min-width: 300px;
-    min-height: 220px;
-    max-width: 98vw;
-    max-height: 96vh;
-    resize: both;
-    overflow: hidden;
-    background: #0a1320;
-    border: 1px solid rgba(143, 180, 204, 0.35);
-    border-radius: 6px;
-    box-shadow: 0 30px 90px -20px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(0, 0, 0, 0.4);
-  }
-  .viewer.win .v-bar { cursor: grab; user-select: none; -webkit-user-select: none; touch-action: none; }
-  .viewer.win.dragging .v-bar { cursor: grabbing; }
-  .viewer.win.dragging .v-frame { pointer-events: none; }
-  .viewer.win .v-body { display: block; padding: 0; }
-  .viewer.win .v-frame { width: 100%; height: 100%; }
-  @media (max-width: 640px) {
-    .viewer.win {
-      left: 0 !important; top: 0 !important;
-      width: 100vw; height: 100vh; height: 100dvh;
-      max-width: 100vw; max-height: 100vh; max-height: 100dvh;
-      border-radius: 0; border: 0; resize: none;
-    }
-    .viewer.win .v-bar { cursor: default; }
-  }
   @media (prefers-reduced-motion: reduce) {
     .player, .album.playing .player, .viewer, .viewer.on { transition-duration: 0.01s; transition-delay: 0s; }
   }
@@ -663,19 +391,8 @@
     animation-delay: 3.6s;
   }
   .f-item + .f-item { margin-top: 1.5rem; }
-  .f-item { padding: 0.6rem 0.85rem; border-radius: 3px; border-left: 2px solid var(--cbar, transparent); background: var(--cbg, transparent); }
-  .f-text { display: block; white-space: pre-line; font-size: 0.88rem; line-height: 1.75; color: var(--ctext, var(--text)); }
-  .f-who { display: block; margin-top: 0.25rem; font-size: 0.75rem; line-height: 1.6; color: var(--cwho, var(--dim)); }
-  /* the words carry a soft two-colour wash taken from the album */
-  .c-text { display: block; }
-  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
-    .c-text, .f-text {
-      background-image: linear-gradient(100deg, var(--ctext, var(--text)), var(--ctext2, var(--ctext, var(--text))));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-  }
+  .f-text { display: block; white-space: pre-line; font-size: 0.88rem; line-height: 1.75; color: var(--text); }
+  .f-who { display: block; margin-top: 0.25rem; font-size: 0.75rem; line-height: 1.6; color: var(--dim); }
 
   @media (min-width: 1000px) {
     .hero {
@@ -690,7 +407,6 @@
     .hero .sub { grid-column: 1 / -1; grid-row: 3; }
     .flank { grid-row: 1; width: auto; max-width: 23rem; margin-top: 0; align-self: center; }
     .flank.left { grid-column: 1; justify-self: end; text-align: right; padding-right: 1.6rem; border-right: 1px solid var(--line); }
-    .flank.left .f-item { border-left: 0; border-right: 2px solid var(--cbar, transparent); }
     .flank.right { grid-column: 3; justify-self: start; text-align: left; padding-left: 1.6rem; border-left: 1px solid var(--line); }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -707,11 +423,10 @@
       z-index: 5;
       display: block;
       width: clamp(17rem, calc((100vw - 36rem) / 2 - 3rem), 24rem);
-      background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 30%, #060b14) 0%, color-mix(in srgb, var(--accent) 9%, #060b14) 55%, #060b14 100%);
+      background: rgba(6, 11, 20, 0.92);
       -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
-      border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
-      box-shadow: 0 18px 50px -20px color-mix(in srgb, var(--accent) 60%, transparent);
+      border: 1px solid var(--line);
       border-radius: 3px;
       opacity: 0;
       visibility: hidden;
@@ -732,7 +447,7 @@
       scrollbar-width: thin;
       scrollbar-color: var(--line) transparent;
     }
-    .p-title { display: block; margin-bottom: 1.1rem; padding-bottom: 0.9rem; border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); font-size: 0.92rem; color: color-mix(in srgb, var(--accent) 45%, #ffffff); }
+    .p-title { display: block; margin-bottom: 1.1rem; padding-bottom: 0.9rem; border-bottom: 1px solid var(--line); font-size: 0.92rem; color: #e4edf4; }
     .comments { margin: 0; padding-left: 0; border-left: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -797,8 +512,8 @@
 
     <section id="about">
       <h2>about</h2>
-      <p>deepspace is the ambient project of Mirko Ruckels, a German-French musician living in Brisbane, Australia.</p>
-      <p>Since 2007 he has made slow, spacious and dream-like music from synthesizers, software and acoustic instruments. The music evokes this and other worlds, filled with empty spaces, night cities, deserts, deep oceans and strange phenomena.</p>
+      <p>deepspace is the ambient project of Mirko Ruckels, an Australian musician living in Brisbane.</p>
+      <p>Since 2006 he has made slow, spacious music from synthesizers, software and acoustic instruments. Many pieces picture places like empty rooms, night cities, deep water and far planets.</p>
       <p>His albums are released independently and on Projekt Records.</p>
     </section>
 
@@ -817,267 +532,80 @@
       <h2>watch</h2>
       <ul>
         <li>
-          <a href="https://www.youtube.com/playlist?list=PLC-ueUAKetVIsy7Mz1Hu1Z9lEkFUtPRQT" data-view="https://www.youtube.com/embed/videoseries?list=PLC-ueUAKetVIsy7Mz1Hu1Z9lEkFUtPRQT" data-kind="embed" data-ask target="_blank" rel="noopener">Deepspace videos</a>
-          <span class="note">All videos on YouTube, newest first below</span>
+          <a href="https://www.youtube.com/playlist?list=PLC-ueUAKetVIsy7Mz1Hu1Z9lEkFUtPRQT" data-view="https://www.youtube.com/embed/videoseries?list=PLC-ueUAKetVIsy7Mz1Hu1Z9lEkFUtPRQT" data-kind="embed" target="_blank" rel="noopener">Deepspace videos</a>
+          <span class="note">34 videos on YouTube</span>
         </li>
         <li>
-          <a href="https://youtube.com/playlist?list=PLC-ueUAKetVLUp8Kro-l4x7xT5nLPBdIc" data-view="https://www.youtube.com/embed/videoseries?list=PLC-ueUAKetVLUp8Kro-l4x7xT5nLPBdIc" data-kind="embed" data-ask target="_blank" rel="noopener">Neon Blue Utopia videos</a>
+          <a href="https://youtube.com/playlist?list=PLC-ueUAKetVLUp8Kro-l4x7xT5nLPBdIc" data-view="https://www.youtube.com/embed/videoseries?list=PLC-ueUAKetVLUp8Kro-l4x7xT5nLPBdIc" data-kind="embed" target="_blank" rel="noopener">Neon Blue Utopia videos</a>
           <span class="note">A playlist for the 2024 album</span>
         </li>
       </ul>
-      <div class="rail-wrap">
-        <button class="rail-btn prev" type="button" aria-label="Earlier videos" hidden>&#8249;</button>
-        <div class="rail" role="region" aria-label="All videos, newest first" tabindex="0">
-          <a class="vcard" href="https://www.youtube.com/watch?v=dGSQcL1nqJ0" data-view="https://www.youtube.com/embed/dGSQcL1nqJ0?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Can you tell me what I am seeing? It’s vast and moving slowly…">
-            <img src="https://i.ytimg.com/vi/dGSQcL1nqJ0/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Can you tell me what I am seeing? It’s vast and moving slowly…</span><span class="note">Sep 2026</span>
+      <ul class="videos">
+        <li>
+          <a class="vid" href="https://www.youtube.com/watch?v=fqwIbqaYP4g" data-view="https://www.youtube.com/embed/fqwIbqaYP4g?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Utopia=Visions">
+            <img class="v-thumb" src="https://i.ytimg.com/vi/fqwIbqaYP4g/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <span class="v-meta"><span class="v-name">Utopia=Visions</span><span class="note">from Neon Blue Utopia</span></span>
           </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=pTbGgMj4VCE" data-view="https://www.youtube.com/embed/pTbGgMj4VCE?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Watch the sun rise from space…">
-            <img src="https://i.ytimg.com/vi/pTbGgMj4VCE/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Watch the sun rise from space…</span><span class="note">Sep 2026</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=J1PCDjlQKlw" data-view="https://www.youtube.com/embed/J1PCDjlQKlw?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Take a 35 minute walk into a transforming endless desert">
-            <img src="https://i.ytimg.com/vi/J1PCDjlQKlw/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Take a 35 minute walk into a transforming endless desert</span><span class="note">Sep 2026</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=FOgRjMkAF34" data-view="https://www.youtube.com/embed/FOgRjMkAF34?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch The feeling of rushing through space…">
-            <img src="https://i.ytimg.com/vi/FOgRjMkAF34/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">The feeling of rushing through space…</span><span class="note">Sep 2026</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=elZ6H_sbM_A" data-view="https://www.youtube.com/embed/elZ6H_sbM_A?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch BlueHeavenAbyss (Theme from Water Planets)">
-            <img src="https://i.ytimg.com/vi/elZ6H_sbM_A/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">BlueHeavenAbyss (Theme from Water Planets)</span><span class="note">Oct 2025 · Arrangement video</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=Xrng-2slsiA" data-view="https://www.youtube.com/embed/Xrng-2slsiA?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Vertical Automated Parking">
-            <img src="https://i.ytimg.com/vi/Xrng-2slsiA/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Vertical Automated Parking</span><span class="note">Jun 2025 · from Neon Blue Utopia</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=hLht99zuFSc" data-view="https://www.youtube.com/embed/hLht99zuFSc?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Floor 426-B">
-            <img src="https://i.ytimg.com/vi/hLht99zuFSc/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Floor 426-B</span><span class="note">Jan 2025 · from Neon Blue Utopia</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=kGIwJAV6Ifc" data-view="https://www.youtube.com/embed/kGIwJAV6Ifc?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Sunny Hypnagogia Heights">
-            <img src="https://i.ytimg.com/vi/kGIwJAV6Ifc/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Sunny Hypnagogia Heights</span><span class="note">Jan 2025 · from Neon Blue Utopia</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=Ykfo9Lbe724" data-view="https://www.youtube.com/embed/Ykfo9Lbe724?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Entering Aquarium Prefecture">
-            <img src="https://i.ytimg.com/vi/Ykfo9Lbe724/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Entering Aquarium Prefecture</span><span class="note">Jan 2025 · from Neon Blue Utopia</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=n_mcmWzy5hs" data-view="https://www.youtube.com/embed/n_mcmWzy5hs?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Bubble Echolalia District">
-            <img src="https://i.ytimg.com/vi/n_mcmWzy5hs/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Bubble Echolalia District</span><span class="note">Jan 2025 · from Neon Blue Utopia</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=Ylabk5dX2is" data-view="https://www.youtube.com/embed/Ylabk5dX2is?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Just a Pill and All this will End">
-            <img src="https://i.ytimg.com/vi/Ylabk5dX2is/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Just a Pill and All this will End</span><span class="note">Jan 2025</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=PnXr_Fkzpu4" data-view="https://www.youtube.com/embed/PnXr_Fkzpu4?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Parkour on Lazarus Heights">
-            <img src="https://i.ytimg.com/vi/PnXr_Fkzpu4/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Parkour on Lazarus Heights</span><span class="note">Jan 2025 · from Neon Blue Utopia</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=fqwIbqaYP4g" data-view="https://www.youtube.com/embed/fqwIbqaYP4g?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Utopia=Visions">
-            <img src="https://i.ytimg.com/vi/fqwIbqaYP4g/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Utopia=Visions</span><span class="note">Jan 2025 · from Neon Blue Utopia</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=hvMmEgfJuhE" data-view="https://www.youtube.com/embed/hvMmEgfJuhE?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Rainy Megacity 7 Precinct">
-            <img src="https://i.ytimg.com/vi/hvMmEgfJuhE/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Rainy Megacity 7 Precinct</span><span class="note">Dec 2024 · from Neon Blue Utopia</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=uW7xP1NgAQI" data-view="https://www.youtube.com/embed/uW7xP1NgAQI?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Considering the Loss of the Organic (Smoo's Capsule)">
-            <img src="https://i.ytimg.com/vi/uW7xP1NgAQI/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Considering the Loss of the Organic (Smoo's Capsule)</span><span class="note">Mar 2024 · video version</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=k7hotpJYeM8" data-view="https://www.youtube.com/embed/k7hotpJYeM8?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Considering the Loss of the Organic (Smoo's Capsule)">
-            <img src="https://i.ytimg.com/vi/k7hotpJYeM8/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Considering the Loss of the Organic (Smoo's Capsule)</span><span class="note">Mar 2024</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=IovVNuh2SYg" data-view="https://www.youtube.com/embed/IovVNuh2SYg?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch HyperdriveEngage">
-            <img src="https://i.ytimg.com/vi/IovVNuh2SYg/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">HyperdriveEngage</span><span class="note">Mar 2024 · from The Black Orchid Galaxies</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=y5cHCDlnRsY" data-view="https://www.youtube.com/embed/y5cHCDlnRsY?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch In the Hydroponic Garden Sector">
-            <img src="https://i.ytimg.com/vi/y5cHCDlnRsY/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">In the Hydroponic Garden Sector</span><span class="note">Mar 2024 · from The Black Orchid Galaxies</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=UA3X460Zjyk" data-view="https://www.youtube.com/embed/UA3X460Zjyk?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch The Great Sea of Brachychiton">
-            <img src="https://i.ytimg.com/vi/UA3X460Zjyk/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">The Great Sea of Brachychiton</span><span class="note">Jan 2024</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=aNW0vdBUg3g" data-view="https://www.youtube.com/embed/aNW0vdBUg3g?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Enveloped in Green and Blue">
-            <img src="https://i.ytimg.com/vi/aNW0vdBUg3g/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Enveloped in Green and Blue</span><span class="note">Jan 2024</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=cUa9VlMWXj8" data-view="https://www.youtube.com/embed/cUa9VlMWXj8?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch O Radiant Bee! (The Arboretum)">
-            <img src="https://i.ytimg.com/vi/cUa9VlMWXj8/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">O Radiant Bee! (The Arboretum)</span><span class="note">Nov 2023 · from The Architecture of Flowers</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=qYor5vTOxx8" data-view="https://www.youtube.com/embed/qYor5vTOxx8?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Dreaming Stalks">
-            <img src="https://i.ytimg.com/vi/qYor5vTOxx8/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Dreaming Stalks</span><span class="note">Oct 2023 · from The Architecture of Flowers</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=ORFVcdp7KOw" data-view="https://www.youtube.com/embed/ORFVcdp7KOw?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Inflorescence">
-            <img src="https://i.ytimg.com/vi/ORFVcdp7KOw/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Inflorescence</span><span class="note">Oct 2023 · from The Architecture of Flowers</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=6exH5JgjydI" data-view="https://www.youtube.com/embed/6exH5JgjydI?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Emptiness (excerpt)">
-            <img src="https://i.ytimg.com/vi/6exH5JgjydI/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Emptiness (excerpt)</span><span class="note">Oct 2022 · from The Blue Dunes</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=LVQnMR9S50M" data-view="https://www.youtube.com/embed/LVQnMR9S50M?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch An Unexpected Shelter (excerpt)">
-            <img src="https://i.ytimg.com/vi/LVQnMR9S50M/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">An Unexpected Shelter (excerpt)</span><span class="note">Oct 2022 · from The Blue Dunes</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=h9gySW7-t0g" data-view="https://www.youtube.com/embed/h9gySW7-t0g?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch The Blue Dunes (excerpt)">
-            <img src="https://i.ytimg.com/vi/h9gySW7-t0g/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">The Blue Dunes (excerpt)</span><span class="note">Oct 2022 · from The Blue Dunes</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=NOG0mGqCMrQ" data-view="https://www.youtube.com/embed/NOG0mGqCMrQ?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Do You Hear Faint Music?">
-            <img src="https://i.ytimg.com/vi/NOG0mGqCMrQ/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Do You Hear Faint Music?</span><span class="note">Apr 2022 · from Superradiance</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=SDEID8FdYvQ" data-view="https://www.youtube.com/embed/SDEID8FdYvQ?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Interlude: Hope for Early Microbial Forms">
-            <img src="https://i.ytimg.com/vi/SDEID8FdYvQ/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Interlude: Hope for Early Microbial Forms</span><span class="note">Mar 2022</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=g8w5bDry_xs" data-view="https://www.youtube.com/embed/g8w5bDry_xs?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Leaving Earth">
-            <img src="https://i.ytimg.com/vi/g8w5bDry_xs/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Leaving Earth</span><span class="note">Mar 2022 · from Superradiance</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=4AhJOq_ZvjY" data-view="https://www.youtube.com/embed/4AhJOq_ZvjY?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch et flux">
-            <img src="https://i.ytimg.com/vi/4AhJOq_ZvjY/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">et flux</span><span class="note">Dec 2021 · with theAdelaidean</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=GLAORVqq0dQ" data-view="https://www.youtube.com/embed/GLAORVqq0dQ?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Dawn">
-            <img src="https://i.ytimg.com/vi/GLAORVqq0dQ/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Dawn</span><span class="note">Nov 2021 · with theAdelaidean</span>
-          </a>
-
-          <a class="vcard" href="https://www.youtube.com/watch?v=VGQMUk-fApI" data-view="https://www.youtube.com/embed/VGQMUk-fApI?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Sol">
-            <img src="https://i.ytimg.com/vi/VGQMUk-fApI/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Sol</span><span class="note">Oct 2012 · fan video by Solaris Protectorate Order · from The Barometric Sea</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=RbiXlX-trs4" data-view="https://www.youtube.com/embed/RbiXlX-trs4?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Another Empty Galaxy">
-            <img src="https://i.ytimg.com/vi/RbiXlX-trs4/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Another Empty Galaxy</span><span class="note">Oct 2012 · fan video by Solaris Protectorate Order</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=e3Hz94WD9R4" data-view="https://www.youtube.com/embed/e3Hz94WD9R4?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch The Barometric Sea">
-            <img src="https://i.ytimg.com/vi/e3Hz94WD9R4/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">The Barometric Sea</span><span class="note">Oct 2012 · fan video by Solaris Protectorate Order</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=UMxLoN5fXe8" data-view="https://www.youtube.com/embed/UMxLoN5fXe8?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Leaving the Hub">
-            <img src="https://i.ytimg.com/vi/UMxLoN5fXe8/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Leaving the Hub</span><span class="note">Oct 2012 · fan video by Solaris Protectorate Order</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=D2hsOUkt0s4" data-view="https://www.youtube.com/embed/D2hsOUkt0s4?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Elevenward">
-            <img src="https://i.ytimg.com/vi/D2hsOUkt0s4/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Elevenward</span><span class="note">Jul 2012 · fan video by Solaris Protectorate Order · from The Glittering Domain</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=s6VTelWV7h8" data-view="https://www.youtube.com/embed/s6VTelWV7h8?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Sky Inside the Mind">
-            <img src="https://i.ytimg.com/vi/s6VTelWV7h8/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Sky Inside the Mind</span><span class="note">Jul 2012 · fan video by Solaris Protectorate Order</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=qrKFSebLEI4" data-view="https://www.youtube.com/embed/qrKFSebLEI4?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch In the Outer Reaches">
-            <img src="https://i.ytimg.com/vi/qrKFSebLEI4/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">In the Outer Reaches</span><span class="note">Jul 2012 · fan video by Solaris Protectorate Order</span>
-          </a>
-          <a class="vcard" href="https://www.youtube.com/watch?v=ZzIGdqZNHAU" data-view="https://www.youtube.com/embed/ZzIGdqZNHAU?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Euphandemonium">
-            <img src="https://i.ytimg.com/vi/ZzIGdqZNHAU/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
-            <span class="v-name">Euphandemonium</span><span class="note">Aug 2008 · fan video by Blinx636</span>
-          </a>
-        </div>
-        <button class="rail-btn next" type="button" aria-label="Older videos">&#8250;</button>
-      </div>
-      <p class="note">The last eight are fan-made videos set to deepspace music, with thanks to the people who made them.</p>
-    </section>
-
-    <section id="interviews">
-      <h2>interviews</h2>
-      <aside class="pull">
-        <p class="pull-q">“Ambient music is my oasis.”</p>
-        <p class="pull-by">deepspace, in <a href="https://www.projekt.com/store/deepspace-exploring-the-blue/" data-view="page" target="_blank" rel="noopener">Exploring the Blue</a></p>
-      </aside>
-      <ul class="srcs">
-        <li class="src">
-          <img class="s-photo" src="img/photos/echoes-mirko.jpg" alt="Mirko during the Echoes podcast video call" width="84" height="84" loading="lazy">
-          <div>
-            <a href="https://echoes.org/2025/11/20/monday-nov-17-2025-deepspace-interview-2" data-view="page" target="_blank" rel="noopener">Echoes interview</a>
-            <span class="note">Podcast conversation, November 2025</span>
-          </div>
         </li>
-        <li class="src">
-          <img class="s-photo round" src="img/photos/chaindlk-mirko.jpg" alt="Portrait of Mirko from the Chain D.L.K. interview" width="84" height="84" loading="lazy">
-          <div>
-            <a href="https://www.chaindlk.com/interviews/deepspace__" data-view="page" target="_blank" rel="noopener">Chain D.L.K. interview</a>
-            <span class="note">On Water Planets</span>
-          </div>
+        <li>
+          <a class="vid" href="https://www.youtube.com/watch?v=PnXr_Fkzpu4" data-view="https://www.youtube.com/embed/PnXr_Fkzpu4?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Parkour on Lazarus Heights">
+            <img class="v-thumb" src="https://i.ytimg.com/vi/PnXr_Fkzpu4/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <span class="v-meta"><span class="v-name">Parkour on Lazarus Heights</span><span class="note">from Neon Blue Utopia</span></span>
+          </a>
         </li>
-        <li class="src">
-          <img class="s-photo" src="img/photos/projekt-2022a.jpg" alt="Mirko in a leather jacket, from the Projekt interview" width="84" height="84" loading="lazy">
-          <div>
-            <a href="https://www.projekt.com/store/deepspace-exploring-the-blue/" data-view="page" target="_blank" rel="noopener">Exploring the Blue</a>
-            <span class="note">An interview on Projekt</span>
-          </div>
+        <li>
+          <a class="vid" href="https://www.youtube.com/watch?v=hvMmEgfJuhE" data-view="https://www.youtube.com/embed/hvMmEgfJuhE?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Rainy Megacity 7 Precinct">
+            <img class="v-thumb" src="https://i.ytimg.com/vi/hvMmEgfJuhE/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <span class="v-meta"><span class="v-name">Rainy Megacity 7 Precinct</span><span class="note">from Neon Blue Utopia</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="vid" href="https://www.youtube.com/watch?v=IovVNuh2SYg" data-view="https://www.youtube.com/embed/IovVNuh2SYg?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch HyperdriveEngage">
+            <img class="v-thumb" src="https://i.ytimg.com/vi/IovVNuh2SYg/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <span class="v-meta"><span class="v-name">HyperdriveEngage</span><span class="note">from The Black Orchid Galaxies</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="vid" href="https://www.youtube.com/watch?v=ORFVcdp7KOw" data-view="https://www.youtube.com/embed/ORFVcdp7KOw?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Inflorescence">
+            <img class="v-thumb" src="https://i.ytimg.com/vi/ORFVcdp7KOw/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <span class="v-meta"><span class="v-name">Inflorescence</span><span class="note">from The Architecture of Flowers</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="vid" href="https://www.youtube.com/watch?v=qYor5vTOxx8" data-view="https://www.youtube.com/embed/qYor5vTOxx8?rel=0&amp;autoplay=1" data-kind="embed" target="_blank" rel="noopener" aria-label="Watch Dreaming Stalks">
+            <img class="v-thumb" src="https://i.ytimg.com/vi/qYor5vTOxx8/mqdefault.jpg" alt="" width="128" height="72" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+            <span class="v-meta"><span class="v-name">Dreaming Stalks</span><span class="note">from The Architecture of Flowers</span></span>
+          </a>
         </li>
       </ul>
     </section>
 
-    <section id="reviews">
-      <h2>reviews</h2>
-      <h3 class="pub"><img class="logo" src="img/logo-sonicimmersion.jpg" alt="" width="22" height="22"><span>Sonic Immersion</span></h3>
-      <ul class="reviews">
-        <li class="rv" data-album="The Architecture of Flowers"><a href="https://www.sonicimmersion.org/deepspace-the-architecture-of-flowers/" data-view="https://web.archive.org/web/20260307152938if_/https://www.sonicimmersion.org/deepspace-the-architecture-of-flowers/" data-archived="1" target="_blank" rel="noopener">The Architecture of Flowers</a></li>
-        <li class="rv" data-album="The Blue Dunes"><a href="https://www.sonicimmersion.org/deepspace-the-blue-dunes/" data-view="https://web.archive.org/web/20260308164720if_/https://www.sonicimmersion.org/deepspace-the-blue-dunes/" data-archived="1" target="_blank" rel="noopener">The Blue Dunes</a></li>
-        <li class="rv" data-album="Superradiance"><a href="https://www.sonicimmersion.org/deepspace-superradiance/" data-view="https://web.archive.org/web/20260307145611if_/https://www.sonicimmersion.org/deepspace-superradiance/" data-archived="1" target="_blank" rel="noopener">Superradiance</a></li>
-        <li class="rv" data-album="Adrift"><div><a href="https://www.sonicimmersion.org/theadelaidean-deepspace-adrift/" data-view="https://web.archive.org/web/20260609114928if_/https://www.sonicimmersion.org/theadelaidean-deepspace-adrift/" data-archived="1" target="_blank" rel="noopener">Adrift</a><span class="note">With theAdelaidean</span></div></li>
-        <li class="rv" data-album="Deep Blue Universe"><a href="https://www.sonicimmersion.org/deepspace-deep-blue-universe/" data-view="https://web.archive.org/web/20260308170015if_/https://www.sonicimmersion.org/deepspace-deep-blue-universe/" data-archived="1" target="_blank" rel="noopener">Deep Blue Universe</a></li>
-        <li class="rv" data-album="Slow Wave Cathedral"><a href="https://www.sonicimmersion.org/deepspace-slow-wave-cathedral/" data-view="https://web.archive.org/web/20260307150119if_/https://www.sonicimmersion.org/deepspace-slow-wave-cathedral/" data-archived="1" target="_blank" rel="noopener">Slow Wave Cathedral</a></li>
-        <li class="rv" data-album="World Ocean Atlas"><a href="https://www.sonicimmersion.org/deepspace-world-ocean-atlas/" data-view="https://web.archive.org/web/20260308164408if_/https://www.sonicimmersion.org/deepspace-world-ocean-atlas/" data-archived="1" target="_blank" rel="noopener">World Ocean Atlas</a></li>
-        <li class="rv" data-album="Another Empty Galaxy"><a href="https://www.sonicimmersion.org/deepspace-another-empty-galaxy/" data-view="https://web.archive.org/web/20260308173618if_/https://www.sonicimmersion.org/deepspace-another-empty-galaxy/" data-archived="1" target="_blank" rel="noopener">Another Empty Galaxy</a></li>
-        <li class="rv" data-album="The Barometric Sun"><a href="https://www.sonicimmersion.org/deepspace-the-barometric-sun/" data-view="https://web.archive.org/web/20260308163947if_/https://www.sonicimmersion.org/deepspace-the-barometric-sun/" data-archived="1" target="_blank" rel="noopener">The Barometric Sun</a></li>
-        <li class="rv" data-album="The Barometric Sea"><a href="https://www.sonicimmersion.org/deepspace-the-barometric-sea/" data-view="https://web.archive.org/web/20260308105535if_/https://www.sonicimmersion.org/deepspace-the-barometric-sea/" data-archived="1" target="_blank" rel="noopener">The Barometric Sea</a></li>
-      </ul>
-
-      <h3 class="pub"><img class="logo" src="img/logo-expose.ico" alt="" width="22" height="22"><span>Exposé</span></h3>
-      <ul class="reviews">
-        <li class="rv" data-album="Neon Blue Utopia"><a href="http://expose.org/index.php/articles/display/deepspace-neon-blue-utopia-3.html" data-view="https://web.archive.org/web/20260611011612if_/http://expose.org/index.php/articles/display/deepspace-neon-blue-utopia-3.html" data-archived="1" target="_blank" rel="noopener">Neon Blue Utopia</a></li>
-        <li class="rv" data-album="The Black Orchid Galaxies"><a href="http://expose.org/index.php/articles/display/deepspace-the-black-orchid-galaxies-3.html" data-view="https://web.archive.org/web/2026if_/http://expose.org/index.php/articles/display/deepspace-the-black-orchid-galaxies-3.html" data-archived="1" target="_blank" rel="noopener">The Black Orchid Galaxies</a></li>
-        <li class="rv" data-album="The Architecture of Flowers"><a href="http://expose.org/index.php/articles/display/deepspace-the-architecture-of-flowers-3.html" data-view="https://web.archive.org/web/20260116194608if_/http://expose.org/index.php/articles/display/deepspace-the-architecture-of-flowers-3.html" data-archived="1" target="_blank" rel="noopener">The Architecture of Flowers</a></li>
-        <li class="rv" data-album="The Blue Dunes"><a href="http://expose.org/index.php/articles/display/deepspace-the-blue-dunes-3.html" data-view="https://web.archive.org/web/20260118014235if_/http://expose.org/index.php/articles/display/deepspace-the-blue-dunes-3.html" data-archived="1" target="_blank" rel="noopener">The Blue Dunes</a></li>
-        <li class="rv" data-album="Superradiance"><a href="http://expose.org/index.php/articles/display/deepspace-superradiance-3.html" data-view="https://web.archive.org/web/20260118021821if_/http://expose.org/index.php/articles/display/deepspace-superradiance-3.html" data-archived="1" target="_blank" rel="noopener">Superradiance</a></li>
-      </ul>
-
-      <h3 class="pub"><img class="logo" src="img/logo-echoes.jpg" alt="" width="22" height="22"><span>Echoes</span></h3>
-      <ul class="reviews">
-        <li class="rv" data-album="Neon Blue Utopia"><div><a href="https://echoes.org/2024/12/29/echoes-january-cd-of-the-month-deepspace/" data-view="page" target="_blank" rel="noopener">Neon Blue Utopia</a><span class="note">CD of the Month</span></div></li>
-      </ul>
-
-      <h3 class="pub"><img class="logo" src="img/logo-chaindlk.png" alt="" width="22" height="22"><span>Chain D.L.K.</span></h3>
-      <ul class="reviews">
-        <li class="rv" data-album="Neon Blue Utopia"><a href="https://chaindlk.com/reviews/12524" data-view="page" target="_blank" rel="noopener">Neon Blue Utopia</a></li>
-      </ul>
-    </section>
-
-    <section id="story">
-      <h2>story</h2>
-      <ul class="stories">
-        <li class="st" data-album="The Atlas Sector">
-          <div>
-            <a href="https://www.projekt.com/atlas.html" data-view="page" target="_blank" rel="noopener">The Atlas Sector gamebook</a>
-            <span class="note">An interactive sci-fi adventure that goes with the album</span>
-          </div>
+    <section id="words">
+      <h2>words</h2>
+      <ul>
+        <li>
+          <a href="https://echoes.org/2025/11/20/monday-nov-17-2025-deepspace-interview-2" data-view="page" target="_blank" rel="noopener">Echoes interview</a>
+          <span class="note">Podcast conversation, November 2025</span>
         </li>
-        <li class="st" data-album="Water Planets">
-          <div>
-            <a href="http://www.projekt.com/store/assets/WaterPlanets-booklet.pdf" data-view="https://www.projekt.com/store/assets/WaterPlanets-booklet.pdf" target="_blank" rel="noopener">Water Planets booklet</a>
-            <span class="note">The album&rsquo;s story, a 29-page PDF</span>
-          </div>
+        <li>
+          <a href="https://www.chaindlk.com/interviews/deepspace__" data-view="page" target="_blank" rel="noopener">Chain D.L.K. interview</a>
+          <span class="note">On Water Planets</span>
         </li>
-        <li class="st" data-album="The Blue Dunes">
-          <div>
-            <a href="http://www.projekt.com/store/wp-content/uploads/ARC254-Deepspace-TheBlueDunes.pdf" data-view="https://www.projekt.com/store/wp-content/uploads/ARC254-Deepspace-TheBlueDunes.pdf" target="_blank" rel="noopener">The Blue Dunes</a>
-            <span class="note">A short science fiction story, as a PDF</span>
-          </div>
+        <li>
+          <a href="https://echoes.org/2024/12/29/echoes-january-cd-of-the-month-deepspace/" data-view="page" target="_blank" rel="noopener">Echoes CD of the Month</a>
+          <span class="note">A review of Neon Blue Utopia</span>
+        </li>
+        <li>
+          <a href="https://chaindlk.com/reviews/12524" data-view="page" target="_blank" rel="noopener">Chain D.L.K. review</a>
+          <span class="note">Also on Neon Blue Utopia</span>
+        </li>
+        <li>
+          <a href="https://www.projekt.com/store/deepspace-exploring-the-blue/" data-view="page" target="_blank" rel="noopener">Exploring the Blue</a>
+          <span class="note">An interview on Projekt</span>
+        </li>
+        <li>
+          <a href="http://www.projekt.com/store/wp-content/uploads/ARC254-Deepspace-TheBlueDunes.pdf" data-view="https://www.projekt.com/store/wp-content/uploads/ARC254-Deepspace-TheBlueDunes.pdf" target="_blank" rel="noopener">The Blue Dunes</a>
+          <span class="note">A short science fiction story, as a PDF</span>
         </li>
       </ul>
     </section>
@@ -1092,119 +620,10 @@
       </p>
     </section>
 
-
-    <section id="photos">
-      <h2>photos</h2>
-      <div class="gallery">
-        <figure class="g-hero">
-          <img src="img/photos/press-sunset.jpg" alt="Mirko on a beach at sunset, in a dark cap, glasses and a scarf" width="1400" height="788" loading="lazy">
-          <figcaption>deepspace press photo</figcaption>
-        </figure>
-        <div class="g-row g3">
-          <figure><img src="img/photos/projekt-2022a.jpg" alt="Mirko in a leather jacket and striped shirt, photographed from below" width="750" height="700" loading="lazy" style="object-position: 50% 22%"></figure>
-          <figure><img src="img/photos/projekt-2022b.jpg" alt="Mirko lying back with chess pieces on a chequered top" width="750" height="734" loading="lazy" style="object-position: 50% 30%"></figure>
-          <figure><img src="img/photos/projekt-2022c.jpg" alt="The studio: a laptop and a tablet running music software" width="750" height="563" loading="lazy"></figure>
-        </div>
-        <p class="g-cap">Projekt Records press photos, 2022</p>
-        <div class="g-row g4">
-          <figure><img src="img/photos/mirko-sunglasses-bw.jpg" alt="Black-and-white photo of Mirko in sunglasses and a blazer, on a veranda" width="177" height="250" loading="lazy" style="object-position: 50% 25%"></figure>
-          <figure><img src="img/photos/mirko-keyboard.jpg" alt="Mirko close to the camera in glasses, with a keyboard behind him" width="189" height="252" loading="lazy" style="object-position: 50% 30%"></figure>
-          <figure><img src="img/photos/mirko-windswept-bw.jpg" alt="Black-and-white photo of Mirko in a jacket with the wind in his hair, looking out over a lake" width="250" height="275" loading="lazy" style="object-position: 50% 20%"></figure>
-          <figure><img src="img/photos/mirko-sunlit.jpg" alt="Sunlit close-up of Mirko looking down" width="203" height="225" loading="lazy" style="object-position: 50% 35%"></figure>
-        </div>
-      </div>
-    </section>
-
-    <section id="press">
-      <h2>press material</h2>
-
-      <div class="press-bio">
-        <p>deepspace is the ambient project of Mirko Ruckels, a German-French musician living in Brisbane, Australia. Since 2007 he has made slow, spacious and dream-like music from synthesizers, software and acoustic instruments. His albums are released independently and on Projekt Records.</p>
-        <p>The newest album, The Atlas Sector, came out on Projekt Records on 11 September 2026 (ARC399). It has twenty tracks in four suites, one for each planet in a system called Atlas, and comes with a free companion gamebook that plays in a browser.</p>
-        <p class="note">Composed, recorded and mixed by Mirko Ruckels at Bickering Goat Studios. Mastered by Angel Marcloid at Angel Hair Audio. No AI was used for the music, the images or the gamebook.</p>
-      </div>
-
-      <h3>highlights</h3>
-      <ul class="facts">
-        <li>The Atlas Sector, released 11 September 2026 on Projekt Records</li>
-        <li>Water Planets: number 65 on the UK Official Album Downloads Chart, September 2025</li>
-        <li>Water Planets: number 22 in Echoes Radio&rsquo;s Best Albums of 2025</li>
-        <li>Neon Blue Utopia: Echoes CD of the Month, January 2025</li>
-        <li>Superradiance: Best New Release of 2022, WPPM Sound + Vision</li>
-        <li>The Barometric Sun: Album of the Month, 2009, Stillstream</li>
-        <li>Subantarctic Sessions: one of the top 10 ambient releases of 2008</li>
-        <li>The Barometric Sea: Top 10 Ambient Album of 2007, Electroambient Space</li>
-        <li>Best New Ambient Artist of 2007, Electroambient Space</li>
-      </ul>
-
-      <h3>downloads</h3>
-      <ul class="press">
-        <li class="press-card">
-          <span class="thumb"><img src="press/the-atlas-sector-press-sheet.jpg" alt="" width="76" height="76" loading="lazy"></span>
-          <div class="meta">
-            The Atlas Sector, one-page press sheet
-            <span class="note">JPG, 1240 &times; 1764</span>
-            <span class="acts"><a href="press/the-atlas-sector-press-sheet.jpg" download>download</a></span>
-          </div>
-        </li>
-        <li class="press-card">
-          <span class="thumb"><img src="press/the-atlas-sector-cover.jpg" alt="" width="76" height="76" loading="lazy"></span>
-          <div class="meta">
-            The Atlas Sector, cover art
-            <span class="note">JPG, 1400 &times; 1400</span>
-            <span class="acts"><a href="press/the-atlas-sector-cover.jpg" download>download</a></span>
-          </div>
-        </li>
-        <li class="press-card">
-          <span class="thumb"><img src="press/deepspace-press-sunset.jpg" alt="" width="76" height="76" loading="lazy"></span>
-          <div class="meta">
-            Press photo, landscape
-            <span class="note">JPG, 1672 &times; 941</span>
-            <span class="acts"><a href="press/deepspace-press-sunset.jpg" download>download</a></span>
-          </div>
-        </li>
-        <li class="press-card">
-          <span class="thumb"><img src="press/deepspace-press-portrait.jpg" alt="" width="76" height="76" loading="lazy"></span>
-          <div class="meta">
-            Press photo, portrait
-            <span class="note">JPG, 1600 &times; 2133</span>
-            <span class="acts"><a href="press/deepspace-press-portrait.jpg" download>download</a></span>
-          </div>
-        </li>
-        <li class="press-card">
-          <span class="thumb"><img src="press/deepspace-press-square.jpg" alt="" width="76" height="76" loading="lazy"></span>
-          <div class="meta">
-            Press photo, square
-            <span class="note">JPG, 1400 &times; 1400</span>
-            <span class="acts"><a href="press/deepspace-press-square.jpg" download>download</a></span>
-          </div>
-        </li>
-        <li class="press-card">
-          <span class="thumb"><img src="press/water-planets-uk-chart.jpg" alt="" width="76" height="76" loading="lazy"></span>
-          <div class="meta">
-            Water Planets on the UK Official Album Downloads Chart
-            <span class="note">Screenshot, September 2025</span>
-            <span class="acts"><a href="press/water-planets-uk-chart.jpg" download>download</a></span>
-          </div>
-        </li>
-      </ul>
-    </section>
   </div>
 </main>
 
 <footer>deepspace &nbsp; brisbane</footer>
-
-<div id="choice" class="choice" role="dialog" aria-modal="true" aria-labelledby="choice-q">
-  <div class="choice-box">
-    <p class="choice-q" id="choice-q"></p>
-    <p class="choice-sub"></p>
-    <div class="choice-btns">
-      <button class="linkbtn c-here" type="button">see it here</button>
-      <button class="linkbtn c-leave" type="button">leave this page</button>
-      <button class="linkbtn cancel" type="button">cancel</button>
-    </div>
-  </div>
-</div>
 
 <div id="viewer" class="viewer" role="dialog" aria-modal="true" aria-label="Viewer">
   <div class="v-bar">
@@ -1232,63 +651,17 @@
     { x: 0.60, y: 0.15, r: 0.45, c: [40, 52, 96],  a: 0.20, sx: 0.00012, sy: 0.00007, p: 1.3 }
   ];
 
-  // The colour of space follows the scroll: dark, blue, soft pink, green.
-  // Each stop sets the sky gradient, the four clouds (colour, strength), the horizon glow and the motes.
-  var STOPS = [
-    { base: [[3, 6, 11], [5, 8, 14], [7, 11, 18]],
-      cl: [[[14, 22, 34], 0.22], [[10, 18, 30], 0.20], [[16, 26, 38], 0.14], [[20, 24, 44], 0.14]],
-      hz: [143, 180, 204], hzA: 0.03, mote: [200, 225, 240] },
-    { base: [[3, 6, 11], [7, 16, 27], [10, 22, 36]],
-      cl: [[[24, 58, 86], 0.34], [[18, 44, 74], 0.30], [[30, 70, 92], 0.20], [[40, 52, 96], 0.20]],
-      hz: [143, 180, 204], hzA: 0.05, mote: [200, 225, 240] },
-    { base: [[11, 6, 16], [19, 10, 24], [27, 14, 31]],
-      cl: [[[92, 48, 82], 0.26], [[74, 38, 72], 0.24], [[100, 56, 88], 0.16], [[66, 42, 94], 0.16]],
-      hz: [218, 164, 198], hzA: 0.05, mote: [240, 214, 234] },
-    { base: [[3, 11, 9], [7, 20, 15], [10, 28, 20]],
-      cl: [[[24, 80, 62], 0.28], [[20, 68, 54], 0.26], [[34, 90, 70], 0.18], [[30, 74, 78], 0.18]],
-      hz: [150, 214, 184], hzA: 0.05, mote: [206, 242, 226] }
-  ];
-  var progress = 0, target = 0;
-
-  function readScroll() {
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    target = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
-  }
-  function mixN(a, b, f) { return a + (b - a) * f; }
-  function mixC(a, b, f) { return [mixN(a[0], b[0], f), mixN(a[1], b[1], f), mixN(a[2], b[2], f)]; }
-  function rgb(c, a) {
-    return 'rgba(' + Math.round(c[0]) + ',' + Math.round(c[1]) + ',' + Math.round(c[2]) + ',' + (a === undefined ? 1 : a) + ')';
-  }
-  // The blend between two neighbouring stops for the current scroll position.
-  function sky() {
-    var pos = progress * (STOPS.length - 1);
-    var i = Math.min(Math.floor(pos), STOPS.length - 2);
-    var f = pos - i;
-    f = f * f * (3 - 2 * f);
-    var A = STOPS[i], B = STOPS[i + 1];
-    var out = { base: [], cl: [], hz: mixC(A.hz, B.hz, f), hzA: mixN(A.hzA, B.hzA, f), mote: mixC(A.mote, B.mote, f) };
-    for (var k = 0; k < 3; k++) out.base.push(mixC(A.base[k], B.base[k], f));
-    for (var j = 0; j < 4; j++) out.cl.push({ c: mixC(A.cl[j][0], B.cl[j][0], f), a: mixN(A.cl[j][1], B.cl[j][1], f) });
-    return out;
-  }
-
   var motes = [];
 
   function seed() {
     motes = [];
-    // Three depths: lots of faint far stars that barely move, fewer near ones that sweep past as you scroll.
-    var n = Math.min(Math.round((w * h) / 4200), 900);
+    var n = Math.round((w * h) / 16000);
     for (var i = 0; i < n; i++) {
-      var d = Math.random();
-      var layer = d < 0.58 ? 0 : (d < 0.88 ? 1 : 2);
       motes.push({
         x: Math.random(),
         y: Math.random(),
         r: Math.random() * 1.1 + 0.25,
-        rs: [0.7, 1, 1.6][layer],
-        as: [0.6, 0.9, 1.25][layer],
-        par: [0.06, 0.2, 0.55][layer],
-        s: (Math.random() * 0.00002 + 0.000005) * [0.6, 1, 1.8][layer],
+        s: Math.random() * 0.00002 + 0.000005,
         t: Math.random() * 6.28,
         f: Math.random() * 0.0006 + 0.0002
       });
@@ -1307,12 +680,11 @@
   }
 
   function draw(t) {
-    var S = sky();
     // base
     var g = ctx.createLinearGradient(0, 0, 0, h);
-    g.addColorStop(0, rgb(S.base[0]));
-    g.addColorStop(0.55, rgb(S.base[1]));
-    g.addColorStop(1, rgb(S.base[2]));
+    g.addColorStop(0, '#03060b');
+    g.addColorStop(0.55, '#07101b');
+    g.addColorStop(1, '#0a1624');
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, w, h);
 
@@ -1321,12 +693,12 @@
     for (var i = 0; i < clouds.length; i++) {
       var c = clouds[i];
       var cx = (c.x + Math.sin(t * c.sx + c.p) * 0.14) * w;
-      var cy = (c.y + Math.cos(t * c.sy + c.p) * 0.10 + Math.sin((window.scrollY || 0) * 0.0006 * (1 + i * 0.35) + c.p) * 0.10) * h;
+      var cy = (c.y + Math.cos(t * c.sy + c.p) * 0.10) * h;
       var rad = c.r * Math.max(w, h) * 0.8;
       var breathe = 0.85 + 0.15 * Math.sin(t * 0.00018 + c.p);
       var rg = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
-      rg.addColorStop(0, rgb(S.cl[i].c, S.cl[i].a * breathe));
-      rg.addColorStop(1, rgb(S.cl[i].c, 0));
+      rg.addColorStop(0, 'rgba(' + c.c[0] + ',' + c.c[1] + ',' + c.c[2] + ',' + (c.a * breathe) + ')');
+      rg.addColorStop(1, 'rgba(' + c.c[0] + ',' + c.c[1] + ',' + c.c[2] + ',0)');
       ctx.fillStyle = rg;
       ctx.fillRect(0, 0, w, h);
     }
@@ -1334,45 +706,110 @@
     // a faint horizon: the place the hallway ends
     var hy = h * 0.58;
     var hz = ctx.createLinearGradient(0, hy - h * 0.12, 0, hy + h * 0.12);
-    var glow = S.hzA + 0.02 * Math.sin(t * 0.0002);
-    hz.addColorStop(0, rgb(S.hz, 0));
-    hz.addColorStop(0.5, rgb(S.hz, glow));
-    hz.addColorStop(1, rgb(S.hz, 0));
+    var glow = 0.05 + 0.02 * Math.sin(t * 0.0002);
+    hz.addColorStop(0, 'rgba(143,180,204,0)');
+    hz.addColorStop(0.5, 'rgba(143,180,204,' + glow + ')');
+    hz.addColorStop(1, 'rgba(143,180,204,0)');
     ctx.fillStyle = hz;
     ctx.fillRect(0, hy - h * 0.12, w, h * 0.24);
     ctx.globalCompositeOperation = 'source-over';
 
     // motes
-    var sy = window.scrollY || 0;
     for (var j = 0; j < motes.length; j++) {
       var m = motes[j];
       var px = ((m.x + t * m.s) % 1) * w;
-      var py = (((m.y + Math.sin(t * m.f + m.t) * 0.01) * h - sy * m.par) % h + h) % h;
+      var py = (m.y + Math.sin(t * m.f + m.t) * 0.01) * h;
       var tw = 0.25 + 0.55 * (0.5 + 0.5 * Math.sin(t * m.f * 3 + m.t));
-      ctx.fillStyle = rgb(S.mote, Math.min(tw * 0.55 * m.as, 1));
+      ctx.fillStyle = 'rgba(200,225,240,' + (tw * 0.55) + ')';
       ctx.beginPath();
-      ctx.arc(px, py, m.r * m.rs, 0, 6.2832);
+      ctx.arc(px, py, m.r, 0, 6.2832);
       ctx.fill();
     }
+
+    drawPlanet(t);
   }
 
-  var lastT = 0;
+  // A quiet planet rising in the lower left, lit from the upper right.
+  function drawPlanet(t) {
+    var fade = reduce ? 1 : Math.min(1, Math.max(0, (t - 1200) / 7000));
+    if (fade <= 0) return;
+    var base = Math.min(w, h);
+    var r = Math.max(150, Math.min(base * 0.46, 430));
+    var lift = reduce ? 0 : Math.min((window.pageYOffset || 0) * 0.04, h * 0.2);
+    var cx = w * 0.09;
+    var cy = h * 0.95 - lift;
+
+    ctx.save();
+    ctx.globalAlpha = fade * 0.78;
+
+    // solid body, so stars behind it are hidden
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, 6.2832);
+    ctx.fillStyle = '#050a12';
+    ctx.fill();
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, 6.2832);
+    ctx.clip();
+
+    // light side
+    var g = ctx.createRadialGradient(cx + r * 0.45, cy - r * 0.45, r * 0.05, cx + r * 0.1, cy - r * 0.1, r * 1.15);
+    g.addColorStop(0, 'rgba(150,190,214,0.50)');
+    g.addColorStop(0.35, 'rgba(52,92,120,0.50)');
+    g.addColorStop(0.72, 'rgba(14,30,48,0.60)');
+    g.addColorStop(1, 'rgba(4,9,16,0.80)');
+    ctx.fillStyle = g;
+    ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+
+    // soft cloud bands that drift very slowly
+    ctx.translate(cx, cy);
+    ctx.rotate(-0.38);
+    var drift = reduce ? 0 : t * 0.0000025;
+    for (var i = -9; i <= 9; i++) {
+      var th = r * (0.06 + ((i * 37) % 5 + 5) % 5 * 0.012);
+      var y = i * r * 0.115 + Math.sin(drift * 40 + i * 1.3) * r * 0.012;
+      var a = 0.05 + 0.05 * Math.abs(Math.sin(i * 1.7));
+      var light = (i % 2 === 0);
+      var col = light ? '120,172,204' : '6,14,26';
+      var bg = ctx.createLinearGradient(0, y, 0, y + th);
+      bg.addColorStop(0, 'rgba(' + col + ',0)');
+      bg.addColorStop(0.5, 'rgba(' + col + ',' + (light ? a : a * 2.2) + ')');
+      bg.addColorStop(1, 'rgba(' + col + ',0)');
+      ctx.fillStyle = bg;
+      ctx.fillRect(-r * 1.2, y, r * 2.4, th);
+    }
+    ctx.rotate(0.38);
+    ctx.translate(-cx, -cy);
+
+    // night side
+    var sh = ctx.createRadialGradient(cx + r * 0.3, cy - r * 0.3, r * 0.2, cx - r * 0.1, cy + r * 0.1, r * 1.75);
+    sh.addColorStop(0, 'rgba(2,4,8,0)');
+    sh.addColorStop(0.5, 'rgba(2,4,8,0.22)');
+    sh.addColorStop(1, 'rgba(2,4,8,0.88)');
+    ctx.fillStyle = sh;
+    ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+    ctx.restore();
+
+    // thin glow of atmosphere around the edge
+    ctx.globalCompositeOperation = 'lighter';
+    var rim = ctx.createRadialGradient(cx, cy, r * 0.9, cx, cy, r * 1.14);
+    rim.addColorStop(0, 'rgba(143,180,204,0)');
+    rim.addColorStop(0.42, 'rgba(143,180,204,0.22)');
+    rim.addColorStop(1, 'rgba(143,180,204,0)');
+    ctx.fillStyle = rim;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r * 1.14, 0, 6.2832);
+    ctx.fill();
+    ctx.restore();
+  }
+
   function loop(t) {
-    var dt = Math.min(t - (lastT || t), 1500);
-    lastT = t;
-    progress += (target - progress) * (1 - Math.exp(-dt / 700));
-    if (Math.abs(target - progress) < 0.0005) progress = target;
     draw(t);
     requestAnimationFrame(loop);
   }
 
-  window.addEventListener('scroll', function () {
-    readScroll();
-    if (reduce) { progress = target; draw(performance.now()); }
-  }, { passive: true });
-  window.addEventListener('resize', function () { readScroll(); resize(); });
-  readScroll();
-  progress = target;
+  window.addEventListener('resize', resize);
   resize();
   if (!reduce) requestAnimationFrame(loop);
 })();
@@ -1390,76 +827,69 @@
 
   var albums = [
     { t: 'The Atlas Sector', y: '2026', l: 'Projekt Records, new album', u: P + 'the-atlas-sector', art: 'a1408284073', id: '295441197', c: [
-      { q: 1, x: "This is such a beautiful album. Relaxing, I just allow it to take me away and it is good. Favorite track: Atlas 8 - Arid Sector, I Think I Found Something Beautiful.", w: "Steve Lake, supporter on Bandcamp" },
+      { q: 1, x: "This is such a beautiful album. Relaxing , I just allow it to take me away and it is good. Favorite track: Atlas 8 - Arid Sector, I Think I Found Something Beautiful.", w: "Steve Lake, supporter on Bandcamp" },
       { q: 1, x: "Mirko is an amazing talent. The Atlas Sector is yet another modern masterpiece of progressive electronic space music. I thought Water Planets was hard to match and this album does just that! You need this in your collection. Highest possible recommendation. Favorite track: Atlas 8 - EMERALD OBSERVATORY.", w: "Progressive Music Planet, supporter on Bandcamp" },
-      { q: 1, x: "Another ambient classic from Deepspace. A fitting follow-up to \"Water Planets\", which I regard as one of the greatest ambient albums ever made.\nThe interactive gamebook is something I have yet to explore, but is an interesting bonus all the same.\nHighly recommended. Favorite track: Atlas 8 - Arid Sector, I Think I Found Something Beautiful.", w: "Darksted, supporter on Bandcamp" },
+      { q: 1, x: "Another ambient classic from Deepspace.A fitting follow up to \"Water planets\" which I regard as one of the greatest ambient albums ever made.\nThe interactive gamebook is something I have yet to explore,but is an interesting bonus all the same.\nHighly recommended. Favorite track: Atlas 8 - Arid Sector, I Think I Found Something Beautiful.", w: "Darksted, supporter on Bandcamp" },
       { q: 1, x: "Mirko has done it again, drawing us into imaginary realms of distant worlds. He continues his move away from pure space music into something more composed but highly original as he melds detuned synths, effects, and bits of stories into a cohesive musical mélange. Put on your headphones and enjoy the journey.", w: "PhilPDX50, supporter on Bandcamp" },
-      { q: 1, x: "Deepspace never misses, but this is next level. The music is beautiful and fits the artist’s moniker perfectly. It is indeed deep like space.\n\nThe real standout part about this album, though, is the gamebook that accompanies it. Something I’ve never seen done before and a great way to immerse yourself further into the vision that has been so painstakingly crafted.\n\nA true labor of love and something not to be slept on. Thank you Projekt Records and Deepspace!", w: "aelia, supporter on Bandcamp" },
-      { q: 1, x: "A very nice range of styles, smooth and mellow to more rhythmic. I enjoyed the melody and nice spatial breadth of the Null piece played on a 5.1 sound system. The Vast Gate piece too was a grand aural vista.\nThanks Deepspace, cheers! Favorite track: Atlas Null - 000, 000, 000, 000.", w: "robw-37, supporter on Bandcamp" },
-      { q: 1, x: "Ambient, mais très musical et mélodieux. Sombre et lumineux, cet album nous emporte, transporte… À écouter au casque pour en saisir toutes les subtilités.", w: "David TRIMBOUR, supporter on Bandcamp" }
+      { q: 1, x: "Deepspace never misses, but this is next level. The music is beautiful and fits the artist’s moniker perfectly. It is indeed deep like space.\n\nThe real stand out part about this album though, is the gamebook that accompanies it. Something I’ve never seen done before and a great way to immerse yourself further into the vision that has been so painstakingly crafted.\n\nA true labor of love and something not to be slept on. Thank you Projekt Records and Deepspace!", w: "aelia, supporter on Bandcamp" },
+      { q: 1, x: "A very nice range of styles, smooth and mellow to more rhythmic. I enjoyed the melody and nice spacial breadth of the Null piece played on a 5:1 sound system. The Vast Gate piece too was a grand aural vista.\nThanks Deepspace, cheers! Favorite track: Atlas Null - 000, 000, 000, 000.", w: "robw-37, supporter on Bandcamp" },
+      { q: 1, x: "Ambient, mais très musical et mélodieux. Sombre et lumineux, cet album nous emporte, transporte… A écouter au casque pour en saisir toutes les subtilités.", w: "David TRIMBOUR, supporter on Bandcamp" }
     ]},
     { t: 'Water Planets', y: '2025', l: 'Projekt Records', u: P + 'water-planets', art: 'a2107629789', id: '3740035671', c: [
       { x: "#65 on the UK album charts, September 2025", w: "UK album charts" },
       { x: "#22 on Best Albums of 2025", w: "Echoes Radio" },
-      { q: 1, x: "A wonderful album, a must buy for purveyors of fine space ambient music. Favorite track: Surfacing Amongst Biofluorescent Systems.", w: "DJ_Tim_Tee, supporter on Bandcamp" },
+      { q: 1, x: "A wonderful album, a must buy for purveyors of fine space ambient music......... Favorite track: Surfacing Amongst Biofluorescent Systems.", w: "DJ_Tim_Tee, supporter on Bandcamp" },
       { q: 1, x: "This album is a nice trip.", w: "maseltaum, supporter on Bandcamp" },
       { q: 1, x: "Here we go again... 🛸✨️", w: "katie-s-music, supporter on Bandcamp" },
-      { q: 1, x: "This is one of the greatest albums ever made. Simple as that.\nPerfect from start to finish.", w: "Darksted, supporter on Bandcamp" },
-      { q: 1, x: "Exactly what I want to hear. Favorite track: Surfacing Amongst Biofluorescent Systems.", w: "xpemou, supporter on Bandcamp" },
+      { q: 1, x: "This is one of the greatest albums ever made.Simple as that.\nPerfect from start to finish.", w: "Darksted, supporter on Bandcamp" },
+      { q: 1, x: "exactly what i want to hear. Favorite track: Surfacing Amongst Biofluorescent Systems.", w: "xpemou, supporter on Bandcamp" },
       { q: 1, x: "That BR-feeling from track 8 CD One...!!! Great album overall!", w: "calyxcalamander, supporter on Bandcamp" },
-      { q: 1, x: "I like how it seems to be split, so part one is more ambient and part two is more sequencer-driven.", w: "mysticwolf75, supporter on Bandcamp" },
+      { q: 1, x: "I like how it seems to be split so part one is more ambient, and part 2 is more sequencer driven.", w: "mysticwolf75, supporter on Bandcamp" },
       { q: 1, x: "The harmonies of ecology and technology in sync with one another. It's a fun trip, in a naive retro-futuristic sort of way.", w: "nichtsein000, supporter on Bandcamp" },
-      { q: 1, x: "A very satisfying album, both as background ambient as well as actively listening and diving deep into the story and the music flow. Expertly crafted, it's pure bliss for the ears. I've only listened to the most recent releases by Deepspace, but I definitely want to explore his earlier works. Favorite track: Light Year (D.e.a.d. S.y.n.t.a.x.).", w: "Ego Broken, supporter on Bandcamp" },
+      { q: 1, x: "A very satisfying album, both as background ambient as well as actively listening and diving deep into the story and the music flow. Expertly crafted, it's pure bliss for the ears. I've only listened to the most recent releases by Deepspace but I definitely want to explore his earlier works. Favorite track: Light Year (D.e.a.d. S.y.n.t.a.x.).", w: "Ego Broken, supporter on Bandcamp" },
       { q: 1, x: "I continue to be amazed by every deepspace release. There appears to be no limits to what Mirko is capable of accomplishing, and in my personal opinion he's already one of the greats of the genre. This album in particular is so effortlessly complex that it's a pure joy to listen to. Favorite track: Unknown Colours Drifting in Liquid (Turquoise World Ocean).", w: "KarPeri, supporter on Bandcamp" },
       { q: 1, x: "Now, this is a voyage. One album of vast stellar washes and drifts in classic spacemusic style and one album of catchy rhythmic grooves, all coming together in a meaningful narrative flow. An hour and a half of 100% goodness. Check it out, and be sure to read the album notes for the origin (very funny!) and the storyline. An instant favorite.", w: "John Shanahan, Hypnagogue" },
       { q: 1, x: "warm, shimmering and curvaceous", w: "Chuck van Zyl, Star\u2019s End" }
     ]},
     { t: 'Neon Blue Utopia', y: '2025', l: 'Projekt Records', u: P + 'neon-blue-utopia', art: 'a1006312085', id: '844316991', c: [
-      { q: 1, x: "One of my favorite deepspace albums. In some ways it reminds me of Ulver's Perdition City. Maybe take that album and set it into the future. Favorite track: Rainy メガシティ 七 Precinct.", w: "Progressive Music Planet, supporter on Bandcamp" },
-      { q: 1, x: "It's a grower! Beautiful ambient/chill compositions with a deep retro feel! Favorite track: Sunny Hypnagogia Heights.", w: "LaRusso, supporter on Bandcamp" },
-      { q: 1, x: "Stunning! It's hard to pin down what makes deepspace so unique. Where other electronic artists make sounds, Mirko makes worlds and then soundtracks them. A hundred, maybe a thousand, novels might have been written in this Utopia, but Mirko isn't interested in telling – that's your job. A deepspace album is only as good as your imagination. Favorite track: Rainy メガシティ 七 Precinct.", w: "D. S., supporter on Bandcamp" },
+      { q: 1, x: "One of my favorite deepspace albums. In some ways it reminds me of Ulver's Perdition City. Maybe take that album and set it into the future, Favorite track: Rainy メガシティ 七 Precinct.", w: "Progressive Music Planet, supporter on Bandcamp" },
+      { q: 1, x: "it's a grower! beautiful ambient / chill compositions with a deep retro feel! Favorite track: Sunny Hypnagogia Heights.", w: "LaRusso, supporter on Bandcamp" },
+      { q: 1, x: "Stunning! It's hard to pin down what makes deepspace so unique. Where other electronic artists make sounds, Mirko makes worlds and then soundtracks them. A hundred, maybe a thousand, novels might have been written in this Utopia, but Mirko isn't interested in telling -- that's your job. A deepspace album is only as good as your imagination. Favorite track: Rainy メガシティ 七 Precinct.", w: "D. S., supporter on Bandcamp" },
       { q: 1, x: "A laid back start to 2025. Just what I need.", w: "Vegänhead, supporter on Bandcamp" },
-      { q: 1, x: "Strangely fascinating and fascinatingly strange, Neon Blue Utopia is a great way to start the new year.", w: "KarPeri, supporter on Bandcamp" },
-      { q: 1, x: "A unique musical journey. It takes you to all kinds of different places. Definitely unlike anything I've heard from deepspace thus far. Multifaceted. I also very much like the concept behind this album. \"Vertical Automated Parking\" and \"Upside Down City Traffic\" bring to mind images of one of my favorite movies, The Fifth Element. Favorite track: Upside Down City Traffic (F-Zero Dream).", w: "mysticwolf75, supporter on Bandcamp" },
-      { q: 1, x: "deepspace goes utopian virtual. His best so far.", w: "JTH, supporter on Bandcamp" },
+      { q: 1, x: "Strangely fascinating and fascinatingly strange, Neon Blue Utopia is a great way to start into the new year.", w: "KarPeri, supporter on Bandcamp" },
+      { q: 1, x: "A unique musical journey. It takes you to all kinds of different places. Definitely unlike anything I've heard from deepspace thus far. Multifaceted. I also very much like the concept behind this album. \"Vertical Automated Parking\" and \"Upside Down City Traffic\" brings to mind images of one of my favorite movies, The Fifth Element. Favorite track: Upside Down City Traffic (F-Zero Dream).", w: "mysticwolf75, supporter on Bandcamp" },
+      { q: 1, x: "deepspace goes utopian virtual. his best so far.", w: "JTH, supporter on Bandcamp" },
       { q: 1, x: "Pure euphoria. Thank you deepspace.", w: "MR GREY, supporter on Bandcamp" },
       { q: 1, x: "Simply, thank you for this wonder.", w: "Ignatious Land, supporter on Bandcamp" },
       { q: 1, x: "His sound is more influenced by Brian Eno’s ambient aesthetic, of fluid impressionism, sometimes to the point of vaporous. On NEON BLUE UTOPIA he adds in Eno’s sensibility for subtle melodies… with shimmering synth crystals, shards of melody and the environmental sound of rain transformed through electronics. It’s a sound that hints at new vistas just over the hill… It’s an album to get lost in, just like the Megacity of his imagination. Welcome to 2025, or is it 2125?", w: "Echoes Radio, review", u: "https://echoes.org/2024/12/29/echoes-january-cd-of-the-month-deepspace/" },
       { q: 1, x: "Ruckels has crafted an album that doesn’t just create a mood; it builds a world. His meticulous layering of detuned synths, shimmering drones, and hyperreal textures draws listeners into a space that is both futuristic and achingly intimate.", w: "Chain D.L.K., review", u: "https://www.chaindlk.com/reviews/12524" },
-      { q: 1, x: "77 minutes of purely instrumental compositions that straddle the boundaries of atmospheric, electronic, dreamwave and post-rock, taking his sound into the far reaches of space and beyond, using droning guitars, synthesizers that occasionally detune suddenly, muted percussion and piano, vast expansive ambient fills, brilliant sparkles of tonal color, and sampled sounds (which can include voices), all in order to bring his visions to life, spread across the album’s fifteen long tracks.", w: "Exposé, review", u: "http://expose.org/index.php/articles/display/deepspace-neon-blue-utopia-3.html", v: "https://web.archive.org/web/20260611011612if_/http://expose.org/index.php/articles/display/deepspace-neon-blue-utopia-3.html" }
+      { q: 1, x: "77 minutes of purely instrumental compositions that straddle the boundaries of atmospheric, electronic, dreamwave and post-rock, taking his sound into the far reaches of space and beyond, using droning guitars, synthesizers that occasionally detune suddenly, muted percussion and piano, vast expansive ambient fills, brilliant sparkles of tonal color, and sampled sounds (which can include voices), all in order to bring his visions to life, spread across the album’s fifteen long tracks.", w: "Exposé, review", u: "https://expose.org/index.php/articles/display/deepspace-neon-blue-utopia-3.html" }
     ]},
     { t: 'Vertical Landscapes \u2013 Retrospective', y: '2024', l: 'Projekt Records', u: P + 'vertical-landscapes-retrospective', art: 'a2602865903', id: '3949209331', c: [
-      { q: 1, x: "Good music with tripping vibes. It helps me concentrate and inspires me. Favorite track: HyperdriveEngage.", w: "Xbass540, supporter on Bandcamp" },
+      { q: 1, x: "Good music, tripping vibes, helps me concentrate and inspire. Favorite track: HyperdriveEngage.", w: "Xbass540, supporter on Bandcamp" },
       { q: 1, x: "A nice collection of beautiful atmospheric soundscapes. Favorite track: The Blue Dunes (single edit).", w: "star_maze_vdb, supporter on Bandcamp" },
       { q: 1, x: "Excellent compilation! This is a great place to start for those new to deepspace, and even for those of us who, like myself, already own everything deepspace has released on Bandcamp, this is a nice sampler when you can't decide which one to listen to!", w: "mysticwolf75, supporter on Bandcamp" },
       { q: 1, x: "spellbinding ambient electronic music", w: "Progressive Rock Central" },
       { q: 1, x: "Mirko’s mastery of the genre is on full display here.", w: "Phil Derby, Electroambient Space" }
     ]},
     { t: 'The Black Orchid Galaxies', y: '2024', l: 'Projekt Records', u: P + 'the-black-orchid-galaxies', art: 'a1888469178', id: '360422661', c: [
-      { q: 1, x: "As the artist name & the title suggest, this album is a deep dive into the furthest reaches of \"Space Ambient\". Full of lush & shifting pads, with ethereal & experimental touches that draw influences from a range of diverse artists from Steve Roach to MBV to Ulrich Schnauss, yet Mirko carves his own sonic aesthetic with a deep sense of wonder & emotion.", w: "Mick Chillage, supporter on Bandcamp" },
-      { q: 1, x: "LOVE the bass in this. Favorite track: DreamMachinery (The Long Sleep).", w: "del, supporter on Bandcamp" },
+      { q: 1, x: "As the artist name & the title suggest this album is a deep dive into the furthest reaches of \"Space Ambient\" Full of lush & shifting pads, with ethereal & experimental touches that draws influences from a range of diverse artists from Steve Roach to MBV to Ulrich Schnauss, yet Mirko carves his own sonic aesthetic with a deep sense of wonder & emotion.", w: "Mick Chillage, supporter on Bandcamp" },
+      { q: 1, x: "LOVE the bass in this Favorite track: DreamMachinery (The Long Sleep).", w: "del, supporter on Bandcamp" },
       { q: 1, x: "Une belle petite odyssée spatiale de 75 mn. Favorite track: Travelling Vast Distances.", w: "roro38, supporter on Bandcamp" },
       { q: 1, x: "This album was so good that my Hubby stole it from me! Good thing I can still play the digital download. Sounds great with headphones.", w: "jcec, supporter on Bandcamp" },
       { q: 1, x: "This makes me lose focus and stare into a beautifully strange abyss. Favorite track: HyperdriveEngage.", w: "boris ruckels, supporter on Bandcamp" },
-      { q: 1, x: "Absolutely loving the dissonant chords that crop up throughout this record – they catch you off guard and give you a mild sense of discomfort. This isn't just another themed ambient album, it has some serious soul & texture to it. Favorite track: DreamMachinery (The Long Sleep).", w: "Chis-R, supporter on Bandcamp" },
-      { q: 1, x: "This is another phenomenal space ambient album by Deepspace. I truly love it! Favorite track: DreamMachinery (The Long Sleep).", w: "DJ_Tim_Tee, supporter on Bandcamp" },
-      { q: 1, x: "Another beautiful dream journey from Deepspace. Starting many years ago with \"Another Empty Galaxy\" all the way to his latest, \"The Black Orchid Galaxies\", there's a lot of deep, thoughtful compositions to just let your mind drift and dream along with. Highly, highly recommended. Favorite track: HyperdriveEngage.", w: "infinite_beagle, supporter on Bandcamp" },
+      { q: 1, x: "Absolutely loving the dissonant chords that crop up throughout this record - they catch you off guard and give you a mild sense of discomfort. This isn't just another themed ambient album, it has some serious soul & texture to it. Favorite track: DreamMachinery (The Long Sleep).", w: "Chis-R, supporter on Bandcamp" },
+      { q: 1, x: "This is another phenomenal space ambient album by Deepspace, I truly love it! Favorite track: DreamMachinery (The Long Sleep).", w: "DJ_Tim_Tee, supporter on Bandcamp" },
+      { q: 1, x: "Another beautiful dream journey from Deepspace. Starting many years ago \"Another Empty Galaxy\" all the way to his latest \"The Black Orchid Galaxies\" there's a lot of deep thoughtful compositions to just let your mind drift and dream along with. Highly highly recommended. Favorite track: HyperdriveEngage.", w: "infinite_beagle, supporter on Bandcamp" },
       { q: 1, x: "Probably the best dreamsynth / hypnagogic space ambient I have ever experienced. Absolutely stunning from start to finish. Favorite track: Earth to Arcturus System.", w: "☆*:.｡.<NΞONΞKA>.｡.:*☆, supporter on Bandcamp" },
       { q: 1, x: "A new album from Deepspace is always a treat!", w: "mysticwolf75, supporter on Bandcamp" },
       { q: 1, x: "Immerse yourself in a mesmerizing blend of ambient electronic music that takes you on a cosmic journey through the stars. Each track on this album is carefully crafted to evoke a sense of wonder and exploration, perfect for both relaxation and inspiration. With its captivating soundscapes and ethereal melodies, \"The Black Orchid Galaxies\" is a must-have for any space music lover looking to expand their collection. My first label release! Favorite track: DreamMachinery (The Long Sleep).", w: "www.littleuniversemusic.co.uk Simply Better Music, supporter on Bandcamp" },
-      { q: 1, x: "Deepspace puts you on the bridge of the ship as your mind sets course for distant and beautiful worlds. Favorite track: Earth to Arcturus System.", w: "Wayne Neverka, supporter on Bandcamp" },
+      { q: 1, x: "Deepspace puts you on the bridge of the ship as your mind sets course for distant and beautiful worlds. Favorite track: Earth to Arcturus System", w: "Wayne Neverka, supporter on Bandcamp" },
       { x: "Called the most engaging of his Projekt releases up to that point.", w: "Exposé Online" }
     ]},
     { t: 'The Architecture of Flowers', y: '2023', l: 'Independent', u: D + 'the-architecture-of-flowers-2', art: 'a1188060786', id: '1744732581', c: [
-      { q: 1, x: "What an amazing, artistic and expansive ambient album. Just the first track alone is worth the small fee charged for this. Other standouts include The Viols Herald the Slow Earth, A Being Only Once & Blue Lanterns. Favorite track: Part One - Inflorescence.", w: "djentstorm, supporter on Bandcamp" },
-      { q: 1, x: "Another brilliant work from deepspace! Favorite track: Blossoms at Midnight.", w: "DJ_Tim_Tee, supporter on Bandcamp" },
-      { q: 1, x: "Mesmerizing sonic landscapes. Fantastic album. Favorite track: Return to Blue.", w: "star_maze_vdb, supporter on Bandcamp" },
-      { q: 1, x: "I picked the first track as my favorite but really all 19 tracks just flow so seemingly effortlessly that it is one big ambient listening love fest. Mirko's mastery of the genre is on full display here. Highly recommended. Favorite track: Part One - Inflorescence.", w: "PhilPDX50, supporter on Bandcamp" },
-      { q: 1, x: "This is on par with \"Mystic Chords & Sacred Spaces\" by Steve Roach. Very deep and nuanced ambient!", w: "mysticwolf75, supporter on Bandcamp" },
-      { q: 1, x: "An amazing album. I'll be featuring it on my Blind Flight podcast. Go get this one, it's fantastic, highly recommended, 10/10. Favorite track: Return to Blue.", w: "Scott Lawlor, supporter on Bandcamp" },
-      { q: 1, x: "Love this album so much. Glorious. On repeat.", w: "Sean Williams, supporter on Bandcamp" },
-      { q: 1, x: "I don't normally do reviews, however, I had to do it for this Deepspace album – and not just because he is an Aussie! Yep, this is up there with the best of Steve Roach and I might add up there with the best of Tomas Wiess and Matthias Grassow. More like this please! Can't pick a favourite - love them all.", w: "openearsian, supporter on Bandcamp" },
-      { q: 1, x: "Deepspace’s genius is evident in every perfectly chosen note, every delicately passing phrase, every unfolding chord that, combined, leads the listener irresistibly deeper into an embrace of warm and always surprising delight. Whether you’re listening to meditate or to enhance your being, you’ll find much to explore in this extraordinary new work. Its depth and breadth proves that Deepspace has not reached the end of his sonic journeys – he is, if anything, just getting us started.", w: "theAdelaidean" }
+      { q: 1, x: 'What an amazing, artistic and expansive ambient album.', w: 'djentstorm, supporter on Bandcamp' },
+      { x: 'Says Deepspace has not reached the end of his sonic journeys and is, if anything, just getting started.', w: 'theAdelaidean' }
     ]},
     { t: 'The Blue Dunes', y: '2022', l: 'Projekt Records', u: P + 'the-blue-dunes', art: 'a1404827542', id: '2823436337', c: [
       { q: 1, x: "Pure ambient at its best: timeless soundscapes that mesmerize the soul. The stillness and relaxation this track evokes are pure art. Favorite track: The Blue Dunes.", w: "star_maze_vdb, supporter on Bandcamp" },
@@ -1468,7 +898,7 @@
       { q: 1, x: "In the cool of the night, the desert flower blooms, delicately scenting the still air. Stars wheel and freeze in the heavens, millennia passing and standing still in a timeless moment. My soul expands to encompass the universe, even as I realize that all of my Self matters even less than one grain of sand in these endless, shifting dunes. Yet somehow that puts a gentle smile on my face.", w: "Dave Aftandilian, supporter on Bandcamp" },
       { q: 1, x: "Lovely, lovely, lovely. Thanks for making this!", w: "Tango Mango, supporter on Bandcamp" },
       { q: 1, x: "A gorgeous slice of dynamic stillness that lifts the listener out of the mundane and into the sublime. Perfectly crafted, the very essence of ambient art.\n\nFavorite track: The Blue Dunes.", w: "Sean Williams, supporter on Bandcamp" },
-      { q: 1, x: "This is a really beautiful album of floating ambience. The gorgeous opener, \"The Blue Dunes\", really sets the mood for the rest of the album and \"An Unexpected Shelter\" has a real Steve Roach feel to it (and I mean this in a very complimentary way, as I am a huge Steve Roach fan). This will definitely be getting played a lot! Lovely cover art, too! Favorite track: The Blue Dunes.", w: "mysticwolf75, supporter on Bandcamp" },
+      { q: 1, x: "This is a really beautiful album of floating ambience. The gorgeous opener, \"The Blue Dunes\", really sets the mood for the rest of the album and \"An Unexpected Shelter\" has a real Steve Roach feel to it (and I mean this very complimentary, as I am a huge Steve Roach fan). This will definitely be getting played a lot! Lovely cover art, too! Favorite track: The Blue Dunes.", w: "mysticwolf75, supporter on Bandcamp" },
       { q: 1, x: "an ocean of ambient bliss", w: "Sonic Immersion" },
       { x: "Described as a slow-moving sonic sculpture that quietly shifts the listener’s mood.", w: "Exposé" },
       { x: "Named Best New Release of 2022.", w: "WPPM Sound + Vision" }
@@ -1483,43 +913,29 @@
       { x: "Gentle floating ambient, well suited to drifting off to sleep.", w: "Exposé" }
     ]},
     { t: 'The Dream Polaroids', y: '2021', l: 'Independent', u: D + 'the-dream-polaroids', art: 'a0597051670', id: '316257753', c: [
-      { q: 1, x: "Wow, this is just blissful. My second favourite deepspace album after Architecture (I've only just scratched the surface of his releases, though, so that may change).\n\nRed Monotone Cloudfaces is 25 minutes of majestic soundscapes that blend into magical sound effects that take you far, far away. Favorite track: Polaroid 3 - Red Monotone Cloudfaces.", w: "djentstorm, supporter on Bandcamp" },
-      { q: 1, x: "I just wanted to add that I find the concept behind this album fascinating, and something that I, myself, would love to see. I actually did once have a dream where I saw beautiful bright phenomenon in the night sky and then a castle in the sky. I was with my brother and we both took photos, but my camera didn't work. I asked him if he got it, and he did. But I woke up and no photos - if only we really could photograph in our dreams.", w: "mysticwolf75, supporter on Bandcamp" },
-      { q: 1, x: "Some of my favorite music to fall asleep to, and I mean that in a good way :) Saint Valentine's Dream in particular has this feeling of being in a bustling urban area, but in a surreal alternate dimension where I can perceive, but not be perceived by others. Favorite track: Polaroid 2 - Saint Valentine's Dream.", w: "Rin/Mari, supporter on Bandcamp" }
+      { q: 1, x: 'My second favourite deepspace album after Architecture', w: 'a supporter on Bandcamp' }
     ]},
-    { t: 'Deep Blue Universe', y: '2019', l: 'Independent', u: D + 'deep-blue-universe', art: 'a0428217506', id: '2704147216', c: [
-      { q: 1, x: "It resonates with my soul. It reminds me of my first album of Steve Roach: Towards the Blue (Quiet Music). Fantastic album! Favorite track: Primordial Oceans.", w: "star_maze_vdb, supporter on Bandcamp" }
-    ] },
+    { t: 'Deep Blue Universe', y: '2019', l: 'Independent', u: D + 'deep-blue-universe', art: 'a0428217506', id: '2704147216', c: [] },
     { t: 'Blue Worlds I', y: '2018', l: 'Independent', u: D + 'blue-worlds-i', art: 'a3896224812', id: '2227799233', c: [] },
-    { t: 'The Empty Atoms', y: '2016', l: 'Independent', u: D + 'the-empty-atoms', art: 'a1642143802', id: '1419835340', c: [
-      { q: 1, x: "This track tells a story in my mind; I don't understand it, but it's a sublime experience and brings back happy memories. Beautifully put together and masterfully produced, a real gem in the genre. Favorite track: Double Hearing.", w: "digitalmeltdown, supporter on Bandcamp" }
-    ] },
+    { t: 'The Empty Atoms', y: '2016', l: 'Independent', u: D + 'the-empty-atoms', art: 'a1642143802', id: '1419835340', c: [] },
     { t: 'Slow Wave Cathedral', y: '2011', l: 'Independent', u: D + 'slow-wave-cathedral', art: 'a2005583787', id: '4157215996', c: [
       { q: 1, x: 'well composed and warm sounding', w: 'Sonic Immersion' }
     ]},
     { t: 'World Ocean Atlas', y: '2009', l: 'Independent', u: D + 'world-ocean-atlas', art: 'a3452207579', id: '560561516', c: [] },
-    { t: 'The Glittering Domain', y: '2009', l: 'Independent', u: D + 'the-glittering-domain', art: 'a2062773657', id: '2856690676', c: [
-      { q: 1, x: "The Glittering Domain. Mixing atmospheric soundscapes with electronic space music. Truly #progressive music.", w: "Progressive Music Planet" }
-    ] },
+    { t: 'The Glittering Domain', y: '2009', l: 'Independent', u: D + 'the-glittering-domain', art: 'a2062773657', id: '2856690676', c: [] },
     { t: 'Another Empty Galaxy', y: '2008', l: 'Independent', u: D + 'another-empty-galaxy', art: 'a2675181772', id: '3728114010', c: [
-      { x: 'Enjoyed the trip through another empty galaxy.', w: 'DJ_Tim_Tee, supporter on Bandcamp' },
-      { q: 1, x: "‘Another Empty Galaxy’ is one continuous track lasting almost an hour, which fans of deep cosmic music will like a lot. Flowing, warm, free form soundscapes are accompanied by the grand design of symphonic/orchestral textures and fx, a galactic ride into the depths of the space. This ambient space music works even better when listened through headphones, creating an uplifting, highly cinematic and at times even hypnotizing experience.", w: "Bert Strolenberg, Sonic Immersion", u: "https://www.sonicimmersion.org/deepspace-another-empty-galaxy/", v: "https://web.archive.org/web/20260308173618if_/https://www.sonicimmersion.org/deepspace-another-empty-galaxy/" }
+      { q: 1, x: 'a galactic ride into the depths of the space', w: 'Bert Strolenberg, Sonic Immersion' },
+      { x: 'Enjoyed the trip through another empty galaxy.', w: 'DJ_Tim_Tee, supporter on Bandcamp' }
     ]},
     { t: 'Subantarctic Sessions (EP)', y: '2008', l: 'Independent', u: D + 'subantarctic-sessions-ep', art: 'a1187507317', id: '1996925198', c: [
-      { q: 1, x: "Mirror Sea is my #1 favorite song of Deepspace. It's the exact kind of ambient music I love the most. Completely ethereal, completely atmospheric, and it just commands you to wind down. This song has been my go-to for just about any situation and it's really hard to stop listening to it. Favorite track: Mirror Sea.", w: "Josiah Grey, supporter on Bandcamp" },
-      { q: 1, x: "I'm so happy to see this on Bandcamp. I've been a fan of this EP for years and could only find it on mp3s, nothing richer. Glad to be able to pay back for all the enjoyment! Favorite track: Arctic Sun and Weather Experiment.", w: "Ike Hall, supporter on Bandcamp" },
-      { q: 1, x: "Indescribably beautiful. Takes me to another place entirely. Favorite track: Arctic Sun and Weather Experiment.", w: "Will, supporter on Bandcamp" },
-      { x: 'One of the top 10 ambient releases of 2008.', w: '' }
+      { q: 1, x: 'Mirror Sea is my #1 favorite song of Deepspace', w: 'Josiah Grey, supporter on Bandcamp' },
+      { x: 'Had been a fan of this EP for years and was glad to finally see it on Bandcamp.', w: 'Ike Hall, supporter on Bandcamp' }
     ]},
-    { t: 'The Barometric Sun', y: '2007', l: 'Independent', u: D + 'the-barometric-sun', art: 'a2915591821', id: '4011671419', c: [
-      { x: 'Album of the month, 2009.', w: 'Stillstream' }
-    ] },
+    { t: 'The Barometric Sun', y: '2007', l: 'Independent', u: D + 'the-barometric-sun', art: 'a2915591821', id: '4011671419', c: [] },
+    { t: 'Slow Moving Lifeforms Vol 1', l: 'Independent', u: D + 'slow-moving-lifeforms-vol-1', art: 'a4238683211', id: '500095178', c: [] },
     { t: 'The Barometric Sea', y: '2007', l: 'Independent', u: D + 'the-barometric-sea', art: 'a1042314047', id: '159508198', c: [
-      { x: 'Won Best New Talent on release and made the top five on several ambient sites.', w: 'from the Bandcamp page' },
-      { x: 'Best New Ambient Artist of the year, 2007.', w: 'Electroambient Space' },
-      { x: 'Top 10 Ambient album of 2007.', w: 'Electroambient Space' }
-    ]},
-    { t: 'Slow Moving Lifeforms Vol 1', y: '2007', l: 'Independent', u: D + 'slow-moving-lifeforms-vol-1', art: 'a4238683211', id: '500095178', c: [] }
+      { x: 'Won Best New Talent on release and made the top five on several ambient sites.', w: 'from the Bandcamp page' }
+    ]}
   ];
 
   function el(tag, cls, text) {
@@ -1574,143 +990,15 @@
   }
   document.addEventListener('deepspace:stop', stopAllPlayers);
 
-  // ---- Streaming links: a column of icons to the left of each album ----
-  var ICONS = {
-    bandcamp: 'M0 18.75l7.437-13.5H24l-7.438 13.5H0z',
-    spotify: 'M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z',
-    applemusic: 'M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 00-1.877-.726 10.496 10.496 0 00-1.564-.15c-.04-.003-.083-.01-.124-.013H5.986c-.152.01-.303.017-.455.026-.747.043-1.49.123-2.193.4-1.336.53-2.3 1.452-2.865 2.78-.192.448-.292.925-.363 1.408-.056.392-.088.785-.1 1.18 0 .032-.007.062-.01.093v12.223c.01.14.017.283.027.424.05.815.154 1.624.497 2.373.65 1.42 1.738 2.353 3.234 2.801.42.127.856.187 1.293.228.555.053 1.11.06 1.667.06h11.03a12.5 12.5 0 001.57-.1c.822-.106 1.596-.35 2.295-.81a5.046 5.046 0 001.88-2.207c.186-.42.293-.87.37-1.324.113-.675.138-1.358.137-2.04-.002-3.8 0-7.595-.003-11.393zm-6.423 3.99v5.712c0 .417-.058.827-.244 1.206-.29.59-.76.962-1.388 1.14-.35.1-.706.157-1.07.173-.95.045-1.773-.6-1.943-1.536a1.88 1.88 0 011.038-2.022c.323-.16.67-.25 1.018-.324.378-.082.758-.153 1.134-.24.274-.063.457-.23.51-.516a.904.904 0 00.02-.193c0-1.815 0-3.63-.002-5.443a.725.725 0 00-.026-.185c-.04-.15-.15-.243-.304-.234-.16.01-.318.035-.475.066-.76.15-1.52.303-2.28.456l-2.325.47-1.374.278c-.016.003-.032.01-.048.013-.277.077-.377.203-.39.49-.002.042 0 .086 0 .13-.002 2.602 0 5.204-.003 7.805 0 .42-.047.836-.215 1.227-.278.64-.77 1.04-1.434 1.233-.35.1-.71.16-1.075.172-.96.036-1.755-.6-1.92-1.544-.14-.812.23-1.685 1.154-2.075.357-.15.73-.232 1.108-.31.287-.06.575-.116.86-.177.383-.083.583-.323.6-.714v-.15c0-2.96 0-5.922.002-8.882 0-.123.013-.25.042-.37.07-.285.273-.448.546-.518.255-.066.515-.112.774-.165.733-.15 1.466-.296 2.2-.444l2.27-.46c.67-.134 1.34-.27 2.01-.403.22-.043.442-.088.663-.106.31-.025.523.17.554.482.008.073.012.148.012.223.002 1.91.002 3.822 0 5.732z',
-    youtube: 'M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z'
-  };
-  var SVC_NAMES = { bandcamp: 'Bandcamp', spotify: 'Spotify', applemusic: 'Apple Music', youtube: 'YouTube' };
-  var SVC_IDS = {
-    'The Atlas Sector': { sp: '3rmiXRngiRvG3foeyit4VK', ap: '6796042623' },
-    'Water Planets': { sp: '6bCsvONVBJf3jAprwkhp1S', ap: '1833063456' },
-    'Neon Blue Utopia': { sp: '5xirAYRHHzyC9HJTczitxY', ap: '1775479272' },
-    'Vertical Landscapes – Retrospective': { sp: '0lC1twxpSrvOHEoWQCyV9C', ap: '1751289501' },
-    'The Black Orchid Galaxies': { sp: '6kAlduAWkRMaZRm4K2WdnX', ap: '1727780361' },
-    'The Architecture of Flowers': { sp: '4P3SPRbTR8spWUgTyJqaKq' },
-    'The Blue Dunes': { sp: '2M1ae9SacOFC0rBlp10yuF', ap: '1638222421' },
-    'Superradiance': { sp: '7vgw57MOR0zIXz489ql87R', ap: '1607630271' },
-    'The Dream Polaroids': { ap: '1557211381' },
-    'Deep Blue Universe': { sp: '3LwcF1RpjoHXYVsdAMa6d8', ap: '1465677891' },
-    'Blue Worlds I': { ap: '1385641617' },
-    'The Empty Atoms': { sp: '7sS9VlEKCC6KewxkYorFeL' },
-    'Another Empty Galaxy': { sp: '2bYdCQYqDsaGL3aIk2lTob' },
-    'The Barometric Sun': { ap: '270746290' },
-    'Slow Moving Lifeforms Vol 1': { ap: '261480785' },
-    'The Barometric Sea': { ap: '267428701' }
-  };
-
-  // Where each icon goes, and whether it can also be shown inside this page.
-  function svcTarget(a, key) {
-    var ids = SVC_IDS[a.t] || {};
-    var q = encodeURIComponent('deepspace ' + a.t.replace(/\s*\(EP\)/, ''));
-    if (key === 'bandcamp') {
-      return { leave: a.u, embed: a.id ? 'https://bandcamp.com/EmbeddedPlayer/album=' + a.id +
-        '/size=large/bgcol=0a1320/linkcol=8fb4cc/tracklist=true/artwork=small/transparent=true/' : null };
-    }
-    if (key === 'spotify') {
-      return ids.sp
-        ? { leave: 'https://open.spotify.com/album/' + ids.sp, embed: 'https://open.spotify.com/embed/album/' + ids.sp + '?theme=0' }
-        : { leave: 'https://open.spotify.com/search/' + q, embed: null, search: true };
-    }
-    if (key === 'applemusic') {
-      return ids.ap
-        ? { leave: 'https://music.apple.com/au/album/' + ids.ap, embed: 'https://embed.music.apple.com/au/album/' + ids.ap }
-        : { leave: 'https://music.apple.com/au/search?term=' + q, embed: null, search: true };
-    }
-    return { leave: 'https://www.youtube.com/results?search_query=' + q + '+album', embed: null, search: true };
-  }
-
-  function buildSvcs(a) {
-    var box = el('div', 'svcs');
-    ['bandcamp', 'spotify', 'applemusic', 'youtube'].forEach(function (key) {
-      var t = svcTarget(a, key);
-      var link = el('a', 'svc ' + key);
-      link.href = t.leave; link.target = '_blank'; link.rel = 'noopener';
-      link.setAttribute('aria-label', a.t + ' on ' + SVC_NAMES[key]);
-      link.title = SVC_NAMES[key];
-      link._svc = { album: a.t, service: SVC_NAMES[key], leave: t.leave, embed: t.embed, search: !!t.search };
-      link.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + ICONS[key] + '"/></svg>';
-      box.appendChild(link);
-    });
-    return box;
-  }
-
-  // ---- Colours taken from each album cover ----
-  var ACCENTS = {
-    'The Atlas Sector': '#c3a979',
-    'Water Planets': '#f0d14c',
-    'Neon Blue Utopia': '#6ac6d2',
-    'Vertical Landscapes \u2013 Retrospective': '#4e65ee',
-    'The Black Orchid Galaxies': '#6daecf',
-    'The Architecture of Flowers': '#5f7fdd',
-    'The Blue Dunes': '#4c94f0',
-    'Superradiance': '#7c96c0',
-    'The Dream Polaroids': '#f0624c',
-    'Deep Blue Universe': '#b2dadc',
-    'Blue Worlds I': '#7c95c0',
-    'The Empty Atoms': '#7cc0bc',
-    'Slow Wave Cathedral': '#a4e25b',
-    'World Ocean Atlas': '#7cb1c0',
-    'The Glittering Domain': '#687bd4',
-    'Another Empty Galaxy': '#4c4cf0',
-    'Subantarctic Sessions (EP)': '#a3c9d3',
-    'The Barometric Sun': '#c07c7d',
-    'Slow Moving Lifeforms Vol 1': '#93c07c',
-    'The Barometric Sea': '#c0957c'
-  };
-  function hexHue(hex) {
-    var r = parseInt(hex.substr(1, 2), 16) / 255, g = parseInt(hex.substr(3, 2), 16) / 255, b = parseInt(hex.substr(5, 2), 16) / 255;
-    var mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn, h = 0;
-    if (d) {
-      if (mx === r) h = ((g - b) / d) % 6; else if (mx === g) h = (b - r) / d + 2; else h = (r - g) / d + 4;
-      h *= 60; if (h < 0) h += 360;
-    }
-    return h;
-  }
-  // Each comment gets its own tint, a few degrees round the album colour, so neighbours are easy to tell apart.
-  var FLANK_HUES = [45, 330, 290, 225, 5, 62];
-  function tintFlank(node, i) {
-    var h = FLANK_HUES[i % FLANK_HUES.length];
-    node.style.setProperty('--ctext', 'hsl(' + h + ', 26%, 84%)');
-    node.style.setProperty('--ctext2', 'hsl(' + ((h + 28) % 360) + ', 28%, 81%)');
-    node.style.setProperty('--cwho', 'hsl(' + h + ', 18%, 66%)');
-    node.style.setProperty('--cbar', 'hsl(' + h + ', 26%, 56%)');
-    node.style.setProperty('--cbg', 'hsla(' + h + ', 26%, 55%, 0.045)');
-  }
-  var HUE_STEP = [0, 22, -22, 44, -44, 66];
-  var LIGHT = [84, 79, 87, 81, 77, 85];
-  function tintComment(node, accent, i) {
-    var h = Math.round((hexHue(accent || '#8fb4cc') + HUE_STEP[i % HUE_STEP.length] + 360) % 360);
-    var l = LIGHT[i % LIGHT.length];
-    node.style.setProperty('--ctext', 'hsl(' + h + ', 66%, ' + (l + 1) + '%)');
-    node.style.setProperty('--ctext2', 'hsl(' + ((h + 34) % 360) + ', 70%, ' + (l - 4) + '%)');
-    node.style.setProperty('--cwho', 'hsl(' + h + ', 38%, 66%)');
-    node.style.setProperty('--cbar', 'hsl(' + h + ', 62%, 60%)');
-    node.style.setProperty('--cbg', 'hsla(' + h + ', 55%, 55%, 0.09)');
-  }
-
-  // Reviews and publications come first, then the supporters, each group in its own order.
-  function isPublication(c) {
-    return !/supporter on Bandcamp/i.test(c.w) || /^(Progressive Music Planet|www\.littleuniversemusic)/i.test(c.w);
-  }
-  function praiseOrder(list) {
-    var first = [], rest = [];
-    list.forEach(function (c) { (isPublication(c) ? first : rest).push(c); });
-    return first.concat(rest);
-  }
-
   albums.forEach(function (a, i) {
     var row = el('li', 'album');
-    if (ACCENTS[a.t]) row.style.setProperty('--accent', ACCENTS[a.t]);
 
     var cover = el('a', 'cover');
     cover.href = a.u; cover.target = '_blank'; cover.rel = 'noopener';
     cover.tabIndex = -1; cover.setAttribute('aria-hidden', 'true');
     if (a.art) {
       var img = new Image();
-      img.alt = ''; img.width = 144; img.height = 144; img.decoding = 'async'; img.referrerPolicy = 'no-referrer';
+      img.alt = ''; img.width = 88; img.height = 88; img.decoding = 'async'; img.referrerPolicy = 'no-referrer';
       if (i > 2) img.loading = 'lazy';
       img.onerror = function () { cover.classList.add('blank'); img.remove(); };
       img.src = 'https://f4.bcbits.com/img/' + a.art + '_5.jpg';
@@ -1721,10 +1009,7 @@
     row.appendChild(cover);
 
     var info = el('div', 'a-info');
-    var head = el('div', 'a-head');
-    head.appendChild(el('div', 'a-title', a.t));
-    head.appendChild(buildSvcs(a));
-    info.appendChild(head);
+    info.appendChild(el('div', 'a-title', a.t));
     var meta = [a.y, a.l].filter(Boolean).join(', ');
     info.appendChild(el('div', 'a-meta', meta));
 
@@ -1761,16 +1046,14 @@
       var inner = el('div', 'panel-in');
       inner.appendChild(el('div', 'p-title', a.t));
       var ul = el('ul', 'comments');
-      praiseOrder(a.c).forEach(function (c, ci) {
+      a.c.forEach(function (c) {
         var li = el('li');
-        tintComment(li, ACCENTS[a.t], ci);
         li.appendChild(el('span', 'c-text', c.q ? '\u201c' + c.x + '\u201d' : c.x));
         var who = el('span', 'c-who');
         if (c.u) {
           var link = el('a', null, c.w);
           link.href = c.u; link.target = '_blank'; link.rel = 'noopener';
-          link.setAttribute('data-view', c.v || 'page');
-          if (c.v) link.setAttribute('data-archived', '1');
+          link.setAttribute('data-view', 'page');
           who.appendChild(link);
         } else {
           who.textContent = c.w;
@@ -1791,56 +1074,6 @@
     list.appendChild(row);
   });
 
-  // ---- Album covers beside the reviews ----
-  Array.prototype.forEach.call(document.querySelectorAll('.rv'), function (li) {
-    var name = li.getAttribute('data-album');
-    var al = albums.filter(function (a) { return a.t === name; })[0];
-    var box = el('span', 'rv-cover');
-    if (al && ACCENTS[al.t]) li.style.setProperty('--accent', ACCENTS[al.t]);
-    if (al && al.art) {
-      var img = new Image();
-      img.alt = ''; img.width = 56; img.height = 56; img.decoding = 'async'; img.loading = 'lazy'; img.referrerPolicy = 'no-referrer';
-      img.onerror = function () { box.classList.add('blank'); img.remove(); };
-      img.src = 'https://f4.bcbits.com/img/' + al.art + '_5.jpg';
-      box.appendChild(img);
-    } else {
-      box.classList.add('blank');
-    }
-    li.insertBefore(box, li.firstChild);
-  });
-
-  // ---- Covers to the right of the story links ----
-  Array.prototype.forEach.call(document.querySelectorAll('.st'), function (li) {
-    var name = li.getAttribute('data-album');
-    var al = albums.filter(function (a) { return a.t === name; })[0];
-    var box = el('span', 'st-cover');
-    if (al && ACCENTS[al.t]) li.style.setProperty('--accent', ACCENTS[al.t]);
-    if (al && al.art) {
-      var img = new Image();
-      img.alt = ''; img.width = 76; img.height = 76; img.decoding = 'async'; img.loading = 'lazy'; img.referrerPolicy = 'no-referrer';
-      img.onerror = function () { box.remove(); };
-      img.src = 'https://f4.bcbits.com/img/' + al.art + '_5.jpg';
-      box.appendChild(img);
-      li.appendChild(box);
-    }
-  });
-
-  // ---- Video rail: arrows scroll it sideways ----
-  (function () {
-    var wrap = document.querySelector('.rail-wrap');
-    if (!wrap) return;
-    var rail = wrap.querySelector('.rail'), prev = wrap.querySelector('.prev'), next = wrap.querySelector('.next');
-    function sync() {
-      prev.hidden = rail.scrollLeft < 8;
-      next.hidden = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 8;
-    }
-    prev.addEventListener('click', function () { rail.scrollBy({ left: -rail.clientWidth * 0.85 }); });
-    next.addEventListener('click', function () { rail.scrollBy({ left: rail.clientWidth * 0.85 }); });
-    rail.addEventListener('scroll', sync, { passive: true });
-    window.addEventListener('resize', sync);
-    sync();
-  })();
-
   // ---- Comments either side of the new album at the top ----
   (function () {
     var atlas = albums[0].c;
@@ -1852,9 +1085,8 @@
     function fill(id, names) {
       var box = document.getElementById(id);
       if (!box) return;
-      pick(names).forEach(function (c, ci) {
+      pick(names).forEach(function (c) {
         var it = el('div', 'f-item');
-        tintFlank(it, ci + (id === 'flank-right' ? 3 : 0));
         it.appendChild(el('span', 'f-text', '\u201c' + c.x + '\u201d'));
         it.appendChild(el('span', 'f-who', c.w));
         box.appendChild(it);
@@ -1924,184 +1156,50 @@
 (function () {
   var v = document.getElementById('viewer');
   var frame = v.querySelector('.v-frame');
-  var bar = v.querySelector('.v-bar');
   var title = v.querySelector('.v-title');
   var ext = v.querySelector('.v-ext');
   var closeBtn = v.querySelector('.v-close');
   var body = v.querySelector('.v-body');
   var page = [document.querySelector('main'), document.querySelector('footer')];
   var last = null;
-  var pos = null;          // where the window was left, so the next one opens in the same place
 
   function setInert(on) { page.forEach(function (n) { if (n) n.inert = on; }); }
-  function isWin() { return v.classList.contains('win'); }
 
-  function clamp() {
-    if (!isWin() || !pos) return;
-    var r = v.getBoundingClientRect();
-    pos.x = Math.min(Math.max(pos.x, 80 - r.width), window.innerWidth - 80);
-    pos.y = Math.min(Math.max(pos.y, 0), window.innerHeight - 44);
-    v.style.left = pos.x + 'px';
-    v.style.top = pos.y + 'px';
-  }
-  function place() {
-    var r = v.getBoundingClientRect();
-    if (!pos) pos = { x: Math.max(8, (window.innerWidth - r.width) / 2), y: Math.max(12, (window.innerHeight - r.height) / 4) };
-    clamp();
-  }
-
-  function show(o) {
+  function open(a) {
     document.dispatchEvent(new Event('deepspace:stop'));   // stop any album player
-    var win = !o.embed;
-    v.classList.toggle('embed', !!o.embed);
-    v.classList.toggle('win', win);
-    if (!win) { v.style.left = ''; v.style.top = ''; }
-    title.textContent = o.title;
-    bar.title = win ? 'Drag to move' : '';
-    ext.href = o.href;
-    frame.title = o.title;
-    frame.src = o.src;
-    last = o.opener;
-    if (win) {
-      // a window: the page behind stays visible and scrolls
-      setInert(false);
-      document.documentElement.classList.remove('lock');
-      place();
-    } else {
-      setInert(true);
-      document.documentElement.classList.add('lock');
-    }
+    var view = a.getAttribute('data-view');
+    var src = (view && view !== 'page') ? view : a.href;
+    v.classList.toggle('embed', a.getAttribute('data-kind') === 'embed');
+    title.textContent = a.textContent;
+    ext.href = a.href;
+    frame.title = a.textContent;
+    frame.src = src;
+    last = a;
+    setInert(true);
+    document.documentElement.classList.add('lock');
     v.classList.add('on');
     closeBtn.focus();
   }
   function close() {
     if (!v.classList.contains('on')) return;
     v.classList.remove('on');
-    v.classList.remove('dragging');
     document.documentElement.classList.remove('lock');
     setInert(false);
     frame.src = 'about:blank';
     if (last) last.focus();
   }
 
-  // drag the window by its bar
-  var drag = null;
-  bar.addEventListener('pointerdown', function (e) {
-    if (!isWin() || e.button !== 0 || window.innerWidth <= 640) return;
-    if (e.target.closest && e.target.closest('a, button')) return;
-    var r = v.getBoundingClientRect();
-    drag = { dx: e.clientX - r.left, dy: e.clientY - r.top, id: e.pointerId };
-    try { bar.setPointerCapture(e.pointerId); } catch (err) {}
-    v.classList.add('dragging');
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[data-view]') : null;
+    if (!a) return;
+    if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button !== 0) return;
     e.preventDefault();
+    open(a);
   });
-  bar.addEventListener('pointermove', function (e) {
-    if (!drag || e.pointerId !== drag.id) return;
-    pos = { x: e.clientX - drag.dx, y: e.clientY - drag.dy };
-    clamp();
-  });
-  function endDrag(e) {
-    if (!drag || (e && e.pointerId !== drag.id)) return;
-    try { bar.releasePointerCapture(drag.id); } catch (err) {}
-    drag = null;
-    v.classList.remove('dragging');
-  }
-  bar.addEventListener('pointerup', endDrag);
-  bar.addEventListener('pointercancel', endDrag);
-  window.addEventListener('resize', clamp);
-
-  document.addEventListener('deepspace:view', function (e) { show(e.detail); });
   closeBtn.addEventListener('click', close);
   body.addEventListener('click', function (e) {
     if (e.target === body && v.classList.contains('embed')) close();
   });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
-})();
-
-// ---- Every link that opens in the page first asks: leave this page, or see it here ----
-(function () {
-  var box = document.getElementById('choice');
-  var q = box.querySelector('.choice-q');
-  var sub = box.querySelector('.choice-sub');
-  var here = box.querySelector('.c-here');
-  var leave = box.querySelector('.c-leave');
-  var cancel = box.querySelector('.cancel');
-  var page = [document.querySelector('main'), document.querySelector('footer')];
-  var cur = null, opener = null;
-
-  var HOSTS = [
-    ['youtube.com', 'YouTube'], ['youtu.be', 'YouTube'], ['sonicimmersion.org', 'Sonic Immersion'],
-    ['expose.org', 'Exposé'], ['echoes.org', 'Echoes'], ['chaindlk.com', 'Chain D.L.K.'],
-    ['projekt.com', 'Projekt'], ['bandcamp.com', 'Bandcamp'], ['spotify.com', 'Spotify']
-  ];
-  function hostName(href) {
-    var h = '';
-    try { h = new URL(href).hostname; } catch (e) { return ''; }
-    for (var i = 0; i < HOSTS.length; i++) if (h.indexOf(HOSTS[i][0]) > -1) return HOSTS[i][1];
-    return h.replace(/^www\./, '');
-  }
-
-  function setInert(on) { page.forEach(function (n) { if (n) n.inert = on; }); }
-
-  function ask(link, s) {
-    cur = s; opener = link;
-    if (s.generic) {
-      q.textContent = '“' + s.album + '”' + (s.service ? ' on ' + s.service : '');
-      sub.textContent = 'Would you like to leave this page to see it' + (s.service ? ' on ' + s.service : '') +
-        ', or see it here in this browser?' + (s.archived ? ' Here it opens as an archived copy.' : '');
-    } else {
-      q.textContent = '“' + s.album + '” on ' + s.service;
-      if (s.embed) {
-        sub.textContent = 'Would you like to leave this page to see it, or see it here in this browser?';
-      } else if (s.search) {
-        sub.textContent = s.service + ' can’t be shown inside this page. Leave this page to search for it on ' + s.service + '?';
-      } else {
-        sub.textContent = s.service + ' can’t be shown inside this page. Leave this page to see it there?';
-      }
-    }
-    here.hidden = !s.embed;
-    setInert(true);
-    box.classList.add('on');
-    (s.embed ? here : leave).focus();
-  }
-  function close(restore) {
-    if (!box.classList.contains('on')) return;
-    box.classList.remove('on');
-    setInert(false);
-    if (restore !== false && opener) opener.focus();
-  }
-
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest ? e.target.closest('a.svc, a[data-view]') : null;
-    if (!a) return;
-    if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button !== 0) return;
-    var t = a._svc;
-    if (!t && a.hasAttribute('data-view')) {
-      var view = a.getAttribute('data-view');
-      var nameEl = a.querySelector('.v-name');
-      var label = ((nameEl || a).textContent || '').replace(/\s+/g, ' ').trim();
-      t = {
-        generic: true, album: label, service: hostName(a.href), leave: a.href,
-        embed: (view && view !== 'page') ? view : a.href,
-        archived: a.hasAttribute('data-archived'),
-        small: a.getAttribute('data-kind') === 'embed'
-      };
-    }
-    if (!t) return;
-    e.preventDefault();
-    ask(a, t);
-  });
-  here.addEventListener('click', function () {
-    var s = cur, o = opener;
-    close(false);
-    var label = s.generic ? s.album + (s.archived ? ' (archived copy)' : '') : s.album + ' – ' + s.service;
-    document.dispatchEvent(new CustomEvent('deepspace:view', { detail: {
-      src: s.embed, title: label, href: s.leave, embed: s.generic ? s.small : true, opener: o
-    }}));
-  });
-  leave.addEventListener('click', function () { window.location.href = cur.leave; });
-  cancel.addEventListener('click', function () { close(); });
-  box.addEventListener('click', function (e) { if (e.target === box) close(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
 })();
 </script>
