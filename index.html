@@ -2473,22 +2473,26 @@ var Glare = (function () {
   var letters = Array.prototype.slice.call(h1.querySelectorAll('.l'));
   var cv = document.createElement('canvas');
   cv.setAttribute('aria-hidden', 'true');
-  cv.style.cssText = 'position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:3;mix-blend-mode:screen;';
-  document.body.appendChild(cv);
+  cv.style.cssText = 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;mix-blend-mode:screen;';
+  h1.appendChild(cv);                    // inside the logo, so it moves with it exactly when you scroll
   var ctx = cv.getContext('2d');
-  var S = { hh: 0, cy: 0, xs: 0, xe: 0, lx: [], hl: 0, hw: 0, W: 0, H: 0 };
+  var S = { hh: 0, cy: 0, xs: 0, xe: 0, lx: [], off: [], hl: 0, hw: 0, W: 0, H: 0 };
   var running = false;
 
   function size() {
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    S.W = window.innerWidth; S.H = window.innerHeight;
+    S.W = Math.min(window.innerWidth, 2200); S.H = Math.round(window.innerHeight * 1.4);
+    cv.style.width = S.W + 'px'; cv.style.height = S.H + 'px';
     cv.width = Math.round(S.W * dpr); cv.height = Math.round(S.H * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   function measure() {
+    // positions are worked out once, relative to the canvas, which is centred on the word and moves with it
     var hr = h1.getBoundingClientRect();
-    S.hh = hr.height; S.cy = hr.top + hr.height / 2; S.hl = hr.left; S.hw = hr.width;
-    S.lx = letters.map(function (l) { var r = l.getBoundingClientRect(); return r.left + r.width / 2; });
+    var ox = hr.left + hr.width / 2 - S.W / 2;
+    S.hh = hr.height; S.cy = S.H / 2; S.hl = hr.left - ox; S.hw = hr.width;
+    S.off = []; S.lx = [];
+    letters.forEach(function (l) { var r = l.getBoundingClientRect(); S.off.push(r.left - hr.left); S.lx.push(r.left + r.width / 2 - ox); });
     S.xs = S.lx[0] - S.hh * 0.3; S.xe = S.lx[S.lx.length - 1] + S.hh * 0.3;
   }
 
@@ -2540,10 +2544,10 @@ var Glare = (function () {
     parts.push(base + ' ' + S.hw + 'px');
     var bg = 'linear-gradient(100deg,' + parts.join(',') + ')';
     for (var i = 0; i < letters.length; i++) {
-      var st = letters[i].style, r = letters[i].getBoundingClientRect();
+      var st = letters[i].style;
       st.backgroundImage = bg;
       st.backgroundSize = S.hw + 'px 100%';
-      st.backgroundPosition = (-(r.left - S.hl)).toFixed(1) + 'px 0';
+      st.backgroundPosition = (-S.off[i]).toFixed(1) + 'px 0';
       st.backgroundRepeat = 'no-repeat';
       st.webkitBackgroundClip = 'text'; st.backgroundClip = 'text';
       st.webkitTextFillColor = 'transparent';
@@ -2716,7 +2720,6 @@ var Glare = (function () {
     function frame(now) {
       if (t0 === null) t0 = now;
       var ms = now - t0;
-      measure();
       ctx.clearRect(0, 0, S.W, S.H);
       ctx.globalCompositeOperation = 'lighter';
       ctx.globalAlpha = fx.gain || 1;
@@ -2753,7 +2756,7 @@ var LOGO_LIGHT = 'both';
   var drawn = false, shown = false, played = false;
   function check() { if (drawn && shown && !played) { played = true; Glare.play(LOGO_LIGHT); } }
   h1.addEventListener('click', function () { if (drawn) Glare.play(LOGO_LIGHT); });   // tap the logo to see it again
-  setTimeout(function () { drawn = true; check(); }, 8000);                            // the last letter has finished surfacing by then
+  setTimeout(function () { drawn = true; check(); }, 5600);                            // the word looks complete by then, so the light starts right behind the drawing
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) { shown = true; check(); } });
