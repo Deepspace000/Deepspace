@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://deepspace000.github.io/Deepspace/img/water-planets/cover.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;1,300&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <script>document.documentElement.className += " js";</script>
 <style>
   :root {
@@ -94,6 +94,35 @@
   .end { padding: 3rem 0 5rem; text-align: center; }
   .end img { margin: 1.4rem auto; width: min(18rem, 70%); }
   .links { padding: 1.4rem 0 0; margin: 0 auto; max-width: 40rem; padding-inline: 1.25rem; font-size: 0.92em; }
+
+  /* the six planets: each is an entry in a book, the Hydros Atlas */
+  .book {
+    position: relative; margin: 0 auto; max-width: 38rem; padding: 2.2rem 1.5rem 2rem;
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif; font-weight: 500; font-size: 1.18em; line-height: 1.7; color: #efe3c8;
+    background:
+      linear-gradient(90deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0) 7%, rgba(0, 0, 0, 0) 93%, rgba(0, 0, 0, 0.35)),
+      repeating-linear-gradient(0deg, rgba(255, 240, 210, 0.025) 0 1px, rgba(0, 0, 0, 0) 1px 4px),
+      linear-gradient(180deg, #211a11, #17120c);
+    border: 1px solid rgba(214, 178, 100, 0.55); border-radius: 3px;
+    box-shadow: 0 0 0 5px rgba(23, 18, 12, 0.9), 0 0 0 6px rgba(214, 178, 100, 0.3), 0 26px 60px -20px rgba(0, 0, 0, 0.9);
+    text-shadow: none !important;
+  }
+  .book p, .book li, .book blockquote, .book h3, .book h2 { text-shadow: none !important; }
+  .book .runhead { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.7em; letter-spacing: 0.22em; text-transform: uppercase; color: #c9a95e; border-bottom: 1px solid rgba(214, 178, 100, 0.4); padding-bottom: 0.6rem; margin-bottom: 1.6rem; }
+  .book h2 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; font-size: 1.9em; line-height: 1.15; letter-spacing: 0.02em; color: #f6e7bf; text-align: center; margin: 0 0 0.3rem; }
+  .book h2 small { margin-top: 0.4rem; font-size: 0.55em; font-style: italic; font-weight: 400; letter-spacing: 0.04em; color: #c9a95e; }
+  .book .orn { text-align: center; color: #c9a95e; letter-spacing: 0.6em; margin: 0.3rem 0 1.4rem; font-size: 0.9em; }
+  .book h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; font-size: 0.82em; letter-spacing: 0.2em; text-transform: uppercase; color: #c9a95e; margin: 1.7rem 0 0.4rem; }
+  .book p { text-align: justify; hyphens: auto; -webkit-hyphens: auto; margin: 0 0 1rem; }
+  .book .lead { color: #fff6dc; font-style: italic; font-size: 1.04em; }
+  .book .dc::first-letter { float: left; font-size: 3.7em; line-height: 0.78; padding: 0.08em 0.1em 0 0; color: #e0b95a; font-weight: 600; }
+  .book blockquote { margin: 1.5rem 0.4rem; padding: 0.7rem 0; border: 0; border-top: 1px solid rgba(214, 178, 100, 0.4); border-bottom: 1px solid rgba(214, 178, 100, 0.4); text-align: center; font-style: italic; font-weight: 500; font-size: 1.12em; color: #fff6dc; }
+  .book blockquote::before { content: "\201C"; } .book blockquote::after { content: "\201D"; }
+  .book .foot { margin-top: 1.8rem; padding-top: 0.8rem; border-top: 1px solid rgba(214, 178, 100, 0.4); font-size: 0.82em; font-style: italic; color: #cdbb93; text-align: left; }
+  .book .foot::before { content: "\2020  "; color: #c9a95e; font-style: normal; }
+  .book .folio { text-align: center; margin: 1.6rem 0 0; font-size: 0.78em; letter-spacing: 0.3em; color: #c9a95e; }
+  @media (max-width: 520px) { .book { padding: 1.7rem 1.05rem 1.5rem; font-size: 1.12em; } .book p { text-align: left; } }
+
   /* things ease into view as you reach them */
   .js .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.2, .7, .2, 1); }
   .js .reveal.in { opacity: 1; transform: none; }
@@ -117,7 +146,7 @@
   @keyframes flick { 0% { opacity: 0.1; } 12% { opacity: 1; } 18% { opacity: 0.25; } 30% { opacity: 1; } 38% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 1; } }
 
   /* stars and small planets drift over everything, very faintly */
-  #sky { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; }
+  #sky { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; mix-blend-mode: screen; }
 </style>
 </head>
 <body>
@@ -202,73 +231,103 @@
 
   <section id="thalassa" class="band" style="--bg-img:url(img/water-planets/bg-14.jpg)">
     <div class="wrap">
+      <div class="book">
+      <div class="runhead"><span>The Hydros Atlas</span><span>Entry I of VI</span></div>
       <h2>Thalassa Prime<small>The Keeper of the Tides</small></h2>
+      <div class="orn">&#10070;</div>
       <blockquote>The sea does not follow the water moon; it moves by its own free will.</blockquote>
       <h3>Geography and Conditions</h3>
-      <p>Unlike normal planets with gravitational tides, Thalassa Prime, the largest of the water planets, has oceans that move in unpredicatable waves, rising and falling as if controlled by an unseen force.</p>
+      <p class="dc">Unlike normal planets with gravitational tides, Thalassa Prime, the largest of the water planets, has oceans that move in unpredicatable waves, rising and falling as if controlled by an unseen force.</p>
       <p>Massive water spires, vertical columns of liquid thousands of metres high, rise from the ocean and hold their shape for hours before collapsing back into the sea.</p>
       <h3>Unique Phenomena</h3>
       <p>The tides form complex geometric spirals when viewed from orbit, too intricate to be natural. Some researchers believe there may be an ancient machine beneath the waves causing this.</p>
       <p>AI simulations predict if left undisturbed, the tides will eventually form a perfect mathematical structure in 217 years. The purpose of this remains a mystery.</p>
-      <p class="note">"Thalassa" (Θάλασσα in Ancient Greek) means "sea" in Greek and is also the name of the Greek goddess of the sea.</p>
+      <p class="foot">"Thalassa" (Θάλασσα in Ancient Greek) means "sea" in Greek and is also the name of the Greek goddess of the sea.</p>
+    <div class="folio">&mdash; i &mdash;</div>
+      </div>
     </div>
   </section>
 
   <section id="nereis" class="band" style="--bg-img:url(img/water-planets/bg-15.jpg)">
     <div class="wrap">
+      <div class="book">
+      <div class="runhead"><span>The Hydros Atlas</span><span>Entry II of VI</span></div>
       <h2>Nereis-9<small>The Whispering Deep</small></h2>
-      <p class="lead">A world with vast, deep trenches where mysterious whispering sounds emanate</p>
+      <div class="orn">&#10070;</div>
+      <p class="lead dc">A world with vast, deep trenches where mysterious whispering sounds emanate</p>
       <p>Trenches, some hundreds of kilometres deep, reside beneath the waves of this world. Scientists suspect that violent earthquakes and towering tsunamis have shaped this world.</p>
       <p>Upon crossing beneath a certain depth threshold, probes have recorded strange whispering sounds that emanate from the core of Nereis-9. Scientists believe these sounds influence the rotation of the planet and the tides.</p>
       <p>Mirror trenches exist here, where the trench floor contains a reverse trench filled with water, stretching further underground. This is where the sounds are the loudest, exceeding 130 decibels in places. It is not known where these reverse trenches lead to.</p>
       <blockquote>What is causing this...strange whispering and sound. And what is it expressing?</blockquote>
-      <p class="note">The scientific name "Nereis" comes from the Ancient Greek word "Νηρηΐς" (Nērēís), which refers to a sea nymph.</p>
+      <p class="foot">The scientific name "Nereis" comes from the Ancient Greek word "Νηρηΐς" (Nērēís), which refers to a sea nymph.</p>
+    <div class="folio">&mdash; ii &mdash;</div>
+      </div>
     </div>
   </section>
 
   <section id="pelagia" class="band" style="--bg-img:url(img/water-planets/bg-16.jpg)">
     <div class="wrap">
+      <div class="book">
+      <div class="runhead"><span>The Hydros Atlas</span><span>Entry III of VI</span></div>
       <h2>Pelagia<small>The Black Abyss</small></h2>
-      <p>The darkest of all the planets, Pelagia’s ocean is pitch black, absorbing 99.9% of all light.</p>
+      <div class="orn">&#10070;</div>
+      <p class="dc">The darkest of all the planets, Pelagia’s ocean is pitch black, absorbing 99.9% of all light.</p>
       <p>The water contains microscopic light-absorbing particles making it nearly impossible to illuminate the depths.</p>
       <p>Any probe that descends past a depth of 12km stops transmitting. No debris has ever been found. Some claim shadows moving beneath the surface, but sonar shows nothing.</p>
       <blockquote>We sent drones. They vanished. We sent submersibles. They went silent. We sent a manned expedition. We do not speak of them anymore.</blockquote>
-      <p class="note">The name Pelagia, meaning "of the sea" or "marine," originates from the Ancient Greek word "pélagos" (πέλαγος), which means "sea" or "open ocean."</p>
+      <p class="foot">The name Pelagia, meaning "of the sea" or "marine," originates from the Ancient Greek word "pélagos" (πέλαγος), which means "sea" or "open ocean."</p>
+    <div class="folio">&mdash; iii &mdash;</div>
+      </div>
     </div>
   </section>
 
   <section id="ondine" class="band" style="--bg-img:url(img/water-planets/bg-17.jpg)">
     <div class="wrap">
+      <div class="book">
+      <div class="runhead"><span>The Hydros Atlas</span><span>Entry IV of VI</span></div>
       <h2>Ondine 7b<small>Cradle of Endless Rain</small></h2>
-      <p class="lead">A storm-covered world where rain never ceases.</p>
+      <div class="orn">&#10070;</div>
+      <p class="lead dc">A storm-covered world where rain never ceases.</p>
       <p>In an endless cycle of evaporation and precipitation encouraged by the strange bio signatures that give rise to these processes, this planet is home to life albeit invisible and mysterious.</p>
       <p>Scientists are trying to understand why this planet requires the constant flow of rain and speculate it is a requirement of the unique lifeforms, but cannot study them as they cannot find them!</p>
       <blockquote>Oh for a dry day, but we suspect it has been raining and storming globally here for five billion years.</blockquote>
-      <p class="note">“Ondine” is a feminine name of Latin origin. This delicate name translates to “little wave” and is an alternate spelling of undine, classified as a category of elemental water-dwelling creatures.</p>
+      <p class="foot">“Ondine” is a feminine name of Latin origin. This delicate name translates to “little wave” and is an alternate spelling of undine, classified as a category of elemental water-dwelling creatures.</p>
+    <div class="folio">&mdash; iv &mdash;</div>
+      </div>
     </div>
   </section>
 
   <section id="hydraxis" class="band" style="--bg-img:url(img/water-planets/bg-18.jpg)">
     <div class="wrap">
+      <div class="book">
+      <div class="runhead"><span>The Hydros Atlas</span><span>Entry V of VI</span></div>
       <h2>Hydraxis<small>The Living Ocean</small></h2>
-      <p class="lead">A world where the water itself harbours strange, self-sustaining ecosystems.</p>
+      <div class="orn">&#10070;</div>
+      <p class="lead dc">A world where the water itself harbours strange, self-sustaining ecosystems.</p>
       <p>The prize jewel of the planets to scientists as Hydraxis harbours a profusion of life. Uncounted and unclassified types of aquatic creatures roam the depths of this planet.  And it is deep. No sea floor has yet be scanned, and it is presumed that there may be no floor at all..</p>
       <p>This planet was quickly barred from water mining as it is considered too vulnerable and precious by humankind. However it is being studied with ultra sensitive hydrodrones which leave no matter signature behind.</p>
       <p>Hydraxis is the first example of a universe-class heritage planet protected by UNESCO-4</p>
       <blockquote>The water itself creates nutrients that feed the profusion of life that exists here.</blockquote>
-      <p class="note">“Hydraxis”- derived from Hydra is a genus of small freshwater hydrozoans belonging to the phylum Cnidaria.</p>
+      <p class="foot">“Hydraxis”- derived from Hydra is a genus of small freshwater hydrozoans belonging to the phylum Cnidaria.</p>
+    <div class="folio">&mdash; v &mdash;</div>
+      </div>
     </div>
   </section>
 
   <section id="bathys" class="band" style="--bg-img:url(img/water-planets/bg-19.jpg)">
     <div class="wrap">
+      <div class="book">
+      <div class="runhead"><span>The Hydros Atlas</span><span>Entry VI of VI</span></div>
       <h2>Bathys<small>Serene waterplanet</small></h2>
-      <p>Said to lower a human’s pulse rate by almost half, this is the most peaceful place yet visited by humankind.</p>
+      <div class="orn">&#10070;</div>
+      <p class="dc">Said to lower a human’s pulse rate by almost half, this is the most peaceful place yet visited by humankind.</p>
       <blockquote>I just feel like I was melting in the most peaceful way. I don’t know what causes this...</blockquote>
       <p>Entirely water under gentle halcyon skies and perfect temperature (always 27 degrees celsius), Bathys is full of cool and deep yet empty waters.</p>
       <p>There is a danger of passing out due to being overwhelmingly relaxed when entering the orbit of this planet. Scientists wear stimulus inducing packs that regularly prod their nervous system, so they can stay conscious during research and mining.</p>
       <p>There are no storms, and the ocean is always calm. Currents in both the water and air are minimal and cool. The planet core is entirely of white sand, and depths range from approx. 100 metres to thousands of metres. Scientists are designing floating structures that could house the several million humans and could move to this planet when the time is right. However the problems of low pulse rate still confound any immediate plans to move.</p>
-      <p class="note">“Bathys” is derived from the Greek word meaning "deep" and is inspired by the bathyscaphe; a deep-sea exploration submersible symbolizing calm, depth, and silence.</p>
+      <p class="foot">“Bathys” is derived from the Greek word meaning "deep" and is inspired by the bathyscaphe; a deep-sea exploration submersible symbolizing calm, depth, and silence.</p>
+    <div class="folio">&mdash; vi &mdash;</div>
+      </div>
       <figure><img src="img/water-planets/maps.jpg" width="1080" height="1080" loading="lazy" alt="Four hand-drawn style maps of the water planets Nereis-9, Ondine 7b, Hydraxis and Bathys, headed Examples of available maps"></figure>
     </div>
   </section>
@@ -372,60 +431,234 @@
     Array.prototype.forEach.call(items, function (el) { el.classList.add('in'); });
   }
 
-  // ---- twinkling stars and a few small planets that drift, moving a little with the scroll ----
+  // ---- the sky behind the page: stars, nebulae, suns, asteroids and many different water planets ----
+  // Everything is unique and passes once as you scroll, at its own depth. Moons orbit faster the faster you scroll.
   var cv = document.getElementById('sky'), ctx = cv.getContext('2d');
-  var W = 0, H = 0, dpr = 1, stars = [], planets = [], last = 0, sy = 0;
+  var W = 0, H = 0, dpr = 1, stars = [], objs = [], sy = 0, vel = 0, lastSy = 0, lastT = 0, spin = 0, builds = [];
   window.addEventListener('scroll', function () { sy = window.pageYOffset || 0; }, { passive: true });
-  function size() {
+
+  function rng(seed) {
+    return function () {
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  // 3D value noise
+  function h3(x, y, z) { var n = Math.sin(x * 127.1 + y * 311.7 + z * 74.7) * 43758.5453; return n - Math.floor(n); }
+  function sm(t) { return t * t * (3 - 2 * t); }
+  function vn(x, y, z) {
+    var xi = Math.floor(x), yi = Math.floor(y), zi = Math.floor(z), xf = sm(x - xi), yf = sm(y - yi), zf = sm(z - zi);
+    function l(a, b, t) { return a + (b - a) * t; }
+    return l(l(l(h3(xi, yi, zi), h3(xi + 1, yi, zi), xf), l(h3(xi, yi + 1, zi), h3(xi + 1, yi + 1, zi), xf), yf),
+             l(l(h3(xi, yi, zi + 1), h3(xi + 1, yi, zi + 1), xf), l(h3(xi, yi + 1, zi + 1), h3(xi + 1, yi + 1, zi + 1), xf), yf), zf);
+  }
+  function fbm(x, y, z, o) { var a = 0.5, f = 1, t = 0, n = 0; for (var i = 0; i < o; i++) { t += a * vn(x * f, y * f, z * f); n += a; a *= 0.5; f *= 2.05; } return t / n; }
+  function mix(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+  function ssm(a, b, x) { var t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+
+  // ---- water planets: several kinds, each rendered once with its own seed, light and weather ----
+  var KINDS = [
+    { name: 'turquoise', deep: [8, 70, 110],  shallow: [40, 190, 190], land: [210, 190, 140], cloud: 0.58, bands: 0 },
+    { name: 'deep blue', deep: [6, 24, 90],    shallow: [30, 90, 200],  land: [150, 170, 200], cloud: 0.6,  bands: 0 },
+    { name: 'emerald',   deep: [6, 70, 60],    shallow: [60, 200, 140], land: [200, 220, 150], cloud: 0.56, bands: 0 },
+    { name: 'ice',       deep: [90, 150, 190], shallow: [210, 240, 250], land: [255, 255, 255], cloud: 0.7,  bands: 0, ice: true },
+    { name: 'storm',     deep: [50, 20, 90],   shallow: [200, 90, 190], land: [255, 190, 230], cloud: 0.5,  bands: 1 },
+    { name: 'abyss',     deep: [2, 8, 20],     shallow: [20, 60, 90],   land: [255, 220, 120], cloud: 0.75, bands: 0 },
+    { name: 'amber sea', deep: [90, 40, 10],   shallow: [230, 140, 60], land: [255, 230, 170], cloud: 0.6,  bands: 1 }
+  ];
+  function buildPlanet(o) {
+    var R = Math.min(90, Math.max(12, Math.round(o.r * dpr))), S = R * 2, c = document.createElement('canvas');   // drawn once, at a size a phone can make quickly
+    c.width = c.height = S; var x2 = c.getContext('2d'), img = x2.createImageData(S, S), d = img.data;
+    var K = KINDS[o.kind], seed = o.seed, L = [-0.62, -0.5, 0.6], ll = Math.sqrt(L[0] * L[0] + L[1] * L[1] + L[2] * L[2]); L = [L[0] / ll, L[1] / ll, L[2] / ll];
+    var ct = Math.cos(o.tilt), st = Math.sin(o.tilt);
+    for (var py = 0; py < S; py++) {
+      for (var px = 0; px < S; px++) {
+        var nx = (px + 0.5 - R) / R, ny = (py + 0.5 - R) / R, rr = nx * nx + ny * ny, i = (py * S + px) * 4;
+        if (rr > 1) continue;
+        var nz = Math.sqrt(1 - rr);
+        var rx = nx * ct - ny * st, ry = nx * st + ny * ct;                 // tilt the world
+        var ang = o.phase, rz = nz * Math.cos(ang) - rx * Math.sin(ang), rx2 = nz * Math.sin(ang) + rx * Math.cos(ang);
+        var h = fbm(rx2 * 1.7 + seed, ry * 1.7 + seed * 1.3, rz * 1.7 + seed * 0.7, 5);
+        var col;
+        if (K.bands) {
+          var b = 0.5 + 0.5 * Math.sin(ry * 9 + fbm(rx2 * 2 + seed, ry * 3, rz * 2, 4) * 5);
+          col = mix(K.deep, K.shallow, b); col = mix(col, K.land, ssm(0.62, 0.9, b * 0.7 + h * 0.5) * 0.7);
+        } else {
+          col = mix(K.deep, K.shallow, ssm(0.35, 0.62, h));
+          if (h > o.landLevel) col = mix(col, K.land, ssm(o.landLevel, o.landLevel + 0.05, h));
+          if (K.ice) { var cr = Math.abs(fbm(rx2 * 4 + seed, ry * 4, rz * 4, 3) - 0.5); col = mix(col, [40, 90, 130], ssm(0.04, 0.0, cr) * 0.8); }
+        }
+        var cl = fbm(rx2 * 3.2 + seed * 2, ry * 3.6 + 9, rz * 3.2 + seed, 5);
+        var ca = ssm(K.cloud, K.cloud + 0.16, cl) * (K.bands ? 0.35 : 0.8);
+        col = mix(col, [255, 255, 255], ca);
+        var dif = nx * L[0] + ny * L[1] + nz * L[2];
+        var k = 0.05 + 0.95 * ssm(-0.12, 0.55, dif);
+        var spec = Math.pow(Math.max(0, 2 * dif * nz - L[2]), 18) * (1 - ca) * 0.5 * (h < o.landLevel ? 1 : 0.2);
+        var rim = Math.pow(1 - nz, 2.4) * ssm(-0.3, 0.6, dif) * 0.9;
+        var a = 255 * Math.min(1, (1 - Math.sqrt(rr)) * R / 1.6);
+        d[i] = Math.min(255, col[0] * k + spec * 255 + rim * 110);
+        d[i + 1] = Math.min(255, col[1] * k + spec * 255 + rim * 170);
+        d[i + 2] = Math.min(255, col[2] * k + spec * 255 + rim * 255);
+        d[i + 3] = a;
+      }
+    }
+    x2.putImageData(img, 0, 0);
+    return c;
+  }
+  function buildMoon(r, seed, tint) {
+    var R = Math.max(4, Math.round(r * dpr)), S = R * 2, c = document.createElement('canvas');
+    c.width = c.height = S; var x2 = c.getContext('2d'), img = x2.createImageData(S, S), d = img.data;
+    for (var py = 0; py < S; py++) for (var px = 0; px < S; px++) {
+      var nx = (px + 0.5 - R) / R, ny = (py + 0.5 - R) / R, rr = nx * nx + ny * ny, i = (py * S + px) * 4;
+      if (rr > 1) continue;
+      var nz = Math.sqrt(1 - rr), n = fbm(nx * 3 + seed, ny * 3 + seed, nz * 3, 4);
+      var cr = Math.abs(fbm(nx * 6 + seed * 2, ny * 6, nz * 6, 2) - 0.5), dark = ssm(0.12, 0.0, cr) * 0.35;
+      var k = (0.1 + 0.9 * ssm(-0.1, 0.6, nx * -0.6 + ny * -0.5 + nz * 0.6)) * (0.7 + 0.5 * n) * (1 - dark);
+      d[i] = tint[0] * k; d[i + 1] = tint[1] * k; d[i + 2] = tint[2] * k; d[i + 3] = 255 * Math.min(1, (1 - Math.sqrt(rr)) * R / 1.4);
+    }
+    x2.putImageData(img, 0, 0); return c;
+  }
+  function buildAsteroid(r, seed) {
+    var R = Math.max(5, Math.round(r * dpr)), S = R * 2 + 4, c = document.createElement('canvas');
+    c.width = c.height = S; var x2 = c.getContext('2d'), rnd = rng(seed);
+    var pts = [], n = 14;
+    for (var i = 0; i < n; i++) { var a = i / n * 6.2832, rad = R * (0.68 + 0.32 * rnd()); pts.push([S / 2 + Math.cos(a) * rad, S / 2 + Math.sin(a) * rad * 0.85]); }
+    x2.beginPath(); x2.moveTo(pts[0][0], pts[0][1]); for (var j = 1; j < n; j++) x2.lineTo(pts[j][0], pts[j][1]); x2.closePath();
+    var g = x2.createRadialGradient(S * 0.36, S * 0.32, R * 0.1, S / 2, S / 2, R * 1.05);
+    var tone = 90 + rnd() * 70; g.addColorStop(0, 'rgb(' + (tone + 60) + ',' + (tone + 45) + ',' + (tone + 30) + ')'); g.addColorStop(0.6, 'rgb(' + tone + ',' + (tone - 12) + ',' + (tone - 24) + ')'); g.addColorStop(1, 'rgb(20,18,16)');
+    x2.fillStyle = g; x2.fill();
+    x2.save(); x2.clip();
+    for (var k = 0; k < 5; k++) { var cx = S * (0.25 + 0.5 * rnd()), cy = S * (0.25 + 0.5 * rnd()), cr = R * (0.1 + 0.18 * rnd()); x2.fillStyle = 'rgba(10,8,6,0.35)'; x2.beginPath(); x2.arc(cx, cy, cr, 0, 6.2832); x2.fill(); x2.fillStyle = 'rgba(255,240,220,0.18)'; x2.beginPath(); x2.arc(cx - cr * 0.25, cy - cr * 0.25, cr * 0.7, 0, 6.2832); x2.fill(); }
+    x2.restore(); return c;
+  }
+  function buildNebula(o) {
+    var S = 200, c = document.createElement('canvas'); c.width = c.height = S;
+    var x2 = c.getContext('2d'), img = x2.createImageData(S, S), d = img.data, a1 = o.c1, a2 = o.c2, sd = o.seed;
+    for (var py = 0; py < S; py++) for (var px = 0; px < S; px++) {
+      var nx = px / S - 0.5, ny = py / S - 0.5, r = Math.sqrt(nx * nx + ny * ny) * 2, i = (py * S + px) * 4;
+      var w = fbm(nx * 2.4 + sd, ny * 2.4 + sd, 1.3, 4);
+      var n = fbm(nx * 4 + w * 2.2 + sd, ny * 4 + w * 2.2, 5.1, 5);
+      var al = ssm(0.38, 0.8, n) * (1 - ssm(0.55, 1.0, r));
+      var col = mix(a1, a2, ssm(0.35, 0.75, w));
+      d[i] = col[0]; d[i + 1] = col[1]; d[i + 2] = col[2]; d[i + 3] = al * 255;
+    }
+    x2.putImageData(img, 0, 0); return c;
+  }
+
+  // ---- lay everything out along the page: one object for each stretch of scrolling, never repeated ----
+  function layout() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = window.innerWidth; H = window.innerHeight;
     cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var rnd = rng(20250815), maxScroll = Math.max(1, document.documentElement.scrollHeight - H), small = W < 700;
     stars = [];
-    var n = Math.round(Math.min(150, Math.max(60, W * H / 5200)));
-    for (var i = 0; i < n; i++) {
-      var layer = Math.random();
-      stars.push({ x: Math.random() * W, y: Math.random() * H, r: 0.4 + Math.random() * 1.3, par: layer < 0.6 ? 0.04 : (layer < 0.9 ? 0.1 : 0.22),
-                   t: Math.random() * 6.28, f: 0.6 + Math.random() * 1.8, a: 0.35 + Math.random() * 0.5 });
+    var ns = Math.round(Math.min(150, Math.max(60, W * H / 5200)));
+    for (var i = 0; i < ns; i++) { var ly = rnd(); stars.push({ x: rnd() * W, y: rnd() * H, r: 0.4 + rnd() * 1.3, par: ly < 0.6 ? 0.04 : (ly < 0.9 ? 0.1 : 0.22), t: rnd() * 6.28, f: 0.6 + rnd() * 1.8, a: 0.35 + rnd() * 0.5 }); }
+    objs = [];
+    var count = Math.max(10, Math.round(maxScroll / (small ? 520 : 640))), order = [];
+    var recipe = ['planet', 'planet', 'nebula', 'planet', 'sun', 'asteroids', 'planet', 'nebula', 'planet', 'asteroids', 'sun', 'planet'];
+    for (var q = 0; q < count; q++) order.push(recipe[q % recipe.length]);
+    var kindBag = [], pn = 0;
+    for (var n2 = 0; n2 < count; n2++) {
+      var type = order[n2], par = 0.14 + rnd() * 0.32, at = (n2 + 0.5) / count * maxScroll;
+      var edge = rnd() < 0.5 ? -1 : 1, xr = small ? 0.12 + rnd() * 0.76 : (edge < 0 ? -0.04 + rnd() * 0.26 : 0.78 + rnd() * 0.26);
+      var o = { type: type, par: par, x: xr * W, worldY: at * par + (0.2 + 0.6 * rnd()) * H, seed: Math.floor(rnd() * 9999) + 1 };
+      if (type === 'planet') {
+        if (!kindBag.length) { kindBag = [0, 1, 2, 3, 4, 5, 6]; for (var z = kindBag.length - 1; z > 0; z--) { var w = Math.floor(rnd() * (z + 1)); var tmp = kindBag[z]; kindBag[z] = kindBag[w]; kindBag[w] = tmp; } }
+        o.kind = kindBag.pop(); o.r = (small ? 34 : 52) + rnd() * (small ? 36 : 64); o.tilt = (rnd() - 0.5) * 1.0; o.phase = rnd() * 6.28; o.landLevel = 0.6 + rnd() * 0.12;
+        o.ring = rnd() < 0.3; o.drift = (rnd() - 0.5) * 8; o.moons = [];
+        var nm = Math.floor(rnd() * 3.2);
+        for (var m = 0; m < nm; m++) o.moons.push({ a: o.r * (1.7 + m * 0.75 + rnd() * 0.3), r: o.r * (0.1 + rnd() * 0.12), ph: rnd() * 6.28, w: (0.25 + rnd() * 0.5) * (m % 2 ? -1 : 1), tilt: (rnd() - 0.5) * 0.7,
+                                    tint: [[190, 188, 180], [170, 140, 110], [150, 170, 190], [200, 190, 160]][Math.floor(rnd() * 4)], seed: Math.floor(rnd() * 999) });
+      } else if (type === 'nebula') {
+        var pal = [[[40, 110, 255], [150, 60, 255]], [[30, 220, 190], [40, 110, 255]], [[255, 90, 170], [150, 60, 255]], [[255, 150, 60], [255, 70, 110]], [[60, 255, 160], [20, 150, 200]]][Math.floor(rnd() * 5)];
+        o.c1 = pal[0]; o.c2 = pal[1]; o.r = (small ? 150 : 230) + rnd() * 150; o.rot = rnd() * 6.28;
+      } else if (type === 'sun') {
+        var suns = [[255, 244, 210], [255, 190, 90], [255, 110, 70], [170, 210, 255], [255, 240, 150]];
+        o.col = suns[Math.floor(rnd() * suns.length)]; o.r = (small ? 22 : 30) + rnd() * 34; o.rays = 5 + Math.floor(rnd() * 4); o.ph = rnd() * 6.28;
+      } else {
+        o.rocks = []; var nr = 7 + Math.floor(rnd() * 8);
+        for (var r2 = 0; r2 < nr; r2++) o.rocks.push({ dx: (rnd() - 0.5) * 260, dy: (rnd() - 0.5) * 150, r: 5 + rnd() * 15, rot: rnd() * 6.28, rs: (rnd() - 0.5) * 0.5, seed: Math.floor(rnd() * 99999), drift: (rnd() - 0.5) * 6 });
+      }
+      objs.push(o);
     }
-    var small = W < 700, R = small ? 1 : 1.5;
-    planets = [
-      { x: W * 0.84, y: H * 0.20, r: 26 * R, c: [70, 190, 210],  par: 0.07, dx: -3.0, ring: false, moon: true },
-      { x: W * 0.12, y: H * 0.62, r: 38 * R, c: [210, 120, 70],  par: 0.12, dx:  2.2, ring: true,  moon: false },
-      { x: W * 0.70, y: H * 0.86, r: 18 * R, c: [150, 110, 220], par: 0.05, dx: -2.0, ring: false, moon: false }
-    ];
   }
-  function planet(p, t) {
-    var y = ((p.y - sy * p.par) % (H + 300) + (H + 300)) % (H + 300) - 150;
-    var x = p.x + Math.sin(t * 0.00012 + p.r) * 14;
-    ctx.save(); ctx.globalAlpha = 0.5;
-    if (p.ring) { ctx.strokeStyle = 'rgba(230,200,160,0.45)'; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.ellipse(x, y, p.r * 1.9, p.r * 0.5, -0.35, 0, 6.2832); ctx.stroke(); }
-    var g = ctx.createRadialGradient(x - p.r * 0.4, y - p.r * 0.4, p.r * 0.1, x, y, p.r);
-    g.addColorStop(0, 'rgba(' + Math.min(255, p.c[0] + 70) + ',' + Math.min(255, p.c[1] + 70) + ',' + Math.min(255, p.c[2] + 70) + ',1)');
-    g.addColorStop(0.55, 'rgba(' + p.c[0] + ',' + p.c[1] + ',' + p.c[2] + ',1)');
-    g.addColorStop(1, 'rgba(' + (p.c[0] >> 2) + ',' + (p.c[1] >> 2) + ',' + (p.c[2] >> 2) + ',1)');
-    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, p.r, 0, 6.2832); ctx.fill();
-    if (p.ring) { ctx.strokeStyle = 'rgba(230,200,160,0.55)'; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.ellipse(x, y, p.r * 1.9, p.r * 0.5, -0.35, 0.1, 3.0); ctx.stroke(); }
-    if (p.moon) {
-      var a = t * 0.0004, mx = x + Math.cos(a) * p.r * 2, my = y + Math.sin(a) * p.r * 0.7;
-      ctx.fillStyle = 'rgba(200,200,205,0.95)'; ctx.beginPath(); ctx.arc(mx, my, p.r * 0.2, 0, 6.2832); ctx.fill();
+
+  function ensure(o) {                                  // build each sprite once, one at a time, as it comes near
+    if (o.ready || o.queued) return; o.queued = true;
+    builds.push(function () {
+      if (o.type === 'planet') { o.spr = buildPlanet(o); o.moons.forEach(function (m) { m.spr = buildMoon(m.r, m.seed, m.tint); }); }
+      else if (o.type === 'nebula') o.spr = buildNebula(o);
+      else if (o.type === 'asteroids') o.rocks.forEach(function (r) { r.spr = buildAsteroid(r.r, r.seed); });
+      o.ready = true;
+    });
+  }
+
+  function drawObj(o, t, dt) {
+    var y = o.worldY - sy * o.par, x = o.x;
+    var ext = o.type === 'nebula' ? o.r : (o.type === 'planet' ? o.r * 5 : 220);
+    if (y < -ext || y > H + ext) return;
+    ensure(o);
+    if (o.type === 'planet') {
+      if (!o.ready) return;
+      x += Math.sin(t * 0.00008 * (1 + o.seed % 3) + o.seed) * 10;
+      ctx.save(); ctx.globalAlpha = 0.62;
+      var glow = ctx.createRadialGradient(x, y, o.r * 0.9, x, y, o.r * 1.6);
+      glow.addColorStop(0, 'rgba(120,200,255,0.16)'); glow.addColorStop(1, 'rgba(120,200,255,0)');
+      ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(x, y, o.r * 1.6, 0, 6.2832); ctx.fill();
+      var moonPos = o.moons.map(function (m) { m.ph += (0.3 * m.w + m.w * Math.min(vel * 0.0028, 5)) * dt; var cx = Math.cos(m.ph) * m.a, cy = Math.sin(m.ph) * m.a * 0.32; var ct = Math.cos(m.tilt), st = Math.sin(m.tilt); return { x: x + cx * ct - cy * st, y: y + cx * st + cy * ct, z: Math.sin(m.ph), m: m }; });
+      moonPos.forEach(function (p) { if (p.z <= 0 && p.m.spr) ctx.drawImage(p.m.spr, p.x - p.m.r, p.y - p.m.r, p.m.r * 2, p.m.r * 2); });
+      if (o.ring) { ctx.strokeStyle = 'rgba(230,205,170,0.5)'; ctx.lineWidth = Math.max(2, o.r * 0.1); ctx.beginPath(); ctx.ellipse(x, y, o.r * 1.9, o.r * 0.5, -0.35, Math.PI, 6.2832); ctx.stroke(); }
+      ctx.drawImage(o.spr, x - o.r, y - o.r, o.r * 2, o.r * 2);
+      if (o.ring) { ctx.strokeStyle = 'rgba(240,215,180,0.62)'; ctx.lineWidth = Math.max(2, o.r * 0.1); ctx.beginPath(); ctx.ellipse(x, y, o.r * 1.9, o.r * 0.5, -0.35, 0, Math.PI); ctx.stroke(); }
+      moonPos.forEach(function (p) { if (p.z > 0 && p.m.spr) { var s2 = p.m.r * (1 + 0.12 * p.z); ctx.drawImage(p.m.spr, p.x - s2, p.y - s2, s2 * 2, s2 * 2); } });
+      ctx.restore();
+    } else if (o.type === 'nebula') {
+      if (!o.ready) return;
+      ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 0.5; ctx.translate(x, y); ctx.rotate(o.rot + t * 0.00001);
+      ctx.drawImage(o.spr, -o.r, -o.r, o.r * 2, o.r * 2); ctx.restore();
+    } else if (o.type === 'sun') {
+      ctx.save(); ctx.globalCompositeOperation = 'lighter';
+      var c = o.col, pulse = 1 + 0.04 * Math.sin(t * 0.002 + o.ph);
+      var g = ctx.createRadialGradient(x, y, 0, x, y, o.r * 5 * pulse);
+      g.addColorStop(0, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.55)'); g.addColorStop(0.25, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.16)'); g.addColorStop(1, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, o.r * 5 * pulse, 0, 6.2832); ctx.fill();
+      for (var k = 0; k < o.rays; k++) { var a = o.ph + k * 3.1416 / o.rays + t * 0.00005, L = o.r * (3.2 + (k % 3) * 0.8); var gg = ctx.createLinearGradient(x - Math.cos(a) * L, y - Math.sin(a) * L, x + Math.cos(a) * L, y + Math.sin(a) * L); gg.addColorStop(0, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)'); gg.addColorStop(0.5, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.22)'); gg.addColorStop(1, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)'); ctx.strokeStyle = gg; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(x - Math.cos(a) * L, y - Math.sin(a) * L); ctx.lineTo(x + Math.cos(a) * L, y + Math.sin(a) * L); ctx.stroke(); }
+      ctx.globalAlpha = 0.95; ctx.fillStyle = 'rgba(255,255,255,1)'; ctx.beginPath(); ctx.arc(x, y, o.r * 0.42, 0, 6.2832); ctx.fill();
+      ctx.fillStyle = 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.9)'; ctx.beginPath(); ctx.arc(x, y, o.r * 0.7, 0, 6.2832); ctx.fill();
+      ctx.restore();
+    } else {
+      if (!o.ready) return;
+      ctx.save(); ctx.globalAlpha = 0.7;
+      o.rocks.forEach(function (r) {
+        if (!r.spr) return; r.rot += r.rs * dt * (1 + Math.min(vel * 0.002, 3));
+        var rx = x + r.dx + Math.sin(t * 0.0001 + r.seed) * r.drift, ry = y + r.dy;
+        ctx.save(); ctx.translate(rx, ry); ctx.rotate(r.rot); ctx.drawImage(r.spr, -r.r, -r.r, r.r * 2, r.r * 2); ctx.restore();
+      });
+      ctx.restore();
     }
-    ctx.restore();
   }
+
   function frame(t) {
+    var dt = Math.min((t - (lastT || t)) / 1000, 0.1); lastT = t;
+    vel += ((sy - lastSy) / Math.max(dt, 0.001) - vel) * Math.min(1, dt * 5); lastSy = sy;      // how fast you are scrolling
+    if (builds.length) builds.shift()();                                                           // build one sprite a frame
     ctx.clearRect(0, 0, W, H);
+    for (var n = 0; n < objs.length; n++) if (objs[n].type === 'nebula') drawObj(objs[n], t, dt);
     for (var i = 0; i < stars.length; i++) {
-      var s = stars[i];
-      var y = ((s.y - sy * s.par) % H + H) % H;
-      var tw = 0.55 + 0.45 * Math.sin(t * 0.001 * s.f + s.t);
-      ctx.fillStyle = 'rgba(220,240,255,' + (s.a * tw) + ')';
-      ctx.beginPath(); ctx.arc(s.x, y, s.r, 0, 6.2832); ctx.fill();
+      var s = stars[i], y = ((s.y - sy * s.par) % H + H) % H, tw = 0.55 + 0.45 * Math.sin(t * 0.001 * s.f + s.t);
+      ctx.fillStyle = 'rgba(220,240,255,' + (s.a * tw) + ')'; ctx.beginPath(); ctx.arc(s.x, y, s.r, 0, 6.2832); ctx.fill();
       if (s.r > 1.3) { ctx.fillRect(s.x - s.r * 3, y - 0.4, s.r * 6, 0.8); ctx.fillRect(s.x - 0.4, y - s.r * 3, 0.8, s.r * 6); }
     }
-    for (var j = 0; j < planets.length; j++) planet(planets[j], t);
+    for (var m = 0; m < objs.length; m++) if (objs[m].type !== 'nebula') drawObj(objs[m], t, dt);
     requestAnimationFrame(frame);
   }
-  window.addEventListener('resize', size);
-  size(); requestAnimationFrame(frame);
+  var relayout;
+  window.addEventListener('resize', function () { clearTimeout(relayout); relayout = setTimeout(layout, 150); });
+  window.addEventListener('load', function () { setTimeout(layout, 300); });          // images have changed the page height by now
+  layout(); requestAnimationFrame(frame);
 })();
 </script>
 </body>
