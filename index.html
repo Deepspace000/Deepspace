@@ -544,6 +544,22 @@
   }
   .icons a:hover, .icons a:focus-visible { color: #ffffff; background-image: none; }
   .icons svg { display: block; width: 100%; height: 100%; fill: currentColor; }
+  /* ---------- Service icons beside each album ---------- */
+  .a-links { margin-top: 0.75rem; display: flex; align-items: center; gap: 1.2rem; }
+  .a-links a {
+    display: block;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    color: var(--text);
+    opacity: 0.5;
+    background-image: none;
+    transition: opacity 0.9s ease;
+  }
+  .a-links a:hover, .a-links a:focus-visible { opacity: 1; color: #ffffff; background-image: none; }
+  .a-links svg { display: block; width: 100%; height: 100%; fill: currentColor; }
+  .icons a { opacity: 0.7; transition: color 0.9s ease, opacity 0.9s ease; }
+  .icons a:hover, .icons a:focus-visible { opacity: 1; }
 </style>
 </head>
 <body>
@@ -1105,7 +1121,7 @@
       { q: 1, x: "A very nice range of styles, smooth and mellow to more rhythmic. I enjoyed the melody and nice spacial breadth of the Null piece played on a 5:1 sound system. The Vast Gate piece too was a grand aural vista.\nThanks Deepspace, cheers! Favorite track: Atlas Null - 000, 000, 000, 000.", w: "robw-37, supporter on Bandcamp" },
       { q: 1, x: "Ambient, mais très musical et mélodieux. Sombre et lumineux, cet album nous emporte, transporte… A écouter au casque pour en saisir toutes les subtilités.", w: "David TRIMBOUR, supporter on Bandcamp" }
     ]},
-    { t: 'Water Planets', y: '2025', l: 'Projekt Records', u: P + 'water-planets', art: 'a2107629789', id: '3740035671', c: [
+    { t: 'Water Planets', y: '2025', l: 'Projekt Records', u: P + 'water-planets', art: 'a2107629789', id: '3740035671', sp: 'https://open.spotify.com/album/6bCsvONVBJf3jAprwkhp1S', c: [
       { x: "#65 on the UK album charts, September 2025", w: "UK album charts" },
       { x: "#22 on Best Albums of 2025", w: "Echoes Radio" },
       { q: 1, x: "A wonderful album, a must buy for purveyors of fine space ambient music......... Favorite track: Surfacing Amongst Biofluorescent Systems.", w: "DJ_Tim_Tee, supporter on Bandcamp" },
@@ -1121,7 +1137,7 @@
       { q: 1, x: "Now, this is a voyage. One album of vast stellar washes and drifts in classic spacemusic style and one album of catchy rhythmic grooves, all coming together in a meaningful narrative flow. An hour and a half of 100% goodness. Check it out, and be sure to read the album notes for the origin (very funny!) and the storyline. An instant favorite.", w: "John Shanahan, Hypnagogue" },
       { q: 1, x: "warm, shimmering and curvaceous", w: "Chuck van Zyl, Star\u2019s End" }
     ]},
-    { t: 'Neon Blue Utopia', y: '2025', l: 'Projekt Records', u: P + 'neon-blue-utopia', art: 'a1006312085', id: '844316991', c: [
+    { t: 'Neon Blue Utopia', y: '2025', l: 'Projekt Records', u: P + 'neon-blue-utopia', art: 'a1006312085', id: '844316991', yt: 'https://www.youtube.com/playlist?list=PLC-ueUAKetVLUp8Kro-l4x7xT5nLPBdIc', c: [
       { q: 1, x: "One of my favorite deepspace albums. In some ways it reminds me of Ulver's Perdition City. Maybe take that album and set it into the future, Favorite track: Rainy メガシティ 七 Precinct.", w: "Progressive Music Planet, supporter on Bandcamp" },
       { q: 1, x: "it's a grower! beautiful ambient / chill compositions with a deep retro feel! Favorite track: Sunny Hypnagogia Heights.", w: "LaRusso, supporter on Bandcamp" },
       { q: 1, x: "Stunning! It's hard to pin down what makes deepspace so unique. Where other electronic artists make sounds, Mirko makes worlds and then soundtracks them. A hundred, maybe a thousand, novels might have been written in this Utopia, but Mirko isn't interested in telling -- that's your job. A deepspace album is only as good as your imagination. Favorite track: Rainy メガシティ 七 Precinct.", w: "D. S., supporter on Bandcamp" },
@@ -1185,8 +1201,8 @@
     { t: 'The Dream Polaroids', y: '2021', l: 'Independent', u: D + 'the-dream-polaroids', art: 'a0597051670', id: '316257753', c: [
       { q: 1, x: 'My second favourite deepspace album after Architecture', w: 'a supporter on Bandcamp' }
     ]},
-    { t: 'Deep Blue Universe', y: '2019', l: 'Independent', u: D + 'deep-blue-universe', art: 'a0428217506', id: '2704147216', c: [] },
-    { t: 'Blue Worlds I', y: '2018', l: 'Independent', u: D + 'blue-worlds-i', art: 'a3896224812', id: '2227799233', c: [] },
+    { t: 'Deep Blue Universe', y: '2019', l: 'Independent', u: D + 'deep-blue-universe', art: 'a0428217506', id: '2704147216', ap: 'https://music.apple.com/us/album/deep-blue-universe/1465677891', c: [] },
+    { t: 'Blue Worlds I', y: '2018', l: 'Independent', u: D + 'blue-worlds-i', art: 'a3896224812', id: '2227799233', ap: 'https://music.apple.com/us/album/blue-worlds-i/1385641617', c: [] },
     { t: 'The Empty Atoms', y: '2016', l: 'Independent', u: D + 'the-empty-atoms', art: 'a1642143802', id: '1419835340', c: [] },
     { t: 'Slow Wave Cathedral', y: '2011', l: 'Independent', u: D + 'slow-wave-cathedral', art: 'a2005583787', id: '4157215996', c: [
       { q: 1, x: 'well composed and warm sounding', w: 'Sonic Immersion' }
@@ -1207,6 +1223,34 @@
       { x: 'Won Best New Talent on release and made the top five on several ambient sites.', w: 'from the Bandcamp page' }
     ]}
   ];
+
+  var ICON = {
+    bc: 'M0 18.75l7.437-13.5H24l-7.438 13.5H0z',
+    sp: 'M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z',
+    ap: 'M17 3.2v11.3a3.1 3.1 0 1 1-1.8-2.8V8.3l-7 1.5v8.5a3.1 3.1 0 1 1-1.8-2.8V6.2L17 3.2z',
+    yt: 'M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z'
+  };
+  // Direct album links where I have them; otherwise a search for that album on the service.
+  function serviceLinks(a) {
+    var q = encodeURIComponent(('deepspace ' + a.t).replace(/\(EP\)/, '').replace('\u2013', ' ').replace(/\s+/g, ' ').trim());
+    var set = [
+      ['Bandcamp', a.u, ICON.bc],
+      ['Spotify', a.sp || 'https://open.spotify.com/search/' + q, ICON.sp],
+      ['Apple Music', a.ap || 'https://music.apple.com/us/search?term=' + q, ICON.ap],
+      ['YouTube', a.yt || 'https://www.youtube.com/results?search_query=' + q, ICON.yt]
+    ];
+    var box = document.createElement('div');
+    box.className = 'a-links';
+    set.forEach(function (x) {
+      var l = document.createElement('a');
+      l.href = x[1]; l.target = '_blank'; l.rel = 'noopener';
+      l.title = x[0];
+      l.setAttribute('aria-label', a.t + ' on ' + x[0]);
+      l.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + x[2] + '"/></svg>';
+      box.appendChild(l);
+    });
+    return box;
+  }
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -1336,9 +1380,11 @@
       panel.appendChild(inner);
       row.appendChild(info);
       info.appendChild(actions);
+      info.appendChild(serviceLinks(a));
       row.appendChild(panel);
     } else {
       info.appendChild(actions);
+      info.appendChild(serviceLinks(a));
       row.appendChild(info);
     }
     if (/^Projekt/.test(a.l)) {
