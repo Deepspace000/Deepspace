@@ -787,7 +787,7 @@
         var r, g, b, ocean = 0;
         if (e < SEA) {
           var d = Math.min(1, (SEA - e) / 0.2);
-          r = mx(26, 4, d); g = mx(104, 22, d); b = mx(138, 52, d);
+          r = mx(44, 5, d); g = mx(172, 56, d); b = mx(112, 42, d);
           ocean = 255;
           if (polar > iceLine - 0.05) {
             var si = sm(iceLine - 0.05, iceLine + 0.02, polar);
@@ -796,13 +796,13 @@
         } else {
           var h = (e - SEA) / (1 - SEA);
           var dryness = sm(0.42, 0.66, dry) * sm(0.15, 0.4, polar) * (1 - sm(0.55, 0.8, polar));
-          r = mx(44, 168, dryness); g = mx(86, 140, dryness); b = mx(50, 92, dryness);
+          r = mx(184, 164, dryness); g = mx(146, 88, dryness); b = mx(88, 56, dryness);
           var rock = sm(0.3, 0.66, h);
-          r = mx(r, 112, rock); g = mx(g, 104, rock); b = mx(b, 92, rock);
+          r = mx(r, 118, rock); g = mx(g, 84, rock); b = mx(b, 96, rock);
           var snow = sm(0.7, 0.88, h);
           r = mx(r, 238, snow); g = mx(g, 241, snow); b = mx(b, 245, snow);
           var beach = 1 - sm(0.0, 0.05, h);
-          r = mx(r, 196, beach * 0.8); g = mx(g, 182, beach * 0.8); b = mx(b, 134, beach * 0.8);
+          r = mx(r, 222, beach * 0.85); g = mx(g, 204, beach * 0.85); b = mx(b, 150, beach * 0.85);
           if (polar > iceLine) {
             var ip = sm(iceLine, iceLine + 0.05, polar);
             r = mx(r, 232, ip); g = mx(g, 239, ip); b = mx(b, 246, ip);
@@ -879,11 +879,8 @@
 
         // thin blue atmosphere at the edge
         var rim = Math.pow(1 - nz, 2.4) * (0.1 + 0.9 * lit) * 1.2;
-        rr += 62 * rim; gg += 124 * rim; bb += 196 * rim;
+        rr += 60 * rim; gg += 176 * rim; bb += 142 * rim;
 
-        // calm the colours so the planet sits quietly in the blue night
-        var lum = 0.3 * rr + 0.59 * gg + 0.11 * bb;
-        rr = mx(rr, lum * 0.92, 0.26); gg = mx(gg, lum * 1.0, 0.26); bb = mx(bb, lum * 1.12, 0.26);
         d[o] = rr; d[o + 1] = gg; d[o + 2] = bb; d[o + 3] = alpha * 255;
       }
     }
@@ -976,8 +973,8 @@
     // faint glow
     ctx.globalCompositeOperation = 'lighter';
     var gl = ctx.createRadialGradient(cx, cy, r * 0.9, cx, cy, r * 2.6);
-    gl.addColorStop(0, 'rgba(90,150,200,0.10)');
-    gl.addColorStop(1, 'rgba(90,150,200,0)');
+    gl.addColorStop(0, 'rgba(90,200,160,0.10)');
+    gl.addColorStop(1, 'rgba(90,200,160,0)');
     ctx.fillStyle = gl;
     ctx.beginPath(); ctx.arc(cx, cy, r * 2.6, 0, 6.2832); ctx.fill();
     ctx.globalCompositeOperation = 'source-over';
