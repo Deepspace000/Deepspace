@@ -588,33 +588,35 @@
     var ns = Math.round(Math.min(150, Math.max(60, W * H / 5200)));
     for (var i = 0; i < ns; i++) { var ly = rnd(); stars.push({ x: rnd() * W, y: rnd() * H, r: 0.4 + rnd() * 1.3, par: ly < 0.6 ? 0.04 : (ly < 0.9 ? 0.1 : 0.22), t: rnd() * 6.28, f: 0.6 + rnd() * 1.8, a: 0.35 + rnd() * 0.5 }); }
     objs = [];
-    var count = Math.min(40, Math.max(6, Math.round(maxScroll / (Math.max(H, 480) * 0.8)))), order = [];   // guarded for a hidden or zero-sized window
-    var recipe = ['planet', 'nebula', 'planet', 'asteroids', 'planet', 'sun', 'planet', 'nebula'];
-    for (var q = 0; q < count; q++) order.push(recipe[q % recipe.length]);
-    var kindBag = [], pn = 0, sizes = [];
-    for (var zz = 0; zz < count; zz++) sizes.push((small ? 26 : 34) + (zz / Math.max(1, count - 1)) * (small ? 78 : 118));
-    for (var z2 = sizes.length - 1; z2 > 0; z2--) { var w2 = Math.floor(rnd() * (z2 + 1)); var t2 = sizes[z2]; sizes[z2] = sizes[w2]; sizes[w2] = t2; }
-    for (var n2 = 0; n2 < count; n2++) {
-      var type = order[n2], par = 0.14 + rnd() * 0.32, at = (n2 + 0.5) / count * maxScroll;
+    var recipe = ['planet', 'nebula', 'planet', 'sun', 'planet', 'asteroids'], kindBag = [], cursor = 0, idx = 0, sizeSeq = [92, 46, 124, 62, 36, 106, 54, 80], pi = 0, Hs = Math.max(H, 480);
+    while (cursor < maxScroll + Hs && idx < 40) {
+      var type = recipe[idx % recipe.length]; idx++;
+      var par = 0.26 + rnd() * 0.22;
       var edge = rnd() < 0.5 ? -1 : 1, xr = small ? 0.12 + rnd() * 0.76 : (edge < 0 ? -0.04 + rnd() * 0.26 : 0.78 + rnd() * 0.26);
-      var o = { type: type, par: par, x: xr * W, worldY: at * par + (0.2 + 0.6 * rnd()) * H, seed: Math.floor(rnd() * 9999) + 1 };
+      var o = { type: type, par: par, x: xr * W, worldY: 0, seed: Math.floor(rnd() * 9999) + 1 }, ext = 200;
       if (type === 'planet') {
         if (!kindBag.length) { kindBag = [0, 1, 2, 3, 4, 5, 6]; for (var z = kindBag.length - 1; z > 0; z--) { var w = Math.floor(rnd() * (z + 1)); var tmp = kindBag[z]; kindBag[z] = kindBag[w]; kindBag[w] = tmp; } }
-        o.kind = kindBag.pop(); o.r = sizes[n2]; o.tilt = (rnd() - 0.5) * 1.0; o.phase = rnd() * 6.28; o.landLevel = 1.5;   // all water, no land
-        o.ring = rnd() < 0.3; o.drift = (rnd() - 0.5) * 8; o.moons = [];
+        o.kind = kindBag.pop(); o.r = sizeSeq[pi % sizeSeq.length] * (small ? 0.72 : 1); pi++; o.tilt = (rnd() - 0.5) * 1.0; o.phase = rnd() * 6.28; o.landLevel = 1.5;
+        o.ring = false; o.moons = [];
         var nm = Math.floor(rnd() * 3.2);
         for (var m = 0; m < nm; m++) o.moons.push({ a: o.r * (1.7 + m * 0.75 + rnd() * 0.3), r: o.r * (0.1 + rnd() * 0.12), ph: rnd() * 6.28, w: (0.25 + rnd() * 0.5) * (m % 2 ? -1 : 1), tilt: (rnd() - 0.5) * 0.7,
-                                    tint: [[190, 188, 180], [170, 140, 110], [150, 170, 190], [200, 190, 160]][Math.floor(rnd() * 4)], seed: Math.floor(rnd() * 999) });
+                                    tint: [190, 188, 180], seed: Math.floor(rnd() * 999) });
+        ext = o.r * 4.2;
       } else if (type === 'nebula') {
         var pal = [[[40, 110, 255], [90, 70, 255]], [[30, 190, 230], [40, 110, 255]], [[70, 140, 255], [140, 90, 255]], [[20, 90, 200], [60, 200, 230]], [[100, 170, 255], [30, 60, 190]]][Math.floor(rnd() * 5)];
-        o.c1 = pal[0]; o.c2 = pal[1]; o.r = (small ? 150 : 230) + rnd() * 150; o.rot = rnd() * 6.28;
+        o.c1 = pal[0]; o.c2 = pal[1]; o.r = (small ? 150 : 230) + rnd() * 120; o.rot = rnd() * 6.28; ext = o.r;
       } else if (type === 'sun') {
         var suns = [[255, 244, 210], [255, 190, 90], [255, 110, 70], [170, 210, 255], [255, 240, 150]];
-        o.col = suns[Math.floor(rnd() * suns.length)]; o.r = (small ? 22 : 30) + rnd() * 34; o.rays = 5 + Math.floor(rnd() * 4); o.ph = rnd() * 6.28;
+        o.col = suns[Math.floor(rnd() * suns.length)]; o.r = (small ? 22 : 30) + rnd() * 30; o.rays = 5 + Math.floor(rnd() * 4); o.ph = rnd() * 6.28; ext = o.r * 5;
       } else {
         o.rocks = []; var nr = 7 + Math.floor(rnd() * 8);
         for (var r2 = 0; r2 < nr; r2++) o.rocks.push({ dx: (rnd() - 0.5) * 260, dy: (rnd() - 0.5) * 150, r: 5 + rnd() * 15, rot: rnd() * 6.28, rs: (rnd() - 0.5) * 0.5, seed: Math.floor(rnd() * 99999), drift: (rnd() - 0.5) * 6 });
+        ext = 200;
       }
+      o.ext = ext;
+      var span = (Hs + 2 * ext) / par;                                 // how much scrolling it takes to cross the screen
+      o.worldY = (cursor + span / 2) * par + Hs / 2;
+      cursor += span + Hs * 0.6;                                       // a gap before the next one, so never two at once
       objs.push(o);
     }
   }
@@ -630,14 +632,16 @@
   }
 
   function drawObj(o, t, dt) {
-    var y = o.worldY - sy * o.par, x = o.x;
-    var ext = o.type === 'nebula' ? o.r : (o.type === 'planet' ? o.r * 5 : 220);
+    var Hh = H, y = o.worldY - sy * o.par, x = o.x;
+    var ext = o.ext || 220;
     if (y < -ext || y > H + ext) return;
     ensure(o);
+    var vis = ssm(Hh * 1.05, Hh * 0.5, y) * ssm(-Hh * 0.1, Hh * 0.3, y);   // in slowly from the bottom, away before the top
+    if (vis < 0.01) return;
     if (o.type === 'planet') {
       if (!o.ready) return;
       x += Math.sin(t * 0.00008 * (1 + o.seed % 3) + o.seed) * 10;
-      ctx.save(); ctx.globalAlpha = 0.62;
+      ctx.save(); ctx.globalAlpha = 0.62 * vis;
       var glow = ctx.createRadialGradient(x, y, o.r * 0.9, x, y, o.r * 1.6);
       glow.addColorStop(0, 'rgba(120,200,255,0.16)'); glow.addColorStop(1, 'rgba(120,200,255,0)');
       ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(x, y, o.r * 1.6, 0, 6.2832); ctx.fill();
@@ -650,21 +654,21 @@
       ctx.restore();
     } else if (o.type === 'nebula') {
       if (!o.ready) return;
-      ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 0.5; ctx.translate(x, y); ctx.rotate(o.rot + t * 0.00001);
+      ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 0.5 * vis; ctx.translate(x, y); ctx.rotate(o.rot + t * 0.00001);
       ctx.drawImage(o.spr, -o.r, -o.r, o.r * 2, o.r * 2); ctx.restore();
     } else if (o.type === 'sun') {
-      ctx.save(); ctx.globalCompositeOperation = 'lighter';
+      ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = vis;
       var c = o.col, pulse = 1 + 0.04 * Math.sin(t * 0.002 + o.ph);
       var g = ctx.createRadialGradient(x, y, 0, x, y, o.r * 5 * pulse);
       g.addColorStop(0, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.55)'); g.addColorStop(0.25, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.16)'); g.addColorStop(1, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)');
       ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, o.r * 5 * pulse, 0, 6.2832); ctx.fill();
       for (var k = 0; k < o.rays; k++) { var a = o.ph + k * 3.1416 / o.rays + t * 0.00005, L = o.r * (3.2 + (k % 3) * 0.8); var gg = ctx.createLinearGradient(x - Math.cos(a) * L, y - Math.sin(a) * L, x + Math.cos(a) * L, y + Math.sin(a) * L); gg.addColorStop(0, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)'); gg.addColorStop(0.5, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.22)'); gg.addColorStop(1, 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0)'); ctx.strokeStyle = gg; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(x - Math.cos(a) * L, y - Math.sin(a) * L); ctx.lineTo(x + Math.cos(a) * L, y + Math.sin(a) * L); ctx.stroke(); }
-      ctx.globalAlpha = 0.95; ctx.fillStyle = 'rgba(255,255,255,1)'; ctx.beginPath(); ctx.arc(x, y, o.r * 0.42, 0, 6.2832); ctx.fill();
+      ctx.globalAlpha = 0.95 * vis; ctx.fillStyle = 'rgba(255,255,255,1)'; ctx.beginPath(); ctx.arc(x, y, o.r * 0.42, 0, 6.2832); ctx.fill();
       ctx.fillStyle = 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.9)'; ctx.beginPath(); ctx.arc(x, y, o.r * 0.7, 0, 6.2832); ctx.fill();
       ctx.restore();
     } else {
       if (!o.ready) return;
-      ctx.save(); ctx.globalAlpha = 0.7;
+      ctx.save(); ctx.globalAlpha = 0.7 * vis;
       o.rocks.forEach(function (r) {
         if (!r.spr) return; r.rot += r.rs * dt * (1 + Math.min(vel * 0.002, 3));
         var rx = x + r.dx + Math.sin(t * 0.0001 + r.seed) * r.drift, ry = y + r.dy;
@@ -701,7 +705,6 @@
     x.fillStyle = glow; x.fillRect(0, 0, S, S);
     var spr = buildPlanet({ r: 92, kind: kind, seed: seed % 977 + 3, tilt: (r() - 0.5) * 0.8, phase: r() * 6.28, landLevel: 1.5 });
     x.drawImage(spr, S / 2 - 100, S / 2 - 100, 200, 200);
-    if (kind === 4 || kind === 3) { x.strokeStyle = 'rgba(230,205,170,0.5)'; x.lineWidth = 2; x.beginPath(); x.ellipse(S / 2, S / 2, 138, 34, -0.35, Math.PI, 6.2832); x.stroke(); }
     var m = buildMoon(14, seed % 500, [190, 188, 180]); x.drawImage(m, S * 0.78 - 14, S * 0.26 - 14, 28, 28);
   }
   var plates = Array.prototype.slice.call(document.querySelectorAll('.planet-plate'));
