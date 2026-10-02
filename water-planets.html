@@ -121,7 +121,33 @@
   .book .foot { margin-top: 1.8rem; padding-top: 0.8rem; border-top: 1px solid rgba(214, 178, 100, 0.4); font-size: 0.82em; font-style: italic; color: #cdbb93; text-align: left; }
   .book .foot::before { content: "\2020  "; color: #c9a95e; font-style: normal; }
   .book .folio { text-align: center; margin: 1.6rem 0 0; font-size: 0.78em; letter-spacing: 0.3em; color: #c9a95e; }
-  @media (max-width: 520px) { .book { padding: 1.7rem 1.05rem 1.5rem; font-size: 1.12em; } .book p { text-align: left; } }
+  @media (max-width: 520px) { .book { padding: 1.7rem 1.05rem 1.5rem; font-size: 1.12em; } .book p { text-align: left; } .book .runhead { font-size: 0.6em; letter-spacing: 0.12em; white-space: nowrap; } }
+
+
+  /* pictures are plates: framed, matted and numbered like the illustrations in an atlas */
+  figure.plate { margin: 2.2rem auto; padding: 0.55rem 0.55rem 0.4rem; background: #1a140c; border: 1px solid rgba(214, 178, 100, 0.6); border-radius: 2px;
+    box-shadow: 0 0 0 4px rgba(26, 20, 12, 0.9), 0 0 0 5px rgba(214, 178, 100, 0.25), 0 18px 40px -16px rgba(0, 0, 0, 0.85); max-width: 100%; }
+  figure.plate img, figure.plate canvas { width: 100%; height: auto; border-radius: 0; box-shadow: none; outline: 1px solid rgba(214, 178, 100, 0.3); display: block; }
+  figure.plate figcaption { margin: 0.55rem 0 0.15rem; text-align: center; font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-size: 0.95em; letter-spacing: 0.04em; color: #d9bd7a; }
+  figure.planet-plate { max-width: 17rem; }
+  figure.planet-plate canvas { aspect-ratio: 1; background: #050a12; }
+  .book figure.plate { margin: 0.4rem auto 1.4rem; }
+  .pair figure.plate { margin: 0; }
+
+  /* chapter openers: a full-width picture with the part title laid over it */
+  .chapter { position: relative; min-height: 42vh; display: flex; align-items: flex-end; justify-content: center; text-align: center; padding: 3rem 1.25rem 2.2rem;
+    background: linear-gradient(rgba(5, 13, 24, 0.05) 30%, rgba(5, 13, 24, 0.82)), var(--img, none) center / cover no-repeat; border-top: 1px solid rgba(214, 178, 100, 0.35); border-bottom: 1px solid rgba(214, 178, 100, 0.35); }
+  .chapter.story-head { min-height: 22vh; background: linear-gradient(rgba(5, 13, 24, 0.4), rgba(5, 13, 24, 0.7)); }
+  .chapter .part { display: block; font-size: 0.72em; letter-spacing: 0.34em; text-transform: uppercase; color: #d9bd7a; }
+  .chapter h2 { margin: 0.2rem 0 0; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; font-size: clamp(2.1rem, 8vw, 3.6rem); letter-spacing: 0.04em; color: #fff3d0; text-shadow: 0 2px 22px rgba(0, 0, 0, 0.85); }
+
+  /* a little more paper: darker edges, a curled corner, grain */
+  .book { box-shadow: inset 0 0 46px rgba(0, 0, 0, 0.55), 0 0 0 5px rgba(23, 18, 12, 0.9), 0 0 0 6px rgba(214, 178, 100, 0.3), 0 26px 60px -20px rgba(0, 0, 0, 0.9); }
+  .book::before { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: 3px; opacity: 0.5; mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6 0 0 0 0 .5 0 0 0 0 .35 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .book::after { content: ""; position: absolute; right: -1px; bottom: -1px; width: 54px; height: 54px; pointer-events: none;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.5) 50%, #3a2e1d 53%, #2a2015); border-top-left-radius: 14px; box-shadow: -4px -4px 8px rgba(0, 0, 0, 0.4); }
+  .book > * { position: relative; z-index: 1; }
 
   /* things ease into view as you reach them */
   .js .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.2, .7, .2, 1); }
@@ -182,16 +208,17 @@
     </div>
   </section>
 
+  <div class="chapter story-head"><div class="chapter-in"><span class="part">Part I</span><h2>The Story</h2></div></div>
+
   <section id="story" class="band" style="--bg-img:url(img/water-planets/bg-06.jpg)">
     <div class="wrap">
-      <h2>The story</h2>
 
       <div class="data">
         <span class="tag">TRANSMISSION</span>
         <p>“We can’t survive much longer... All the ice, all the water... It’s vaporizing. We didn’t expect this—but it’s clear now: We caused it. This entanglement hell, born from our own ignorance...And that experiment. Earth is almost dry. The Oort Cloud, empty. The Kuiper Belt, silent. Enceladus is a dust bowl, and Venus? You don’t even want to know. The oceans are gone. Rivers are mud. People are dying, fast. The domes are holding, but not for much longer.</p>
         <p>But.. There’s something new. IASA found a wormhole. It leads to Hydros: A system of water planets. If those sustainable drone ships don’t reach it soon, we’re finished. Everyone. Everything. We have a year...if we’re lucky.”</p>
       </div>
-      <figure class="narrow"><img src="img/water-planets/lander.jpg" width="472" height="930" loading="lazy" alt="A cream-coloured landing pod standing on red Martian ground under a dark red sky"></figure>
+      <figure class="plate narrow"><img src="img/water-planets/lander.jpg" width="472" height="930" loading="lazy" alt="A cream-coloured landing pod standing on red Martian ground under a dark red sky"><figcaption>Plate I: The transmission, from Mars</figcaption></figure>
 
       <blockquote>Unexpected heat dysfunction in the entire solar system.</blockquote>
       <div class="data">
@@ -214,14 +241,13 @@
     </div>
   </section>
 
+  <div class="chapter" role="img" aria-label="A glowing orange red dwarf star surrounded by six blue water planets" style="--img:url(img/water-planets/hydros-system.jpg)"><div class="chapter-in"><span class="part">Part II</span><h2>Hydros</h2></div></div>
+
   <section id="hydros" class="band plain">
     <div class="wrap">
-      <h2>Hydros</h2>
-      <figure><img src="img/water-planets/hydros-system.jpg" width="1080" height="725" loading="lazy" alt="A glowing orange red dwarf star surrounded by six blue water planets"></figure>
       <p>The Hydros system is a small yet significant solar system consisting entirely of water planets orbiting the M-class red dwarf Hydros. More importantly, it is far away enough to be untouched by humankind's unfortunate effect, yet is accessible through a wormhole. The six orbiting planets, shimmering like celestial sapphires, hold the key to survival for the humans. The system's planets are prized for their pristine waters.</p>
-      <figure><img src="img/water-planets/hydros-ocean.jpg" width="1080" height="500" loading="lazy" alt="A calm blue ocean under a large pale planet, with a red star glowing in the corner"></figure>
       <p><strong>DATA:</strong> Hydros is an M-type red dwarf star with six orbiting water planets.</p>
-      <figure class="narrow"><img src="img/water-planets/orbit-station.jpg" width="580" height="540" loading="lazy" alt="A satellite with long solar panels in orbit above the curve of a planet, with a small moon beside it"></figure>
+      <figure class="plate narrow"><img src="img/water-planets/orbit-station.jpg" width="580" height="540" loading="lazy" alt="A satellite with long solar panels in orbit above the curve of a planet, with a small moon beside it"><figcaption>Plate II: A satellite in orbit</figcaption></figure>
       <p>Six water planets orbit Hydros:</p>
       <ul class="planets">
         <li>Thalassa Prime</li><li>Nereis-9</li><li>Pelagia</li><li>Ondine 7b</li><li>Hydraxis</li><li>Bathys</li>
@@ -229,12 +255,15 @@
     </div>
   </section>
 
+  <div class="chapter" role="img" aria-label="A calm blue ocean under a large pale planet, with a red star glowing in the corner" style="--img:url(img/water-planets/hydros-ocean.jpg)"><div class="chapter-in"><span class="part">Part III</span><h2>The Six Water Planets</h2></div></div>
+
   <section id="thalassa" class="band" style="--bg-img:url(img/water-planets/bg-14.jpg)">
     <div class="wrap">
       <div class="book">
       <div class="runhead"><span>The Hydros Atlas</span><span>Entry I of VI</span></div>
       <h2>Thalassa Prime<small>The Keeper of the Tides</small></h2>
       <div class="orn">&#10070;</div>
+      <figure class="plate planet-plate" data-kind="1" data-seed="1111"><canvas width="300" height="300" aria-label="Thalassa Prime, drawn from the booklet"></canvas><figcaption>Plate III: Thalassa Prime</figcaption></figure>
       <blockquote>The sea does not follow the water moon; it moves by its own free will.</blockquote>
       <h3>Geography and Conditions</h3>
       <p class="dc">Unlike normal planets with gravitational tides, Thalassa Prime, the largest of the water planets, has oceans that move in unpredicatable waves, rising and falling as if controlled by an unseen force.</p>
@@ -254,6 +283,7 @@
       <div class="runhead"><span>The Hydros Atlas</span><span>Entry II of VI</span></div>
       <h2>Nereis-9<small>The Whispering Deep</small></h2>
       <div class="orn">&#10070;</div>
+      <figure class="plate planet-plate" data-kind="3" data-seed="2222"><canvas width="300" height="300" aria-label="Nereis-9, drawn from the booklet"></canvas><figcaption>Plate IV: Nereis-9</figcaption></figure>
       <p class="lead dc">A world with vast, deep trenches where mysterious whispering sounds emanate</p>
       <p>Trenches, some hundreds of kilometres deep, reside beneath the waves of this world. Scientists suspect that violent earthquakes and towering tsunamis have shaped this world.</p>
       <p>Upon crossing beneath a certain depth threshold, probes have recorded strange whispering sounds that emanate from the core of Nereis-9. Scientists believe these sounds influence the rotation of the planet and the tides.</p>
@@ -271,6 +301,7 @@
       <div class="runhead"><span>The Hydros Atlas</span><span>Entry III of VI</span></div>
       <h2>Pelagia<small>The Black Abyss</small></h2>
       <div class="orn">&#10070;</div>
+      <figure class="plate planet-plate" data-kind="5" data-seed="3333"><canvas width="300" height="300" aria-label="Pelagia, drawn from the booklet"></canvas><figcaption>Plate V: Pelagia</figcaption></figure>
       <p class="dc">The darkest of all the planets, Pelagia’s ocean is pitch black, absorbing 99.9% of all light.</p>
       <p>The water contains microscopic light-absorbing particles making it nearly impossible to illuminate the depths.</p>
       <p>Any probe that descends past a depth of 12km stops transmitting. No debris has ever been found. Some claim shadows moving beneath the surface, but sonar shows nothing.</p>
@@ -287,6 +318,7 @@
       <div class="runhead"><span>The Hydros Atlas</span><span>Entry IV of VI</span></div>
       <h2>Ondine 7b<small>Cradle of Endless Rain</small></h2>
       <div class="orn">&#10070;</div>
+      <figure class="plate planet-plate" data-kind="4" data-seed="4444"><canvas width="300" height="300" aria-label="Ondine 7b, drawn from the booklet"></canvas><figcaption>Plate VI: Ondine 7b</figcaption></figure>
       <p class="lead dc">A storm-covered world where rain never ceases.</p>
       <p>In an endless cycle of evaporation and precipitation encouraged by the strange bio signatures that give rise to these processes, this planet is home to life albeit invisible and mysterious.</p>
       <p>Scientists are trying to understand why this planet requires the constant flow of rain and speculate it is a requirement of the unique lifeforms, but cannot study them as they cannot find them!</p>
@@ -303,6 +335,7 @@
       <div class="runhead"><span>The Hydros Atlas</span><span>Entry V of VI</span></div>
       <h2>Hydraxis<small>The Living Ocean</small></h2>
       <div class="orn">&#10070;</div>
+      <figure class="plate planet-plate" data-kind="2" data-seed="5555"><canvas width="300" height="300" aria-label="Hydraxis, drawn from the booklet"></canvas><figcaption>Plate VII: Hydraxis</figcaption></figure>
       <p class="lead dc">A world where the water itself harbours strange, self-sustaining ecosystems.</p>
       <p>The prize jewel of the planets to scientists as Hydraxis harbours a profusion of life. Uncounted and unclassified types of aquatic creatures roam the depths of this planet.  And it is deep. No sea floor has yet be scanned, and it is presumed that there may be no floor at all..</p>
       <p>This planet was quickly barred from water mining as it is considered too vulnerable and precious by humankind. However it is being studied with ultra sensitive hydrodrones which leave no matter signature behind.</p>
@@ -320,6 +353,7 @@
       <div class="runhead"><span>The Hydros Atlas</span><span>Entry VI of VI</span></div>
       <h2>Bathys<small>Serene waterplanet</small></h2>
       <div class="orn">&#10070;</div>
+      <figure class="plate planet-plate" data-kind="0" data-seed="6666"><canvas width="300" height="300" aria-label="Bathys, drawn from the booklet"></canvas><figcaption>Plate VIII: Bathys</figcaption></figure>
       <p class="dc">Said to lower a human’s pulse rate by almost half, this is the most peaceful place yet visited by humankind.</p>
       <blockquote>I just feel like I was melting in the most peaceful way. I don’t know what causes this...</blockquote>
       <p>Entirely water under gentle halcyon skies and perfect temperature (always 27 degrees celsius), Bathys is full of cool and deep yet empty waters.</p>
@@ -328,50 +362,50 @@
       <p class="foot">“Bathys” is derived from the Greek word meaning "deep" and is inspired by the bathyscaphe; a deep-sea exploration submersible symbolizing calm, depth, and silence.</p>
     <div class="folio">&mdash; vi &mdash;</div>
       </div>
-      <figure><img src="img/water-planets/maps.jpg" width="1080" height="1080" loading="lazy" alt="Four hand-drawn style maps of the water planets Nereis-9, Ondine 7b, Hydraxis and Bathys, headed Examples of available maps"></figure>
+      <figure class="plate"><img src="img/water-planets/maps.jpg" width="1080" height="1080" loading="lazy" alt="Four hand-drawn style maps of the water planets Nereis-9, Ondine 7b, Hydraxis and Bathys, headed Examples of available maps"><figcaption>Plate IX: Examples of available maps</figcaption></figure>
     </div>
   </section>
 
+  <div class="chapter" role="img" aria-label="A huge circular floating platform above the clouds" style="--img:url(img/water-planets/ship-tranquility.jpg)"><div class="chapter-in"><span class="part">Part IV</span><h2>The Ships</h2></div></div>
+
   <section id="ships" class="band" style="--bg-img:url(img/water-planets/bg-21.jpg)">
     <div class="wrap">
-      <h2>The ships</h2>
       <p>Perfecting sustainability is the only way forward for humans from now on. We have become a species that is acutely invested in creating technology that causes no harm to any environment. The following ships are evidence of this commitment by the rattled humans as they begin to mine again....</p>
 
       <div class="pair">
-        <figure><img src="img/water-planets/drone.jpg" width="524" height="624" loading="lazy" alt="White drones hovering over a blue sea"></figure>
-        <figure><img src="img/water-planets/diagram.jpg" width="556" height="624" loading="lazy" alt="Diagram titled Ethical Water Extraction: a water mining drone, survey drone, floating processing platform, water storage tank, autonomous harvester and drill"></figure>
+        <figure class="plate"><img src="img/water-planets/drone.jpg" width="524" height="624" loading="lazy" alt="White drones hovering over a blue sea"><figcaption>Plate X: Drones over the water</figcaption></figure>
+        <figure class="plate"><img src="img/water-planets/diagram.jpg" width="556" height="624" loading="lazy" alt="Diagram titled Ethical Water Extraction: a water mining drone, survey drone, floating processing platform, water storage tank, autonomous harvester and drill"><figcaption>Plate XI: Ethical water extraction</figcaption></figure>
       </div>
       <p class="data" style="padding:1rem 1.15rem">To tap into this precious resource a fleet of specialized ships is deployed to the Hydros system. These vessels, equipped with advanced technologies for long-distance travel and water containment, traverse the vastness of space to reach the water-rich planets. The process of mining water is meticulous involving a fleet of engineering marvels and skilled AI personnel. Enormous tankers draw water from the planets' surfaces carefully preserving its purity and integrity during transportation.</p>
-      <figure class="narrow"><img src="img/water-planets/freighter-ocean.jpg" width="460" height="456" loading="lazy" alt="A large flying saucer-shaped tanker hovering over a green sea, drawing up water in beams"></figure>
+      <figure class="plate narrow"><img src="img/water-planets/freighter-ocean.jpg" width="460" height="456" loading="lazy" alt="A large flying saucer-shaped tanker hovering over a green sea, drawing up water in beams"><figcaption>Plate XII: A tanker at work</figcaption></figure>
 
       <h3>Hydroskim drones</h3>
-      <figure><img src="img/water-planets/ship-hydroskimmer.jpg" width="1080" height="440" loading="lazy" alt="A white drone skimming the ocean surface"></figure>
+      <figure class="plate"><img src="img/water-planets/ship-hydroskimmer.jpg" width="1080" height="440" loading="lazy" alt="A white drone skimming the ocean surface"><figcaption>Plate XIII: The hydroskim drone</figcaption></figure>
       <p>Lightweight, autonomous water harvesters such as the Hydrospheric Extraction Drones Class (aka Hydroskimmer) pictured here.</p>
       <p>Small fast-moving drones that skim the ocean surface extracting only the necessary amounts of water vapour or liquid.</p>
       <p>Uses nanofiltration to remove impurities before sending water to storage ships.</p>
 
       <h3>Deep current surveyors</h3>
-      <figure><img src="img/water-planets/ship-surveyor.jpg" width="1080" height="460" loading="lazy" alt="A glowing submarine in dark blue water"></figure>
+      <figure class="plate"><img src="img/water-planets/ship-surveyor.jpg" width="1080" height="460" loading="lazy" alt="A glowing submarine in dark blue water"><figcaption>Plate XIV: The deep current surveyor</figcaption></figure>
       <p>These AI-controlled submarines such as the Pantheon-Class Hadal Submersible are used for deep sea exploration. They use sonar to map underwater currents and features then collect data on marine life and water composition in order to ensure safe water extraction. They glow faintly in bioluminescent waters, blending in with the environment.</p>
 
       <h3>The aether striders <small class="note">(zero-g peripheral planar hyudroharvesters)</small></h3>
-      <figure><img src="img/water-planets/ship-aether-strider.jpg" width="1080" height="330" loading="lazy" alt="A silver airship floating above a green ocean"></figure>
+      <figure class="plate"><img src="img/water-planets/ship-aether-strider.jpg" width="1080" height="330" loading="lazy" alt="A silver airship floating above a green ocean"><figcaption>Plate XV: The aether strider</figcaption></figure>
       <p>Massive, silent airships such as the Peripheral PLANAR Hydroharvesters hover above the oceans, extracting water from the atmosphere through condensation panels. They are completely non-invasive and use wind currents to move rather than thrusters. Releases mist back into the atmosphere to maintain planetary balance.</p>
 
       <h3>The tranquility harvesters <small class="note">(floating processing stations)</small></h3>
-      <figure><img src="img/water-planets/ship-tranquility.jpg" width="1080" height="400" loading="lazy" alt="A huge circular floating platform above the clouds"></figure>
       <p>A massive city-sized platform that purifies and stores harvested water before transport. Uses anti-gravity stabilisers to minimise interaction with the water’s surface. Powered by solar panel engines and geothermal energy from the planet’s core.</p>
 
       <h3>Cryo-vault freighters <small class="note">(interstellar ice transport ships)</small></h3>
-      <figure><img src="img/water-planets/ship-cryovault.jpg" width="1080" height="475" loading="lazy" alt="A freighter carrying a huge block of ice over the sea"></figure>
+      <figure class="plate"><img src="img/water-planets/ship-cryovault.jpg" width="1080" height="475" loading="lazy" alt="A freighter carrying a huge block of ice over the sea"><figcaption>Plate XVI: The cryo-vault freighter</figcaption></figure>
       <p>These ships (CryoVault Transport Array Model CX22 pictured) transport massive frozen water chunks off-world back to Earth, keeping them in suspended animation to stop them from melting. They have a sleek monolithic design with built-in AI to chart the safest routes. Uses gravity-assist manoeuvres to minimise fuel use.</p>
 
       <h3>The Okeanos conduits <small class="note">(planetary water regulators)</small></h3>
-      <figure><img src="img/water-planets/ship-okeanos.jpg" width="1080" height="465" loading="lazy" alt="A round white platform standing on a calm sea"></figure>
+      <figure class="plate"><img src="img/water-planets/ship-okeanos.jpg" width="1080" height="465" loading="lazy" alt="A round white platform standing on a calm sea"><figcaption>Plate XVII: The Okeanos conduit</figcaption></figure>
       <p>A self-sustaining AI system that ensures planetary balance. When water is removed, it replenishes the ecosystem through artificial rainfall. Uses ultra-precise weather control to stabilise planet locations after extraction. Monitors local hydrology to prevent ecosystem collapse.</p>
 
       <h3>Microbial engineers <small class="note">(nano-scale purifiers working inside water itself)</small></h3>
-      <figure><img src="img/water-planets/ship-microbial.jpg" width="1080" height="830" loading="lazy" alt="Red spiked nano-machines floating in clear blue water"></figure>
+      <figure class="plate"><img src="img/water-planets/ship-microbial.jpg" width="1080" height="830" loading="lazy" alt="Red spiked nano-machines floating in clear blue water"><figcaption>Plate XVIII: Microbial engineers</figcaption></figure>
       <p>Micro-Particle Refiners SFPA: Tiny self-replicating machines that remove harmful elements from the water without disturbing natural microbial life. Their work is crucial for safe consumption and life preservation. They disassemble themselves and actually decay when their work is done leaving no trace due to their synthesized organic construction.</p>
 
       <h3>Exosphere glider <small class="note">(communication satellite)</small></h3>
@@ -655,6 +689,26 @@
     for (var m = 0; m < objs.length; m++) if (objs[m].type !== 'nebula') drawObj(objs[m], t, dt);
     requestAnimationFrame(frame);
   }
+
+  // ---- planet plates: each entry's planet, drawn in its own colours and shown once it is near ----
+  function drawPlate(fig) {
+    var c = fig.querySelector('canvas'); if (!c || c._done) return; c._done = true;
+    var S = 300, x = c.getContext('2d'), kind = +fig.getAttribute('data-kind'), seed = +fig.getAttribute('data-seed'), r = rng(seed);
+    var g = x.createRadialGradient(S / 2, S / 2, 10, S / 2, S / 2, S * 0.75); g.addColorStop(0, '#0d2036'); g.addColorStop(1, '#03070d');
+    x.fillStyle = g; x.fillRect(0, 0, S, S);
+    for (var i = 0; i < 90; i++) { x.fillStyle = 'rgba(225,240,255,' + (0.2 + r() * 0.7) + ')'; x.beginPath(); x.arc(r() * S, r() * S, 0.4 + r() * 1.2, 0, 6.2832); x.fill(); }
+    var glow = x.createRadialGradient(S / 2, S / 2, 70, S / 2, S / 2, 140); glow.addColorStop(0, 'rgba(120,200,255,0.22)'); glow.addColorStop(1, 'rgba(120,200,255,0)');
+    x.fillStyle = glow; x.fillRect(0, 0, S, S);
+    var spr = buildPlanet({ r: 92, kind: kind, seed: seed % 977 + 3, tilt: (r() - 0.5) * 0.8, phase: r() * 6.28, landLevel: 0.64 });
+    x.drawImage(spr, S / 2 - 100, S / 2 - 100, 200, 200);
+    if (kind === 4 || kind === 3) { x.strokeStyle = 'rgba(230,205,170,0.5)'; x.lineWidth = 2; x.beginPath(); x.ellipse(S / 2, S / 2, 138, 34, -0.35, Math.PI, 6.2832); x.stroke(); }
+    var m = buildMoon(14, seed % 500, [190, 188, 180]); x.drawImage(m, S * 0.78 - 14, S * 0.26 - 14, 28, 28);
+  }
+  var plates = Array.prototype.slice.call(document.querySelectorAll('.planet-plate'));
+  if ('IntersectionObserver' in window) {
+    var pio = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { drawPlate(e.target); pio.unobserve(e.target); } }); }, { rootMargin: '300px 0px' });
+    plates.forEach(function (f) { pio.observe(f); });
+  } else { plates.forEach(drawPlate); }
   var relayout;
   window.addEventListener('resize', function () { clearTimeout(relayout); relayout = setTimeout(layout, 150); });
   window.addEventListener('load', function () { setTimeout(layout, 300); });          // images have changed the page height by now
