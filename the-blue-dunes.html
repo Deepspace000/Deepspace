@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Blue Dunes, the booklet</title>
+<meta name="description" content="The Blue Dunes by deepspace: the album notes and the science fiction short story, The Blue Dunes Journal, written to be read while listening.">
+<meta name="theme-color" content="#06101d">
+<link rel="canonical" href="https://deepspace000.github.io/Deepspace/the-blue-dunes.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="deepspace">
+<meta property="og:title" content="The Blue Dunes, the booklet">
+<meta property="og:description" content="The album notes and the science fiction short story that goes with The Blue Dunes by deepspace.">
+<meta property="og:url" content="https://deepspace000.github.io/Deepspace/the-blue-dunes.html">
+<meta property="og:image" content="https://deepspace000.github.io/Deepspace/img/blue-dunes/cover.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="900">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://deepspace000.github.io/Deepspace/img/blue-dunes/cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #06101d;
+    --ink: #d3e3f6;
+    --dim: #8ea9c6;
+    --blue: #79b0f5;
+    --line: rgba(121, 176, 245, 0.28);
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    font-family: "Poppins", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-weight: 300;
+    /* the text grows and shrinks with the screen, so it stays comfortable to read on a phone or a desktop */
+    font-size: clamp(1.05rem, 0.98rem + 0.5vw, 1.25rem);
+    line-height: 1.8;
+    background: linear-gradient(180deg, #06101d 0%, #0a1b33 45%, #081426 100%);
+    min-height: 100vh;
+  }
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: var(--blue); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+  a:hover, a:focus-visible { color: #ffffff; }
+
+  .hero { margin: 0; }
+  .hero img { width: 100%; }
+  .credit { margin: 0.5rem 0 0; font-size: 0.78em; line-height: 1.5; color: var(--dim); }
+  .hero .credit { padding: 0 1.25rem; text-align: right; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  .wrap { max-width: 40rem; margin: 0 auto; padding: 0 1.25rem 4rem; }
+
+  .toc { margin: 2rem 0 3rem; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 0.6rem 0.9rem; }
+  .toc a {
+    display: inline-block; padding: 0.35rem 0.9rem; font-size: 0.82em; line-height: 1.4; letter-spacing: 0.04em;
+    color: var(--ink); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; background: rgba(121, 176, 245, 0.06);
+  }
+  .toc a:hover, .toc a:focus-visible { background: rgba(121, 176, 245, 0.18); color: #fff; }
+
+  section { padding-top: 3.2rem; }
+  h2 {
+    margin: 0 0 1.4rem; font-weight: 300; font-size: 1.15em; line-height: 1.4; letter-spacing: 0.12em; color: var(--blue);
+  }
+  h2 small { display: block; margin-top: 0.2rem; font-size: 0.78em; letter-spacing: 0.06em; color: var(--dim); font-weight: 300; }
+  p { margin: 0 0 1.35rem; }
+  .lead { font-style: italic; color: #ffffff; }
+
+  blockquote {
+    margin: 2.2rem 0; padding: 0.2rem 0 0.2rem 1.1rem; border-left: 2px solid var(--blue);
+    font-style: italic; font-weight: 400; font-size: 1.2em; line-height: 1.55; color: #eaf3ff;
+  }
+
+  figure { margin: 2.2rem 0; }
+  figure img { border-radius: 3px; box-shadow: 0 14px 40px -18px rgba(0, 0, 0, 0.8); }
+  figure.tall { max-width: 22rem; margin-left: auto; margin-right: auto; }
+  figure.square { max-width: 26rem; margin-left: auto; margin-right: auto; }
+  figcaption { margin-top: 0.55rem; font-size: 0.78em; line-height: 1.5; color: var(--dim); }
+
+  .links { margin: 2.4rem 0 0; padding: 1.4rem 0 0; border-top: 1px solid var(--line); font-size: 0.92em; }
+  .links p { margin-bottom: 0.9rem; }
+  .small { font-size: 0.82em; color: var(--dim); }
+
+  @media (min-width: 760px) {
+    .wrap { padding-bottom: 6rem; }
+    .pair { display: grid; grid-template-columns: 1fr 15rem; gap: 2rem; align-items: start; }
+    .pair figure { margin: 0.4rem 0 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img src="img/blue-dunes/cover.jpg" width="1600" height="900" alt="The Blue Dunes by deepspace. Blue sand dunes under a pale sky.">
+  <p class="credit">Cover image by Jeremy Ruckels</p>
+  <h1 class="sr">The Blue Dunes, deepspace</h1>
+</header>
+
+<main class="wrap">
+
+  <ul class="toc" aria-label="Contents">
+    <li><a href="#album">The album</a></li>
+    <li><a href="#track-1">1 The Blue Dunes</a></li>
+    <li><a href="#track-2">2 An Unexpected Shelter</a></li>
+    <li><a href="#track-3">3 Emptiness</a></li>
+    <li><a href="#track-4">4 The Wind at Night</a></li>
+    <li><a href="#track-5">5 The Flatlands</a></li>
+    <li><a href="#track-6">6 The Memory</a></li>
+    <li><a href="#last">Last entry</a></li>
+    <li><a href="#about">About deepspace</a></li>
+  </ul>
+
+  <section id="album" style="padding-top:0">
+    <div class="pair">
+      <div>
+        <p>THE BLUE DUNES, a serene and meditative work from starfaring Australian ambient/electronic artist Deepspace, paints calm and exquisite sound pictures of imagined desert landscapes. Deepspace’s second album on Projekt Records contains six floating passages of soft waves inspired by the Odyssey orbiter's 2021 finding of what first seemed to be blue-coloured dunes on Mars. THE BLUE DUNES takes the aesthetic impact of that discovery and explores a desert bathed entirely in those cool serene hues.</p>
+      </div>
+      <figure>
+        <img src="img/blue-dunes/album-cover.jpg" width="700" height="700" alt="The Blue Dunes album cover: rippled blue sand dunes under a deep blue sky">
+        <figcaption>Cover image by Chris Larson</figcaption>
+      </figure>
+    </div>
+
+    <p>Even though the dunes only appeared blue due to false-colour imagery indicating temperature, it was enough to kindle the desire for such a surreal place. This desert, with its imagined shadings, is the starting point for Deepspace’s hypnotic ambient drone. Longing, desolate shimmers with glassy luminescence abound, interspersed with soft transient murmurs not quite identifiable — maybe the aural representation of a cluster of strangely-shaped rock, or something unusual in the path on this voyage into a vast and strange terrain. Like a pulsing heatwave, blue chords hover and transform, invoking a halcyon shimmer that sings of the love of solitude and nothingness. Occasionally, some respite from the harsh barren desert occurs as the chords dissipate and clouds form, providing shade from the penetrating sun.</p>
+
+    <blockquote>This album is the sound of an artist using the minimal amount of tools possible to achieve something that is not achievable by using more.</blockquote>
+
+    <p>Mirko says: “I think that most ambient creators listen to their own work after creating it for a number of reasons: to check for errors, consistency, feel and various other aspects. But I have listened to THE BLUE DUNES almost obsessively since creating it. It calms me deeply, and it is the right feeling — and this aspect is so intangible to me that after all these years of creating ambient works, I still don’t know what makes any piece the right feeling for an album, other than how it takes my imagination on a journey and somehow fits the theme. I try to let inspiration drive me, as it always ends up being more exciting than too much intentional planning. I've discovered this through trial and error.”</p>
+
+    <p>Wandering through an ambient dream of deserts unknown, the album is a 70-minute exploration of a far-away and imaginary place. Whatever the type of place evoked, this album is a love song to escaping the chaos and noise of our world and feeling the glittering, gentle pull of solitude and warm isolation. And who knows, maybe there are blue deserts somewhere out there.</p>
+
+    <p>On top of this, a story emerged from the music. Read on and discover the journey into the blue dunes.</p>
+  </section>
+
+  <section id="story">
+    <p class="lead">Here is the accompanying science fiction short story to The Blue Dunes. It could be atmospheric to read while listening to the album.</p>
+    <h2 style="margin-bottom:0.3rem">The Blue Dunes Journal<small>(with track titles that inspired the entries)</small></h2>
+  </section>
+
+  <section id="track-1">
+    <h2>Track 1: The Blue Dunes</h2>
+    <p>I’ve travelled north on foot for a day and am near the southern part of the dunes. They stretch north for untold kilometres, so I will need to make my supplies last with enough to get back to my ship. I can see them looming invitingly in the distance, probably only an hour away now. They are stunningly beautiful from here, resplendent and blue under the warm white sun, surreal in their glory and slow vastness. The sensor in my watch emits its dulcet pulse every few minutes, guiding me on. I will camp near the dunes tonight.</p>
+    <p>I can see the dunes from my tent, only a few hundred metres away now. I sit cross legged and ponder their serene desolation - such a strangely unnatural description - they offer hypnotic beauty yet are no place for life. A faint wind chases ripples of sand up and down the main dune nearby. I am so alone out here. As the sun sets and the planet turns imperceptibly, I crawl into my tent to rest for tomorrow.</p>
+    <blockquote>On closer inspection, the dunes are dark creamy blue throughout; they are composed of countless tiny jewels of sand.</blockquote>
+    <p>After striking my little camp, I begin my walk proper. Here I go. Blue sand passes under my feet as I cross the first dune and see the magnificent array of sand formations that emanate northward under the sky. My lungs command an involuntary intake of air as I scan the panorama in front of me. I only release the air about 10 seconds later, feeling my chest lower and a tingling sense of warmth and excitement spread throughout my body. On closer inspection, the dunes are dark creamy blue throughout; they are composed of countless tiny jewels of sand. Together they create a blue environment that is deeply lulling and hypnotic, creating a sense of profound aloneness and delight. I stop and pour some warm pure blue sand through my hands and then resume walking, smiling with wonder.</p>
+    <figure>
+      <img src="img/blue-dunes/nasa-1.jpg" width="578" height="298" loading="lazy" alt="Rolling blue dunes stretching to a pale horizon">
+      <figcaption>Image by NASA</figcaption>
+    </figure>
+  </section>
+
+  <section id="track-2">
+    <h2>Track 2: An Unexpected Shelter</h2>
+    <p>The sun is hotter than I thought it would be. While the temperature is lower than what you would normally expect in a desert, the heat generated by walking makes the otherwise idyllic 27 degrees Celsius (80° F) build up over time, mostly due to the glare of the slightly smaller white sun. I walk over a crescent dune and am stopped in my tracks.</p>
+    <blockquote>I walk over a crescent dune and am stopped in my tracks. An empty ruin of rocks lies before me.</blockquote>
+    <p>An empty ruin of rocks lies before me.</p>
+    <p>In the middle of a valley between dunes lies this sudden surprise. Like a temple, except created by wind, sand and sun instead of hands, this strange conglomeration stands hidden beneath the tops of the surrounding dunes. Rocks are worn by wind into surreal shapes that defy architecture. The structure provides shade, which I eagerly accept. I sit on the dark rocks, in a cave-like alcove, appreciative and drink from my water supplies. The wind sings and this causes the rocks to resonate with deep languid tones or at least I imagine they do, I’m not sure. I put my hands on the rocks and feel the vibrations. Cool, dark relief on my palms. I did not expect such a sensation from this.</p>
+    <p>I picture cool water flowing underground as I look around the quiet valley between the dunes. I imagine that I can hear it underneath the rocks and visualise descending down to seek more shelter. I enjoy my time here before setting off.</p>
+  </section>
+
+  <section id="track-3">
+    <h2>Track 3: Emptiness</h2>
+    <p>Walking again. I remember that it is the second day, but it doesn’t feel like it. Time seems dilated in this vast place. Normal constructs that we hold in order to make sense of things become confused and somewhat merged. Time becomes distance becomes landscape becomes sky. The sands have also become hotter. Arid. Telling me something. I’m not sure what.</p>
+    <blockquote>Clouds pass overhead, non-sentient, although I’m questioning all my assumptions now.</blockquote>
+    <p>Clouds pass overhead, non-sentient, although I’m questioning all my assumptions now. They are imperious white beasts, like slow motion cats, teasing me with their streaky fluffiness, far above, observing my frailty and slowness. I must look like an exiled ant with a death wish to them. It is hard to hold onto the idea of time in an ordinary way when you walk through such a vast landscape. And thoughts seem a bit more slippery, a bit like some of the more vertiginous dunes I am clambering up now. I'm getting a bit fatigued today. Dune after dune. Climbing, then slight relief as I descend. The sensor on my watch beeps, renewing a sense of identity and purpose within me.</p>
+  </section>
+
+  <section id="track-4">
+    <h2>Track 4: The Wind at Night</h2>
+    <p>In my tent, the sand stops stinging my face. Conditions have worsened somewhat but are still manageable. Supplies are doing their thing: being in decline, as they do. But I should be ok. I feel like something is happening but can’t figure out for the life of me what it is. It’s like my mind is being affected by something. I distract myself and sleep, although it is unsettled sleep as the wind is loud and all encompassing outside. The sound of the sensor is a little louder now when it does its regular beep and sounds...somewhat hollow and eerie. It must be my imagination or the wind. Yes, it’s a little of both I would say.</p>
+    <figure>
+      <img src="img/blue-dunes/nasa-2.jpg" width="671" height="561" loading="lazy" alt="An aerial view of dunes with wind-rippled sand in blue and violet shades">
+      <figcaption>Image by NASA</figcaption>
+    </figure>
+    <p>I wake up in the middle of the night and the wind has stopped. Completely. It is incredibly quiet. I enjoy the strange stillness and go back to sleep, thankful. My dreams are haunted by sand.</p>
+    <blockquote>Unexpectedly, the sensor beeps at a new, different pitch. My pack hits me in the back as I stop in my tracks instantly.</blockquote>
+  </section>
+
+  <section id="track-5">
+    <h2>Track 5: The Flatlands <small>(Ghosts in the Heatwaves)</small></h2>
+    <p>The sensor on my arm beeps a little louder again. I am getting closer. The dunes are much smaller now and are mostly part of a flat blue landscape riddled with ripples of sand. If I thought the dunes had a desolate feeling a few weeks ago….. no wait, it’s only been a few days. Anyway, it’s much more desolate here. I can see the flat area rimmed by distant dunes up ahead and all around the flat relief that I am walking through. It could have been a lake once. There are some odd small rocks to confirm my suspicions.</p>
+    <p>I wonder if there is still water somewhere underneath the ground in cool labyrinthine caves. I can’t tell how far away the perimeter dunes are. It could be an hour away, or a day. I can’t trust my depth perception anymore. Everything feels far away. Like I’m sinking into this sea of sand. I can hear my heart beating when I stop walking, so I don’t stop. The heat is intensifying, and I feel it coursing through my body from the sand into my legs then upwards, as well as from the sun through my skull downwards.</p>
+    <blockquote>Ghosts moving in the heatwaves.</blockquote>
+    <p>This is bothering me as there is no escape, and I have to fight back a feeling of claustrophobia which is strange as I couldn’t be in a less confined space. Only my tent, attached to my backpack, and the odd steep dune in the afternoon, which there are none of right now, offer any shade. I have started noticing shapes and movement on the horizon. Ghosts moving in the heatwaves. Writhing flashes of light in between the distant perimeter dunes and the flat sand. It is unnerving, yet I console myself that the shapes are not real and are a result of the shimmering heatwave. But how would I be able to tell if they were real? I silence this thought. I don’t look and walk on. I must get my thoughts under control.</p>
+    <p>Unexpectedly, the sensor beeps at a new, different pitch. My pack hits me in the back as I stop in my tracks instantly.</p>
+    <p>It is then that I see it.</p>
+    <p><em>There were things in the heatwave after all.</em></p>
+  </section>
+
+  <section id="track-6">
+    <h2>Track 6: The Memory</h2>
+    <p>As I sit in the carrier ship, I mutely ponder what has just happened and why I am sitting, dressed in a robe, in an empty room. I woke up in a bed, got dressed and came and sat down here. I read through my journal and can see the words and events that happened over the past week transcribed on my device. But in my mind, it’s all just gone. None of that happened. I don’t remember writing the last or any of the entries. The edges of memory I do have are so frayed that I can’t remember where reality joins with my supposed trip. It feels like a stranger’s hand filled in my journal, or that I am reading a work of fiction.</p>
+    <blockquote>But in my mind, it’s all just gone. None of that happened. I don’t remember writing the last or any of the entries.</blockquote>
+    <p>I look through the window at a landscape moving far below. The blues everywhere seem more vivid now. I see the colour everywhere, even as I write in my journal. Even in the composition of other colours and it fills me with a sense of something. Maybe it’s serenity or peace, without it being that specific. Maybe the memories in the journal will come back over time to explain what happened. Maybe they won’t. Maybe it wasn’t me, and I’m not sure I want to know now. I don’t really know what I have lost or gained. Is this some sort of dissociative amnesia? That normally happens when someone has witnessed something extremely traumatic. The thought makes me uncomfortable.</p>
+    <figure class="tall">
+      <img src="img/blue-dunes/georgina-buchanan.jpg" width="360" height="632" loading="lazy" alt="A tall blue sand dune with a line of footprints climbing its ridge, under a pale sky">
+      <figcaption>Image by Georgina Buchanan</figcaption>
+    </figure>
+  </section>
+
+  <section id="last">
+    <h2>Last entry</h2>
+    <p>I’ve been having the most vivid dreams. In one, I am wandering among blue dunes and hovering about a hundred metres up in the sky is the most collossal squid, suspended vertically into the sky. The thing itself is probably several hundred metres long, and there are thousands of birds, or what look like birds flying in and out of the siphon near its eyes. It looks like it’s a nest for these creatures. The tentacles move slowly as this behemoth just hovers above the desert.</p>
+    <figure class="tall">
+      <img src="img/blue-dunes/jeremy-ruckels.jpg" width="607" height="714" loading="lazy" alt="A huge pale squid hanging upright in a clear blue sky above a blue desert, with a cloud of tiny birds around it">
+      <figcaption>Image by Jeremy Ruckels</figcaption>
+    </figure>
+    <p>Another dream is of a giant humanoid creature wandering the dunes. I try to stay out of sight, but it eventually sees me and emits a horrendously loud howl. I feel my body shake with fear, and then I wake up. I don’t know what these dreams mean. Is my unconscious trying to process what I saw? They’ve occured multiple times now, and I am getting desperate for an answer. What the hell did I see?</p>
+    <blockquote>I don’t know what these dreams mean. Is my unconscious trying to process what I saw?</blockquote>
+    <p><em>Journal ends.</em></p>
+  </section>
+
+  <section id="about">
+    <h2>About deepspace</h2>
+    <div class="pair">
+      <div>
+        <p>Deepspace is Brisbane, Australia-based ambient artist Mirko Ruckels. His hypnotic, glacial, dreamy and atmospheric work is created with synthesizers, software and acoustic instruments such as bells, guitars and piano. When he was a little boy in Germany (he is German/French) he would slip into a reverie at hearing a distant lawn mower, church bells, passing planes, or the rumblings of far-off trains. This love of drones and ambient sound led to a wonderous moment upon discovering like-minded artists and listeners who also enjoyed atmospheric environments that evoke liminal moods and spaces. Ruckels discovered vidnaObmana and later Steve Roach, their unconventional approach inspired him to explore and create his own pieces. He says: “I literally had no idea how to make ambient music and just felt my way in the dark.” In 2006, Deepspace was born. Themes range from macro — such as space, underwater, deserts and science fiction imaginings, to micro — internal states and microscopic life.</p>
+      </div>
+      <figure>
+        <img src="img/blue-dunes/mirko.jpg" width="379" height="506" loading="lazy" alt="Black-and-white photo of Mirko Ruckels in sunglasses and a blazer">
+        <figcaption>Mirko Ruckels, deepspace</figcaption>
+      </figure>
+    </div>
+    <p>Deepspace has released thirteen albums; two through Projekt Records; SUPERRADIANCE, and THE BLUE DUNES, ten self-released and THE GLITTERING DOMAIN (2009) through American label Hypnos. He has two 2021 collaborations with theAdelaidean ADRIFT and ANTIGRAVITY, both on Projekt Records.</p>
+  </section>
+
+  <div class="links">
+    <p>The album is available at <a href="https://projektrecords.bandcamp.com/album/the-blue-dunes" target="_blank" rel="noopener">Projekt's Bandcamp page</a>.</p>
+    <p class="small">The original booklet, as a PDF: <a href="https://www.projekt.com/store/wp-content/uploads/ARC254-Deepspace-TheBlueDunes.pdf" target="_blank" rel="noopener">The Blue Dunes booklet (PDF)</a></p>
+    <p class="small">©2022 Projekt Records<br>Music publishing by APRA</p>
+    <p class="small"><a href="./" target="_top">deepspace home</a></p>
+  </div>
+
+</main>
+</body>
+</html>

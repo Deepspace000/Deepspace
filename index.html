@@ -1131,8 +1131,8 @@
         </li>
         <li class="st" data-album="The Blue Dunes">
           <div>
-            <a href="http://www.projekt.com/store/wp-content/uploads/ARC254-Deepspace-TheBlueDunes.pdf" data-view="https://www.projekt.com/store/wp-content/uploads/ARC254-Deepspace-TheBlueDunes.pdf" target="_blank" rel="noopener">The Blue Dunes</a>
-            <span class="note">A short science fiction story, as a PDF</span>
+            <a href="the-blue-dunes.html" data-view="page" target="_blank" rel="noopener">The Blue Dunes</a>
+            <span class="note">The album notes and the short science fiction story, laid out to read on any screen. <a href="http://www.projekt.com/store/wp-content/uploads/ARC254-Deepspace-TheBlueDunes.pdf" data-view="https://www.projekt.com/store/wp-content/uploads/ARC254-Deepspace-TheBlueDunes.pdf" target="_blank" rel="noopener">The original PDF</a></span>
           </div>
         </li>
       </ul>
@@ -2409,6 +2409,7 @@
   function hostName(href) {
     var h = '';
     try { h = new URL(href).hostname; } catch (e) { return ''; }
+    if (h === window.location.hostname) return '';        // a page of this site
     for (var i = 0; i < HOSTS.length; i++) if (h.indexOf(HOSTS[i][0]) > -1) return HOSTS[i][1];
     return h.replace(/^www\./, '');
   }
