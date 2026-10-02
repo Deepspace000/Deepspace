@@ -81,7 +81,7 @@
 
   h1 {
     font-weight: 200;
-    font-size: clamp(1.6rem, 6.2vw, 4.2rem);
+    font-size: clamp(2.24rem, 8.68vw, 5.88rem);
     line-height: 1;
     color: #e4edf4;
     white-space: nowrap;
@@ -93,13 +93,20 @@
     opacity: 0;
     filter: blur(14px);
     transform: translateY(0.12em);
-    animation: surface 4.5s cubic-bezier(.2,.6,.2,1) forwards;
-    animation-delay: calc(0.9s + var(--i) * 0.28s);
+    /* the letters surface one by one, then a soft light passes through them from left to right */
+    animation: surface 4.5s cubic-bezier(.2,.6,.2,1) forwards, glint 2.6s ease-in-out both;
+    animation-delay: calc(0.9s + var(--i) * 0.28s), calc(8s + var(--i) * 0.17s);
   }
   h1 .l:last-child { margin-right: 0; }
 
   @keyframes surface {
     to { opacity: 1; filter: blur(0); transform: none; }
+  }
+
+  @keyframes glint {
+    0%   { color: #e4edf4; text-shadow: 0 0 0 rgba(190, 225, 255, 0); }
+    45%  { color: #ffffff; text-shadow: 0 0 18px rgba(190, 225, 255, 0.7), 0 0 44px rgba(150, 200, 255, 0.32); }
+    100% { color: #e4edf4; text-shadow: 0 0 0 rgba(190, 225, 255, 0); }
   }
 
   .sub {
@@ -341,7 +348,7 @@
   }
 
   @media (max-width: 520px) {
-    h1 { font-size: 1.35rem; }
+    h1 { font-size: 1.89rem; }
     h1 .l { margin-right: 0.5em; }
     .sub { letter-spacing: 0.22em; }
     .inline-links a { display: inline-block; }
