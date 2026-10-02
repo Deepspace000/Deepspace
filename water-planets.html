@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Water Planets, the booklet</title>
+<meta name="description" content="Water Planets by deepspace: the story of the Hydros system, its six water planets and the ships sent to mine them. The booklet, laid out to read on any screen.">
+<meta name="theme-color" content="#050d18">
+<link rel="canonical" href="https://deepspace000.github.io/Deepspace/water-planets.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="deepspace">
+<meta property="og:title" content="Water Planets, the booklet">
+<meta property="og:description" content="The story of the Hydros system, its six water planets and the ships sent to mine them.">
+<meta property="og:url" content="https://deepspace000.github.io/Deepspace/water-planets.html">
+<meta property="og:image" content="https://deepspace000.github.io/Deepspace/img/water-planets/cover.jpg">
+<meta property="og:image:width" content="1080">
+<meta property="og:image:height" content="1080">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://deepspace000.github.io/Deepspace/img/water-planets/cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050d18;
+    --ink: #d6e7f2;
+    --dim: #8fb0c4;
+    --aqua: #7fe3d4;
+    --gold: #f0c64b;
+    --line: rgba(127, 227, 212, 0.28);
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0; color: var(--ink);
+    font-family: "Poppins", "Segoe UI", system-ui, -apple-system, Arial, sans-serif; font-weight: 300;
+    /* the text grows and shrinks with the screen, so it stays comfortable on a phone or a desktop */
+    font-size: clamp(1.05rem, 0.98rem + 0.5vw, 1.25rem); line-height: 1.8;
+    background: linear-gradient(180deg, #050d18, #071a2a 50%, #050d18);
+  }
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: var(--aqua); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+  a:hover, a:focus-visible { color: #fff; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  .hero { margin: 0 auto; max-width: 34rem; }
+  .hero img { width: 100%; }
+  .wrap { max-width: 40rem; margin: 0 auto; padding: 0 1.25rem; }
+
+  .toc { margin: 2rem 0 1rem; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 0.6rem 0.8rem; }
+  .toc a {
+    display: inline-block; padding: 0.35rem 0.9rem; font-size: 0.8em; line-height: 1.4; letter-spacing: 0.04em;
+    color: var(--ink); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; background: rgba(127, 227, 212, 0.06);
+  }
+  .toc a:hover, .toc a:focus-visible { background: rgba(127, 227, 212, 0.18); color: #fff; }
+
+  /* each part sits on a soft backdrop of its own page, blurred, so the words always read clearly */
+  .band { padding: 3.4rem 0; background: linear-gradient(rgba(5, 13, 24, 0.5), rgba(5, 13, 24, 0.82)), var(--bg-img, none) center / cover no-repeat; }
+  .band.plain { background: none; }
+  h2 { margin: 0 0 1.5rem; font-weight: 300; font-size: 1.3em; line-height: 1.35; letter-spacing: 0.08em; color: var(--aqua); }
+  h2 small { display: block; margin-top: 0.3rem; font-size: 0.7em; letter-spacing: 0.04em; font-weight: 300; color: var(--dim); }
+  h3 { margin: 2rem 0 0.6rem; font-weight: 400; font-size: 1em; letter-spacing: 0.06em; color: var(--gold); }
+  p { margin: 0 0 1.3rem; }
+  .lead { font-size: 1.05em; color: #fff; }
+  .note { font-size: 0.82em; color: var(--dim); }
+
+  blockquote {
+    margin: 2rem 0; padding: 0.1rem 0 0.1rem 1.1rem; border-left: 2px solid var(--aqua);
+    font-style: italic; font-weight: 400; font-size: 1.12em; line-height: 1.55; color: #eefaf7;
+  }
+  .data {
+    margin: 1.6rem 0; padding: 1rem 1.15rem; border: 1px solid var(--line); border-radius: 4px;
+    background: rgba(0, 20, 14, 0.55); color: #8dffb0;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.86em; line-height: 1.75;
+  }
+  .data p { margin: 0 0 0.9rem; } .data p:last-child { margin: 0; }
+  .data .tag { display: block; margin-bottom: 0.5rem; color: #5fd88a; letter-spacing: 0.1em; }
+
+  figure { margin: 2rem 0; }
+  figure img { border-radius: 3px; box-shadow: 0 14px 40px -18px rgba(0, 0, 0, 0.85); width: 100%; }
+  figure.narrow { max-width: 22rem; margin-left: auto; margin-right: auto; }
+  .pair { display: grid; gap: 1rem; margin: 2rem 0; }
+  .pair figure { margin: 0; }
+  @media (min-width: 640px) { .pair { grid-template-columns: 1fr 1fr; } }
+
+  ul.planets { margin: 0 0 1.5rem; padding-left: 1.2rem; }
+  ul.planets li { margin: 0.2rem 0; }
+
+  .end { padding: 3rem 0 5rem; text-align: center; }
+  .end img { margin: 1.4rem auto; width: min(18rem, 70%); }
+  .links { padding: 1.4rem 0 0; margin: 0 auto; max-width: 40rem; padding-inline: 1.25rem; font-size: 0.92em; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img src="img/water-planets/cover.jpg" width="1080" height="1080" alt="Water Planets by deepspace. An adventure from the year 2225, a space epic double album. A green water planet with two small moons.">
+  <h1 class="sr">Water Planets, deepspace</h1>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="lead" style="text-align:center;margin-top:1.8rem">Booklet: The Story of Water Planets<br><span class="note">Accompanies the latest album from deepspace. Out now on Projekt.</span></p>
+    <ul class="toc" aria-label="Contents">
+      <li><a href="#album">The album</a></li>
+      <li><a href="#story">The story</a></li>
+      <li><a href="#hydros">Hydros</a></li>
+      <li><a href="#thalassa">Thalassa Prime</a></li>
+      <li><a href="#nereis">Nereis-9</a></li>
+      <li><a href="#pelagia">Pelagia</a></li>
+      <li><a href="#ondine">Ondine 7b</a></li>
+      <li><a href="#hydraxis">Hydraxis</a></li>
+      <li><a href="#bathys">Bathys</a></li>
+      <li><a href="#ships">The ships</a></li>
+    </ul>
+  </div>
+
+  <section id="album" class="band" style="--bg-img:url(img/water-planets/bg-04.jpg)">
+    <div class="wrap">
+      <p>WATER PLANETS is the seventeenth deepspace album and his fifth release on Projekt Records. This conceptual double-album (with accompanying story) portrays serene and mysterious planets of water giving way to strange aquatic environments, some barren, some teeming with strange alien life. Soft bubbling sequences float and shimmer, conveying distant aquatic locations, refracting against and entwining with luminescent and filtered patterns that hypnotise and tantalise the ear and inner eye.</p>
+      <p>From orbit to beneath the turquoise wave, the first half of WATER PLANETS calmly descends through glimmering halcyon depths into sleeping aquatic valleys, always safe and ensconced in warm waves of audio, entwined and accompanied by quiet and gentle detail. From dazzling underwater valleys filled with undulating plant-life to dark crevasses falling into the nothing of water night, this album explores these places through the architecture of soundwaves. Remnants of the story unfold through occasional journals and transcripts, subtly adding a new dimension to the experience.</p>
+      <p>The second half of the album imagines the technology used by humans to mine the water planets in a neutral way that does not upset the natural balance. Technological shimmers and movement is present here, conveying the science and futuristic sleek aspects of the different ships that are created and sent by the humans to Hydros.</p>
+      <p class="note">Style: ambient, electronic, science-fiction, space ambient, spacewave, dreamwave.<br>Similar to: Pete Namlook, Carbon Based Lifeforms, Chihei Hatakeyama, Casino Versus Japan, Michael Stearns.</p>
+    </div>
+  </section>
+
+  <section id="story" class="band" style="--bg-img:url(img/water-planets/bg-06.jpg)">
+    <div class="wrap">
+      <h2>The story</h2>
+
+      <div class="data">
+        <span class="tag">TRANSMISSION</span>
+        <p>“We can’t survive much longer... All the ice, all the water... It’s vaporizing. We didn’t expect this—but it’s clear now: We caused it. This entanglement hell, born from our own ignorance...And that experiment. Earth is almost dry. The Oort Cloud, empty. The Kuiper Belt, silent. Enceladus is a dust bowl, and Venus? You don’t even want to know. The oceans are gone. Rivers are mud. People are dying, fast. The domes are holding, but not for much longer.</p>
+        <p>But.. There’s something new. IASA found a wormhole. It leads to Hydros: A system of water planets. If those sustainable drone ships don’t reach it soon, we’re finished. Everyone. Everything. We have a year...if we’re lucky.”</p>
+      </div>
+      <figure class="narrow"><img src="img/water-planets/lander.jpg" width="472" height="930" loading="lazy" alt="A cream-coloured landing pod standing on red Martian ground under a dark red sky"></figure>
+
+      <blockquote>Unexpected heat dysfunction in the entire solar system.</blockquote>
+      <div class="data">
+        <p>2224. Global warming isn’t just on Earth. It is everywhere. The Sun, all the planets, belts, and moons in the solar system, once used to ice-cold space, have started to heat up violently. An intervention that was intended to slow the warming, which had been happening for the past 200 years, triggered a catastrophic sequence. The event, known now as 817, or the Great Quantum Entanglement Disaster, made things far worse and has accelerated the process on an unimaginable scale. Our human intrusions, long-standing and recent, have led to an unexpected heat dysfunction in the entire solar system and neighbouring areas.</p>
+      </div>
+
+      <blockquote>a frightening heat spectre of derangement and entropy...</blockquote>
+      <p>Scientists learned that when we transform and pollute our environment on earth, because of previously unaccounted-for quantum entanglement, other planets and astral objects are affected, like a metastatic cancer, radiating outward for light years in a frightening heat spectre of derangement and entropy. There used to be a global warming metaphor about us realising too late that the pot was boiling. Well, turns out the pot is now almost the size of the Milky Way.</p>
+
+      <blockquote>Without water, only extinction is possible</blockquote>
+      <p>Most life is wiped out in the space of a few months as all water vaporizes and vanishes. A few million human survivors huddle in domed cities. Without water, only extinction is possible. While science can engineer some water and food, it is not enough.</p>
+
+      <blockquote>It will take AI to save us now.</blockquote>
+      <div class="data">
+        <p>2225.</p>
+        <p>In an incredible turn of events, a scientist from IASA manages to locate a wormhole near Mars that leads to a far-away system of water planets called Hydros.</p>
+        <p>Humanity must create new technology, and new ways that do not destroy the cosmos further, and return water to earth.</p>
+        <p>It will take AI to save us now. But there must be almost no intervention or interruption to these gentle water planets so as not to spread the entanglement further.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="hydros" class="band plain">
+    <div class="wrap">
+      <h2>Hydros</h2>
+      <figure><img src="img/water-planets/hydros-system.jpg" width="1080" height="725" loading="lazy" alt="A glowing orange red dwarf star surrounded by six blue water planets"></figure>
+      <p>The Hydros system is a small yet significant solar system consisting entirely of water planets orbiting the M-class red dwarf Hydros. More importantly, it is far away enough to be untouched by humankind's unfortunate effect, yet is accessible through a wormhole. The six orbiting planets, shimmering like celestial sapphires, hold the key to survival for the humans. The system's planets are prized for their pristine waters.</p>
+      <figure><img src="img/water-planets/hydros-ocean.jpg" width="1080" height="500" loading="lazy" alt="A calm blue ocean under a large pale planet, with a red star glowing in the corner"></figure>
+      <p><strong>DATA:</strong> Hydros is an M-type red dwarf star with six orbiting water planets.</p>
+      <figure><img src="img/water-planets/orbit-station.jpg" width="1080" height="460" loading="lazy" alt="A space station in orbit above the curve of a planet"></figure>
+      <p>Six water planets orbit Hydros:</p>
+      <ul class="planets">
+        <li>Thalassa Prime</li><li>Nereis-9</li><li>Pelagia</li><li>Ondine 7b</li><li>Hydraxis</li><li>Bathys</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="thalassa" class="band" style="--bg-img:url(img/water-planets/bg-14.jpg)">
+    <div class="wrap">
+      <h2>Thalassa Prime<small>The Keeper of the Tides</small></h2>
+      <blockquote>The sea does not follow the water moon; it moves by its own free will.</blockquote>
+      <h3>Geography and Conditions</h3>
+      <p>Unlike normal planets with gravitational tides, Thalassa Prime, the largest of the water planets, has oceans that move in unpredicatable waves, rising and falling as if controlled by an unseen force.</p>
+      <p>Massive water spires, vertical columns of liquid thousands of metres high, rise from the ocean and hold their shape for hours before collapsing back into the sea.</p>
+      <h3>Unique Phenomena</h3>
+      <p>The tides form complex geometric spirals when viewed from orbit, too intricate to be natural. Some researchers believe there may be an ancient machine beneath the waves causing this.</p>
+      <p>AI simulations predict if left undisturbed, the tides will eventually form a perfect mathematical structure in 217 years. The purpose of this remains a mystery.</p>
+      <p class="note">"Thalassa" (Θάλασσα in Ancient Greek) means "sea" in Greek and is also the name of the Greek goddess of the sea.</p>
+    </div>
+  </section>
+
+  <section id="nereis" class="band" style="--bg-img:url(img/water-planets/bg-15.jpg)">
+    <div class="wrap">
+      <h2>Nereis-9<small>The Whispering Deep</small></h2>
+      <p class="lead">A world with vast, deep trenches where mysterious whispering sounds emanate</p>
+      <p>Trenches, some hundreds of kilometres deep, reside beneath the waves of this world. Scientists suspect that violent earthquakes and towering tsunamis have shaped this world.</p>
+      <p>Upon crossing beneath a certain depth threshold, probes have recorded strange whispering sounds that emanate from the core of Nereis-9. Scientists believe these sounds influence the rotation of the planet and the tides.</p>
+      <p>Mirror trenches exist here, where the trench floor contains a reverse trench filled with water, stretching further underground. This is where the sounds are the loudest, exceeding 130 decibels in places. It is not known where these reverse trenches lead to.</p>
+      <blockquote>What is causing this...strange whispering and sound. And what is it expressing?</blockquote>
+      <p class="note">The scientific name "Nereis" comes from the Ancient Greek word "Νηρηΐς" (Nērēís), which refers to a sea nymph.</p>
+    </div>
+  </section>
+
+  <section id="pelagia" class="band" style="--bg-img:url(img/water-planets/bg-16.jpg)">
+    <div class="wrap">
+      <h2>Pelagia<small>The Black Abyss</small></h2>
+      <p>The darkest of all the planets, Pelagia’s ocean is pitch black, absorbing 99.9% of all light.</p>
+      <p>The water contains microscopic light-absorbing particles making it nearly impossible to illuminate the depths.</p>
+      <p>Any probe that descends past a depth of 12km stops transmitting. No debris has ever been found. Some claim shadows moving beneath the surface, but sonar shows nothing.</p>
+      <blockquote>We sent drones. They vanished. We sent submersibles. They went silent. We sent a manned expedition. We do not speak of them anymore.</blockquote>
+      <p class="note">The name Pelagia, meaning "of the sea" or "marine," originates from the Ancient Greek word "pélagos" (πέλαγος), which means "sea" or "open ocean."</p>
+    </div>
+  </section>
+
+  <section id="ondine" class="band" style="--bg-img:url(img/water-planets/bg-17.jpg)">
+    <div class="wrap">
+      <h2>Ondine 7b<small>Cradle of Endless Rain</small></h2>
+      <p class="lead">A storm-covered world where rain never ceases.</p>
+      <p>In an endless cycle of evaporation and precipitation encouraged by the strange bio signatures that give rise to these processes, this planet is home to life albeit invisible and mysterious.</p>
+      <p>Scientists are trying to understand why this planet requires the constant flow of rain and speculate it is a requirement of the unique lifeforms, but cannot study them as they cannot find them!</p>
+      <blockquote>Oh for a dry day, but we suspect it has been raining and storming globally here for five billion years.</blockquote>
+      <p class="note">“Ondine” is a feminine name of Latin origin. This delicate name translates to “little wave” and is an alternate spelling of undine, classified as a category of elemental water-dwelling creatures.</p>
+    </div>
+  </section>
+
+  <section id="hydraxis" class="band" style="--bg-img:url(img/water-planets/bg-18.jpg)">
+    <div class="wrap">
+      <h2>Hydraxis<small>The Living Ocean</small></h2>
+      <p class="lead">A world where the water itself harbours strange, self-sustaining ecosystems.</p>
+      <p>The prize jewel of the planets to scientists as Hydraxis harbours a profusion of life. Uncounted and unclassified types of aquatic creatures roam the depths of this planet.  And it is deep. No sea floor has yet be scanned, and it is presumed that there may be no floor at all..</p>
+      <p>This planet was quickly barred from water mining as it is considered too vulnerable and precious by humankind. However it is being studied with ultra sensitive hydrodrones which leave no matter signature behind.</p>
+      <p>Hydraxis is the first example of a universe-class heritage planet protected by UNESCO-4</p>
+      <blockquote>The water itself creates nutrients that feed the profusion of life that exists here.</blockquote>
+      <p class="note">“Hydraxis”- derived from Hydra is a genus of small freshwater hydrozoans belonging to the phylum Cnidaria.</p>
+    </div>
+  </section>
+
+  <section id="bathys" class="band" style="--bg-img:url(img/water-planets/bg-19.jpg)">
+    <div class="wrap">
+      <h2>Bathys<small>Serene waterplanet</small></h2>
+      <p>Said to lower a human’s pulse rate by almost half, this is the most peaceful place yet visited by humankind.</p>
+      <blockquote>I just feel like I was melting in the most peaceful way. I don’t know what causes this...</blockquote>
+      <p>Entirely water under gentle halcyon skies and perfect temperature (always 27 degrees celsius), Bathys is full of cool and deep yet empty waters.</p>
+      <p>There is a danger of passing out due to being overwhelmingly relaxed when entering the orbit of this planet. Scientists wear stimulus inducing packs that regularly prod their nervous system, so they can stay conscious during research and mining.</p>
+      <p>There are no storms, and the ocean is always calm. Currents in both the water and air are minimal and cool. The planet core is entirely of white sand, and depths range from approx. 100 metres to thousands of metres. Scientists are designing floating structures that could house the several million humans and could move to this planet when the time is right. However the problems of low pulse rate still confound any immediate plans to move.</p>
+      <p class="note">“Bathys” is derived from the Greek word meaning "deep" and is inspired by the bathyscaphe; a deep-sea exploration submersible symbolizing calm, depth, and silence.</p>
+      <figure><img src="img/water-planets/maps.jpg" width="1080" height="1080" loading="lazy" alt="Four hand-drawn style maps of the water planets Nereis-9, Ondine 7b, Hydraxis and Bathys, headed Examples of available maps"></figure>
+    </div>
+  </section>
+
+  <section id="ships" class="band" style="--bg-img:url(img/water-planets/bg-21.jpg)">
+    <div class="wrap">
+      <h2>The ships</h2>
+      <p>Perfecting sustainability is the only way forward for humans from now on. We have become a species that is acutely invested in creating technology that causes no harm to any environment. The following ships are evidence of this commitment by the rattled humans as they begin to mine again....</p>
+
+      <div class="pair">
+        <figure><img src="img/water-planets/drone.jpg" width="524" height="624" loading="lazy" alt="White drones hovering over a blue sea"></figure>
+        <figure><img src="img/water-planets/diagram.jpg" width="556" height="624" loading="lazy" alt="Diagram titled Ethical Water Extraction: a water mining drone, survey drone, floating processing platform, water storage tank, autonomous harvester and drill"></figure>
+      </div>
+      <p class="data" style="padding:1rem 1.15rem">To tap into this precious resource a fleet of specialized ships is deployed to the Hydros system. These vessels, equipped with advanced technologies for long-distance travel and water containment, traverse the vastness of space to reach the water-rich planets. The process of mining water is meticulous involving a fleet of engineering marvels and skilled AI personnel. Enormous tankers draw water from the planets' surfaces carefully preserving its purity and integrity during transportation.</p>
+      <figure class="narrow"><img src="img/water-planets/freighter-ocean.jpg" width="460" height="456" loading="lazy" alt="A large flying saucer-shaped tanker hovering over a green sea, drawing up water in beams"></figure>
+
+      <h3>Hydroskim drones</h3>
+      <figure><img src="img/water-planets/ship-hydroskimmer.jpg" width="1080" height="440" loading="lazy" alt="A white drone skimming the ocean surface"></figure>
+      <p>Lightweight, autonomous water harvesters such as the Hydrospheric Extraction Drones Class (aka Hydroskimmer) pictured here.</p>
+      <p>Small fast-moving drones that skim the ocean surface extracting only the necessary amounts of water vapour or liquid.</p>
+      <p>Uses nanofiltration to remove impurities before sending water to storage ships.</p>
+
+      <h3>Deep current surveyors</h3>
+      <figure><img src="img/water-planets/ship-surveyor.jpg" width="1080" height="460" loading="lazy" alt="A glowing submarine in dark blue water"></figure>
+      <p>These AI-controlled submarines such as the Pantheon-Class Hadal Submersible are used for deep sea exploration. They use sonar to map underwater currents and features then collect data on marine life and water composition in order to ensure safe water extraction. They glow faintly in bioluminescent waters, blending in with the environment.</p>
+
+      <h3>The aether striders <small class="note">(zero-g peripheral planar hyudroharvesters)</small></h3>
+      <figure><img src="img/water-planets/ship-aether-strider.jpg" width="1080" height="330" loading="lazy" alt="A silver airship floating above a green ocean"></figure>
+      <p>Massive, silent airships such as the Peripheral PLANAR Hydroharvesters hover above the oceans, extracting water from the atmosphere through condensation panels. They are completely non-invasive and use wind currents to move rather than thrusters. Releases mist back into the atmosphere to maintain planetary balance.</p>
+
+      <h3>The tranquility harvesters <small class="note">(floating processing stations)</small></h3>
+      <figure><img src="img/water-planets/ship-tranquility.jpg" width="1080" height="400" loading="lazy" alt="A huge circular floating platform above the clouds"></figure>
+      <p>A massive city-sized platform that purifies and stores harvested water before transport. Uses anti-gravity stabilisers to minimise interaction with the water’s surface. Powered by solar panel engines and geothermal energy from the planet’s core.</p>
+
+      <h3>Cryo-vault freighters <small class="note">(interstellar ice transport ships)</small></h3>
+      <figure><img src="img/water-planets/ship-cryovault.jpg" width="1080" height="475" loading="lazy" alt="A freighter carrying a huge block of ice over the sea"></figure>
+      <p>These ships (CryoVault Transport Array Model CX22 pictured) transport massive frozen water chunks off-world back to Earth, keeping them in suspended animation to stop them from melting. They have a sleek monolithic design with built-in AI to chart the safest routes. Uses gravity-assist manoeuvres to minimise fuel use.</p>
+
+      <h3>The Okeanos conduits <small class="note">(planetary water regulators)</small></h3>
+      <figure><img src="img/water-planets/ship-okeanos.jpg" width="1080" height="465" loading="lazy" alt="A round white platform standing on a calm sea"></figure>
+      <p>A self-sustaining AI system that ensures planetary balance. When water is removed, it replenishes the ecosystem through artificial rainfall. Uses ultra-precise weather control to stabilise planet locations after extraction. Monitors local hydrology to prevent ecosystem collapse.</p>
+
+      <h3>Microbial engineers <small class="note">(nano-scale purifiers working inside water itself)</small></h3>
+      <figure><img src="img/water-planets/ship-microbial.jpg" width="1080" height="830" loading="lazy" alt="Red spiked nano-machines floating in clear blue water"></figure>
+      <p>Micro-Particle Refiners SFPA: Tiny self-replicating machines that remove harmful elements from the water without disturbing natural microbial life. Their work is crucial for safe consumption and life preservation. They disassemble themselves and actually decay when their work is done leaving no trace due to their synthesized organic construction.</p>
+
+      <h3>Exosphere glider <small class="note">(communication satellite)</small></h3>
+      <p>High in the exosphere, these satellites communicate with the other machines working on the other planets throughout the Hydros system and with our own solar system, co-ordinating the comings and goings of the Cryo-Vault freighters and any new technology.</p>
+    </div>
+  </section>
+
+  <section class="end">
+    <div class="wrap">
+      <p>Experience the story of Water Planets, out now on</p>
+      <img src="img/water-planets/projekt-logo.jpg" width="432" height="135" loading="lazy" alt="Projekt">
+      <p><a href="https://projektrecords.bandcamp.com/album/water-planets" target="_blank" rel="noopener">Water Planets on Bandcamp</a></p>
+    </div>
+  </section>
+
+  <p class="links"><a href="./" target="_top">deepspace home</a></p>
+</main>
+</body>
+</html>
