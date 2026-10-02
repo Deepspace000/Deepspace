@@ -606,7 +606,8 @@
         var ca = Math.min(1, ssm(K.cloud, K.cloud + 0.14, cl) * 0.85 + cyc * 0.8);
         var hi = ssm(0.62, 0.8, fbm(rx2 * 7 + seed, ry * 7 + 3, rz * 7, 4)) * 0.35;   // wispy cirrus
         ca = Math.min(1, ca + hi * (1 - ca));
-        col = mix(col, [255, 255, 255], ca);
+        if (o.cover) ca = Math.min(1, ca + o.cover * (1 - ca) * 0.985);              // a world with no sky showing: storm cloud right across
+        col = o.cover ? mix(col, mix([88, 108, 146], [238, 245, 255], ssm(0.3, 0.78, cl + hi * 0.3)), ca) : mix(col, [255, 255, 255], ca);
         var dif = nx * L[0] + ny * L[1] + nz * L[2];
         var k = 0.04 + 0.96 * ssm(-0.1, 0.5, dif);
         // sunlight glinting on the open water, broken up by waves
@@ -697,7 +698,7 @@
     band.classList.add('has-planet');
     var hd = makeHold(band), box = hd[1];
     var seed = +fig.getAttribute('data-seed'), rr = rng(seed);
-    var f = { band: band, box: box, hold: hd[0], kind: +fig.getAttribute('data-kind'), seed: seed % 977 + 3, side: n % 2 ? -1 : 1, tilt: (rr() - 0.5) * 0.8, phase: rr() * 6.28, vis: 0, r: 0, started: false, moons: [] };
+    var f = { band: band, box: box, hold: hd[0], cover: id === 'ondine' ? 1 : 0, kind: +fig.getAttribute('data-kind'), seed: seed % 977 + 3, side: n % 2 ? -1 : 1, tilt: (rr() - 0.5) * 0.8, phase: rr() * 6.28, vis: 0, r: 0, started: false, moons: [] };
     var nm = 2 + (n % 2);
     for (var m = 0; m < nm; m++) f.moons.push({ a: 1.6 + m * 0.55 + rr() * 0.2, rf: 0.08 + rr() * 0.07, ph: rr() * 6.28, w: (0.22 + rr() * 0.3) * (m % 2 ? -1 : 1), tilt: (rr() - 0.5) * 0.6, seed: Math.floor(rr() * 999) });
     feats.push(f);
@@ -718,7 +719,7 @@
       var near = rect.top < H * 2 && rect.bottom > -H;
       if (near && !f.started) {                      // start painting it when its entry is about to come up
         f.started = true; f.r = W < 700 ? Math.min(W * 0.4, 170) : Math.min(210, Math.max(110, W * 0.15));
-        f.paint = startPlanet({ r: f.r, kind: f.kind, seed: f.seed, tilt: f.tilt, phase: f.phase, landLevel: 1.5 }, W < 700 ? 130 : 170);
+        f.paint = startPlanet({ r: f.r, kind: f.kind, seed: f.seed, tilt: f.tilt, phase: f.phase, landLevel: 1.5, cover: f.cover }, W < 700 ? 130 : 170);
       }
       if (f.paint && !painting) { painting = true; if (stepPlanet(f.paint, 7)) {
         var el = f.paint.c; el.style.cssText = 'position:absolute;width:' + f.r * 2 + 'px;height:' + f.r * 2 + 'px;left:' + (-f.r) + 'px;top:' + (-f.r) + 'px;z-index:1;filter:drop-shadow(0 0 ' + Math.round(f.r * 0.25) + 'px rgba(110,190,255,0.35))';
@@ -1035,7 +1036,7 @@
     for (var i = 0; i < 90; i++) { x.fillStyle = 'rgba(225,240,255,' + (0.2 + r() * 0.7) + ')'; x.beginPath(); x.arc(r() * S, r() * S, 0.4 + r() * 1.2, 0, 6.2832); x.fill(); }
     var glow = x.createRadialGradient(S / 2, S / 2, 70, S / 2, S / 2, 140); glow.addColorStop(0, 'rgba(120,200,255,0.22)'); glow.addColorStop(1, 'rgba(120,200,255,0)');
     x.fillStyle = glow; x.fillRect(0, 0, S, S);
-    var spr = buildPlanet({ r: 92, kind: kind, seed: seed % 977 + 3, tilt: (r() - 0.5) * 0.8, phase: r() * 6.28, landLevel: 1.5 });
+    var spr = buildPlanet({ r: 92, kind: kind, seed: seed % 977 + 3, tilt: (r() - 0.5) * 0.8, phase: r() * 6.28, landLevel: 1.5, cover: fig.closest('#ondine') ? 1 : 0 });
     x.drawImage(spr, S / 2 - 100, S / 2 - 100, 200, 200);
     var m = buildMoon(14, seed % 500, [190, 188, 180]); x.drawImage(m, S * 0.78 - 14, S * 0.26 - 14, 28, 28);
   }
