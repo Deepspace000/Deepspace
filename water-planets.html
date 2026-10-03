@@ -703,7 +703,7 @@
     var hd = makeHold(band), box = hd[1];
     var seed = +fig.getAttribute('data-seed'), rr = rng(seed);
     var f = { band: band, box: box, hold: hd[0], cover: id === 'ondine' ? 1 : 0, kind: +fig.getAttribute('data-kind'), seed: seed % 977 + 3, side: n % 2 ? -1 : 1, tilt: (rr() - 0.5) * 0.8, phase: rr() * 6.28, vis: 0, r: 0, started: false, moons: [] };
-    var nm = 2 + (n % 2);
+    var nm = [2, 4, 1, 3, 5, 2][n];
     for (var m = 0; m < nm; m++) f.moons.push({ a: 1.6 + m * 0.55 + rr() * 0.2, rf: 0.08 + rr() * 0.07, ph: rr() * 6.28, w: (0.22 + rr() * 0.3) * (m % 2 ? -1 : 1), tilt: (rr() - 0.5) * 0.6, seed: Math.floor(rr() * 999) });
     feats.push(f);
   });
@@ -860,7 +860,7 @@
     if (hs.width !== Math.round(w * d2) || hs.height !== Math.round(h * d2)) { hs.width = Math.round(w * d2); hs.height = Math.round(h * d2); }
     hsx.setTransform(d2, 0, 0, d2, 0, 0); hsx.clearRect(0, 0, w, h);
     if (!hsys) {
-      var kinds = [2, 5, 6, 1, 3, 4], sz = [17, 24, 14, 28, 20, 26], P = [], nm = [3, 2, 3, 2, 3, 2];
+      var kinds = [2, 5, 6, 1, 3, 4], sz = [17, 24, 14, 28, 20, 26], P = [], nm = [2, 4, 1, 5, 3, 2];
       for (var i = 0; i < 6; i++) P.push({ r: sz[i], a: 0, w: 0.34 / Math.pow(i + 1, 1.5) * (i % 2 ? 1.1 : 1), ph: i * 2.1 + 0.4, spr: buildPlanet({ r: sz[i], kind: kinds[i], seed: 11 + i * 29, tilt: 0.1 * i, phase: i, landLevel: 1.5 }), moons: [] });
       P.forEach(function (pp, i) { for (var m = 0; m < nm[i]; m++) pp.moons.push({ a: 0, w: (0.7 + m * 0.45) * (m % 2 ? -1 : 1), ph: m * 2.3 + i, d: pp.r * (1.9 + m * 0.8), r: pp.r * (0.22 + 0.06 * ((m + i) % 3)), spr: buildMoon(pp.r * 0.3, 40 + i * 7 + m * 13, [190, 188, 180]) }); });
       hsys = { star: buildSun({ r: 70, col: [255, 70, 50], seed: 7 }), P: P, a: 0 };
