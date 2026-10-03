@@ -867,7 +867,7 @@
     }
     hsys.a = Math.min(1, hsys.a + dt * 0.7); hs.style.opacity = (hsys.a * hsys.a * (3 - 2 * hsys.a)).toFixed(3);
     // a 3D view: orbits are circles in a plane tipped towards us, seen in perspective, and they run off the page
-    var cx = w / 2, cy = h * 0.42, boost = 1 + Math.min(vel * 0.0028, 5), T = 1.0 + Math.sin(t * 0.00004) * 0.07, sT = Math.sin(T), cT = Math.cos(T), D = w * 1.5, k = Math.min(1, w / 900 + 0.35);
+    var chp = hs.parentNode.querySelector('.chapter-hydros'), cx = w / 2, cy = Math.max(w * 0.24, (chp ? chp.offsetHeight : h * 0.4) * 0.4), boost = 1 + Math.min(vel * 0.0028, 5), T = 1.0 + Math.sin(t * 0.00004) * 0.07, sT = Math.sin(T), cT = Math.cos(T), D = w * 1.5, k = Math.min(1, w / 900 + 0.35);
     function proj(X, Z) { var dep = -Z * cT, s = D / (D + dep); return { x: cx + X * s, y: cy + Z * sT * s, s: s, dep: dep }; }
     hsx.globalCompositeOperation = 'lighter';
     [[w * 0.32, 0.34], [w * 0.14, 0.34]].forEach(function (L) { var g = hsx.createRadialGradient(cx, cy, 4, cx, cy, L[0]); g.addColorStop(0, 'rgba(255,80,50,' + L[1] + ')'); g.addColorStop(1, 'rgba(255,80,50,0)'); hsx.fillStyle = g; hsx.beginPath(); hsx.arc(cx, cy, L[0], 0, 6.2832); hsx.fill(); });
