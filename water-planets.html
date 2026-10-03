@@ -149,6 +149,16 @@
   #bathys blockquote { float: left; width: 42%; margin: 0.3rem 1.3rem 0.8rem 0; border: 0; border-right: 3px solid #c9a95e; padding: 0.3rem 1rem 0.3rem 0; text-align: right; }
   #bathys .cols { clear: both; }
   @media (max-width: 620px) { .book .cols { column-count: 1; } #nereis blockquote, #bathys blockquote { float: none; width: auto; margin: 1.2rem 0.4rem; } #hydraxis blockquote { border-radius: 20px; padding: 1rem 1.3rem; } }
+
+  /* facts about each planet */
+  .book .datasheet { margin: 0.4rem 0 1.4rem; font-size: 0.82em; line-height: 1.4; border: 1px solid rgba(214, 178, 100, 0.55); outline: 1px solid rgba(214, 178, 100, 0.2); outline-offset: 3px; background: rgba(40, 30, 14, 0.35); }
+  .book .datasheet .dh { background: rgba(214, 178, 100, 0.22); color: #f6e7bf; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; font-size: 1.3em; letter-spacing: 0.12em; text-transform: uppercase; text-align: center; padding: 0.35rem 0.5rem; border-bottom: 1px solid rgba(214, 178, 100, 0.55); }
+  .book .datasheet dl { margin: 0; }
+  .book .datasheet dl > div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.3rem 0.8rem; border-bottom: 1px dotted rgba(214, 178, 100, 0.3); }
+  .book .datasheet dl > div:last-child { border-bottom: 0; }
+  .book .datasheet dt { color: #c9a95e; flex: 0 0 auto; }
+  .book .datasheet dd { margin: 0; text-align: right; color: #eadfc3; }
+  @media (max-width: 520px) { .book .datasheet dl > div { flex-direction: column; gap: 0; } .book .datasheet dd { text-align: left; } }
   @media (max-width: 520px) { .book { padding: 1.7rem 1.05rem 1.5rem; font-size: 1.12em; } .book p { text-align: left; } .book .runhead { font-size: 0.6em; letter-spacing: 0.12em; white-space: nowrap; } }
 
 
@@ -324,7 +334,8 @@
       <div class="runhead"><span>The Hydros Atlas</span><span>Entry I of VI</span></div>
       <h2>Thalassa Prime<small>The Keeper of the Tides</small></h2>
       <div class="orn">&#10070;</div>
-      <figure class="plate planet-plate" data-kind="1" data-seed="1111"><canvas width="300" height="300" aria-label="Thalassa Prime, drawn from the booklet"></canvas><figcaption>Plate III: Thalassa Prime</figcaption></figure>
+      <figure class="plate planet-plate" data-kind="1" data-seed="1111" data-moons="2"><canvas width="300" height="300" aria-label="Thalassa Prime, drawn from the booklet"></canvas><figcaption>Plate III: Thalassa Prime</figcaption></figure>
+      <aside class="datasheet" aria-label="Facts about this planet"><div class="dh">Planet facts</div><dl><div><dt>Order from Hydros</dt><dd>1st</dd></div><div><dt>Class</dt><dd>Ocean giant</dd></div><div><dt>Diameter</dt><dd>21,400 km</dd></div><div><dt>Surface gravity</dt><dd>1.4 g</dd></div><div><dt>Temperature range</dt><dd>18 to 31 °C</dd></div><div><dt>Orbit time</dt><dd>9.6 days</dd></div><div><dt>Day length</dt><dd>31 hours</dd></div><div><dt>Age</dt><dd>6.2 billion years</dd></div><div><dt>Moons</dt><dd>2: Pontos, Aegaeon</dd></div><div><dt>Features</dt><dd>Tides that move by themselves; water spires thousands of metres high; spiral tide patterns seen from orbit</dd></div></dl></aside>
       <blockquote>The sea does not follow the water moon; it moves by its own free will.</blockquote>
       <div class="panel"><h3>Geography and Conditions</h3>
       <p class="dc">Unlike normal planets with gravitational tides, Thalassa Prime, the largest of the water planets, has oceans that move in unpredicatable waves, rising and falling as if controlled by an unseen force.</p>
@@ -346,7 +357,8 @@
       <div class="runhead"><span>The Hydros Atlas</span><span>Entry II of VI</span></div>
       <h2>Nereis-9<small>The Whispering Deep</small></h2>
       <div class="orn">&#10070;</div>
-      <figure class="plate planet-plate" data-kind="3" data-seed="2222"><canvas width="300" height="300" aria-label="Nereis-9, drawn from the booklet"></canvas><figcaption>Plate IV: Nereis-9</figcaption></figure>
+      <figure class="plate planet-plate" data-kind="3" data-seed="2222" data-moons="4"><canvas width="300" height="300" aria-label="Nereis-9, drawn from the booklet"></canvas><figcaption>Plate IV: Nereis-9</figcaption></figure>
+      <aside class="datasheet" aria-label="Facts about this planet"><div class="dh">Planet facts</div><dl><div><dt>Order from Hydros</dt><dd>2nd</dd></div><div><dt>Class</dt><dd>Deep-trench ocean</dd></div><div><dt>Diameter</dt><dd>13,800 km</dd></div><div><dt>Surface gravity</dt><dd>1.0 g</dd></div><div><dt>Temperature range</dt><dd>11 to 24 °C</dd></div><div><dt>Orbit time</dt><dd>17 days</dd></div><div><dt>Day length</dt><dd>20 hours</dd></div><div><dt>Age</dt><dd>5.1 billion years</dd></div><div><dt>Moons</dt><dd>4: Doris, Galatea, Thetis, Amphitrite</dd></div><div><dt>Features</dt><dd>Trenches hundreds of km deep; mirror trenches; whispering sounds above 130 decibels</dd></div></dl></aside>
       <p class="lead dc">A world with vast, deep trenches where mysterious whispering sounds emanate</p>
       <p>Trenches, some hundreds of kilometres deep, reside beneath the waves of this world. Scientists suspect that violent earthquakes and towering tsunamis have shaped this world.</p>
       <p>Upon crossing beneath a certain depth threshold, probes have recorded strange whispering sounds that emanate from the core of Nereis-9. Scientists believe these sounds influence the rotation of the planet and the tides.</p>
@@ -364,7 +376,8 @@
       <div class="runhead"><span>The Hydros Atlas</span><span>Entry III of VI</span></div>
       <h2>Pelagia<small>The Black Abyss</small></h2>
       <div class="orn">&#10070;</div>
-      <figure class="plate planet-plate" data-kind="5" data-seed="3333"><canvas width="300" height="300" aria-label="Pelagia, drawn from the booklet"></canvas><figcaption>Plate V: Pelagia</figcaption></figure>
+      <figure class="plate planet-plate" data-kind="5" data-seed="3333" data-moons="1"><canvas width="300" height="300" aria-label="Pelagia, drawn from the booklet"></canvas><figcaption>Plate V: Pelagia</figcaption></figure>
+      <aside class="datasheet" aria-label="Facts about this planet"><div class="dh">Planet facts</div><dl><div><dt>Order from Hydros</dt><dd>3rd</dd></div><div><dt>Class</dt><dd>Dark ocean</dd></div><div><dt>Diameter</dt><dd>12,100 km</dd></div><div><dt>Surface gravity</dt><dd>0.9 g</dd></div><div><dt>Temperature range</dt><dd>2 to 9 °C</dd></div><div><dt>Orbit time</dt><dd>28 days</dd></div><div><dt>Day length</dt><dd>41 hours</dd></div><div><dt>Age</dt><dd>7.4 billion years</dd></div><div><dt>Moons</dt><dd>1: Erebus</dd></div><div><dt>Features</dt><dd>Black water that absorbs 99.9% of light; probes lost below 12 km</dd></div></dl></aside>
       <p class="dc">The darkest of all the planets, Pelagia’s ocean is pitch black, absorbing 99.9% of all light.</p>
       <p>The water contains microscopic light-absorbing particles making it nearly impossible to illuminate the depths.</p>
       <p>Any probe that descends past a depth of 12km stops transmitting. No debris has ever been found. Some claim shadows moving beneath the surface, but sonar shows nothing.</p>
@@ -381,7 +394,8 @@
       <div class="runhead"><span>The Hydros Atlas</span><span>Entry IV of VI</span></div>
       <h2>Ondine 7b<small>Cradle of Endless Rain</small></h2>
       <div class="orn">&#10070;</div>
-      <figure class="plate planet-plate" data-kind="4" data-seed="4444"><canvas width="300" height="300" aria-label="Ondine 7b, drawn from the booklet"></canvas><figcaption>Plate VI: Ondine 7b</figcaption></figure>
+      <figure class="plate planet-plate" data-kind="4" data-seed="4444" data-moons="3"><canvas width="300" height="300" aria-label="Ondine 7b, drawn from the booklet"></canvas><figcaption>Plate VI: Ondine 7b</figcaption></figure>
+      <aside class="datasheet" aria-label="Facts about this planet"><div class="dh">Planet facts</div><dl><div><dt>Order from Hydros</dt><dd>4th</dd></div><div><dt>Class</dt><dd>Storm ocean</dd></div><div><dt>Diameter</dt><dd>15,600 km</dd></div><div><dt>Surface gravity</dt><dd>1.1 g</dd></div><div><dt>Temperature range</dt><dd>12 to 19 °C</dd></div><div><dt>Orbit time</dt><dd>46 days</dd></div><div><dt>Day length</dt><dd>17 hours</dd></div><div><dt>Age</dt><dd>5.4 billion years</dd></div><div><dt>Moons</dt><dd>3: Naiad, Rusalka, Marid</dd></div><div><dt>Features</dt><dd>Rain and storms over the whole planet for about five billion years; lightning; unseen life</dd></div></dl></aside>
       <p class="lead dc">A storm-covered world where rain never ceases.</p>
       <p>In an endless cycle of evaporation and precipitation encouraged by the strange bio signatures that give rise to these processes, this planet is home to life albeit invisible and mysterious.</p>
       <p>Scientists are trying to understand why this planet requires the constant flow of rain and speculate it is a requirement of the unique lifeforms, but cannot study them as they cannot find them!</p>
@@ -398,7 +412,8 @@
       <div class="runhead"><span>The Hydros Atlas</span><span>Entry V of VI</span></div>
       <h2>Hydraxis<small>The Living Ocean</small></h2>
       <div class="orn">&#10070;</div>
-      <figure class="plate planet-plate" data-kind="2" data-seed="5555"><canvas width="300" height="300" aria-label="Hydraxis, drawn from the booklet"></canvas><figcaption>Plate VII: Hydraxis</figcaption></figure>
+      <figure class="plate planet-plate" data-kind="2" data-seed="5555" data-moons="5"><canvas width="300" height="300" aria-label="Hydraxis, drawn from the booklet"></canvas><figcaption>Plate VII: Hydraxis</figcaption></figure>
+      <aside class="datasheet" aria-label="Facts about this planet"><div class="dh">Planet facts</div><dl><div><dt>Order from Hydros</dt><dd>5th</dd></div><div><dt>Class</dt><dd>Living ocean</dd></div><div><dt>Diameter</dt><dd>17,200 km</dd></div><div><dt>Surface gravity</dt><dd>1.2 g</dd></div><div><dt>Temperature range</dt><dd>8 to 17 °C</dd></div><div><dt>Orbit time</dt><dd>71 days</dd></div><div><dt>Day length</dt><dd>26 hours</dd></div><div><dt>Age</dt><dd>4.8 billion years</dd></div><div><dt>Moons</dt><dd>5: Cnidus, Obelia, Aurelia, Physalia, Velella</dd></div><div><dt>Features</dt><dd>Unclassified life throughout; no sea floor found; UNESCO-4 heritage planet</dd></div></dl></aside>
       <p class="lead dc">A world where the water itself harbours strange, self-sustaining ecosystems.</p>
       <div class="cols">
       <p>The prize jewel of the planets to scientists as Hydraxis harbours a profusion of life. Uncounted and unclassified types of aquatic creatures roam the depths of this planet.  And it is deep. No sea floor has yet be scanned, and it is presumed that there may be no floor at all..</p>
@@ -418,7 +433,8 @@
       <div class="runhead"><span>The Hydros Atlas</span><span>Entry VI of VI</span></div>
       <h2>Bathys<small>Serene waterplanet</small></h2>
       <div class="orn">&#10070;</div>
-      <figure class="plate planet-plate" data-kind="0" data-seed="6666"><canvas width="300" height="300" aria-label="Bathys, drawn from the booklet"></canvas><figcaption>Plate VIII: Bathys</figcaption></figure>
+      <figure class="plate planet-plate" data-kind="0" data-seed="6666" data-moons="2"><canvas width="300" height="300" aria-label="Bathys, drawn from the booklet"></canvas><figcaption>Plate VIII: Bathys</figcaption></figure>
+      <aside class="datasheet" aria-label="Facts about this planet"><div class="dh">Planet facts</div><dl><div><dt>Order from Hydros</dt><dd>6th</dd></div><div><dt>Class</dt><dd>Calm ocean</dd></div><div><dt>Diameter</dt><dd>14,900 km</dd></div><div><dt>Surface gravity</dt><dd>0.8 g</dd></div><div><dt>Temperature range</dt><dd>27 °C, never changes</dd></div><div><dt>Orbit time</dt><dd>104 days</dd></div><div><dt>Day length</dt><dd>54 hours</dd></div><div><dt>Age</dt><dd>6.9 billion years</dd></div><div><dt>Moons</dt><dd>2: Halcyon, Lull</dd></div><div><dt>Features</dt><dd>No storms; still water 100 m to thousands of metres deep; white sand core</dd></div></dl></aside>
       <p class="dc">Said to lower a human’s pulse rate by almost half, this is the most peaceful place yet visited by humankind.</p>
       <blockquote>I just feel like I was melting in the most peaceful way. I don’t know what causes this...</blockquote>
       <div class="cols">
@@ -860,7 +876,7 @@
     if (hs.width !== Math.round(w * d2) || hs.height !== Math.round(h * d2)) { hs.width = Math.round(w * d2); hs.height = Math.round(h * d2); }
     hsx.setTransform(d2, 0, 0, d2, 0, 0); hsx.clearRect(0, 0, w, h);
     if (!hsys) {
-      var kinds = [2, 5, 6, 1, 3, 4], sz = [17, 24, 14, 28, 20, 26], P = [], nm = [2, 4, 1, 5, 3, 2];
+      var kinds = [2, 5, 6, 1, 3, 4], sz = [17, 24, 14, 28, 20, 26], P = [], nm = [2, 4, 1, 3, 5, 2];
       for (var i = 0; i < 6; i++) P.push({ r: sz[i], a: 0, w: 0.34 / Math.pow(i + 1, 1.5) * (i % 2 ? 1.1 : 1), ph: i * 2.1 + 0.4, spr: buildPlanet({ r: sz[i], kind: kinds[i], seed: 11 + i * 29, tilt: 0.1 * i, phase: i, landLevel: 1.5 }), moons: [] });
       P.forEach(function (pp, i) { for (var m = 0; m < nm[i]; m++) pp.moons.push({ a: 0, w: (0.7 + m * 0.45) * (m % 2 ? -1 : 1), ph: m * 2.3 + i, d: pp.r * (1.9 + m * 0.8), r: pp.r * (0.22 + 0.06 * ((m + i) % 3)), spr: buildMoon(pp.r * 0.3, 40 + i * 7 + m * 13, [190, 188, 180]) }); });
       hsys = { star: buildSun({ r: 70, col: [255, 70, 50], seed: 7 }), P: P, a: 0 };
@@ -1072,7 +1088,11 @@
     var spr = buildPlanet({ r: 92, kind: kind, seed: seed % 977 + 3, tilt: (r() - 0.5) * 0.8, phase: r() * 6.28, landLevel: 1.5, cover: fig.closest('#ondine') ? 1 : 0 });
     x.drawImage(spr, S / 2 - 100, S / 2 - 100, 200, 200);
     if (fig.closest('#ondine')) { x.save(); x.beginPath(); x.arc(S / 2, S / 2, 98, 0, 6.2832); x.clip(); x.globalCompositeOperation = 'lighter'; [[0.3, -0.25, 0.9], [-0.35, 0.3, 0.55]].forEach(function (f2) { var g = x.createRadialGradient(S / 2 + f2[0] * 92, S / 2 + f2[1] * 92, 0, S / 2 + f2[0] * 92, S / 2 + f2[1] * 92, 46); g.addColorStop(0, 'rgba(220,232,255,' + f2[2] + ')'); g.addColorStop(1, 'rgba(120,150,255,0)'); x.fillStyle = g; x.fillRect(0, 0, S, S); }); x.restore(); }
-    var m = buildMoon(14, seed % 500, [190, 188, 180]); x.drawImage(m, S * 0.78 - 14, S * 0.26 - 14, 28, 28);
+    var nmn = +fig.getAttribute('data-moons') || 1;                                   // all the planet's moons, each a different size on its own orbit
+    for (var mi = 0; mi < nmn; mi++) {
+      var ma = -0.85 + mi * (6.2832 / nmn) + 0.4 * (mi % 2), md = 112 + (mi % 3) * 11, mr = 8 + ((mi * 5 + seed) % 5) * 1.6;
+      var mm = buildMoon(mr, seed % 500 + mi * 31, [190, 188, 180]); x.drawImage(mm, S / 2 + Math.cos(ma) * md - mr, S / 2 + Math.sin(ma) * md * 0.9 - mr, mr * 2, mr * 2);
+    }
   }
   var plates = Array.prototype.slice.call(document.querySelectorAll('.planet-plate'));
   if ('IntersectionObserver' in window) {
