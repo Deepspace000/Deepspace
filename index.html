@@ -300,6 +300,10 @@
     background: var(--cbg, transparent);
   }
   .comments li + li { margin-top: 0.7rem; }
+  .comments li.big { padding: 1.15rem 1.3rem; border-left: 3px solid #e0b95a; background: linear-gradient(100deg, rgba(224, 185, 90, 0.16), var(--cbg, transparent) 70%); box-shadow: 0 0 0 1px rgba(224, 185, 90, 0.22), 0 10px 30px -14px rgba(224, 185, 90, 0.35); }
+  .comments li.big .c-text { font-size: 1.04rem; line-height: 1.8; }
+  .comments li.big .c-who { font-size: 0.86rem; margin-top: 0.5rem; color: #e0c27a; }
+  .comments li.big + li { margin-top: 1.1rem; }
   .c-text { color: var(--ctext, var(--text)); }
   .c-who { color: var(--cwho, var(--dim)); }
   .comments { border-left: 0; padding-left: 0; }
@@ -665,6 +669,9 @@
     animation-delay: 3.6s;
   }
   .f-item + .f-item { margin-top: 1.5rem; }
+  .f-item.f-big { border-left-color: #e0b95a; padding: 0.85rem 1rem; background: linear-gradient(100deg, rgba(224, 185, 90, 0.14), var(--cbg, transparent) 75%); }
+  .f-item.f-big .f-text { font-size: 1rem; line-height: 1.75; }
+  .f-item.f-big .f-who { color: #e0c27a; }
   .f-item { padding: 0.6rem 0.85rem; border-radius: 3px; border-left: 2px solid var(--cbar, transparent); background: var(--cbg, transparent); }
   .f-text { display: block; white-space: pre-line; font-size: 0.88rem; line-height: 1.75; color: var(--ctext, var(--text)); }
   .f-who { display: block; margin-top: 0.25rem; font-size: 0.75rem; line-height: 1.6; color: var(--cwho, var(--dim)); }
@@ -693,6 +700,7 @@
     .flank { grid-row: 1; width: auto; max-width: 23rem; margin-top: 0; align-self: center; }
     .flank.left { grid-column: 1; justify-self: end; text-align: right; padding-right: 1.6rem; border-right: 1px solid var(--line); }
     .flank.left .f-item { border-left: 0; border-right: 2px solid var(--cbar, transparent); }
+    .flank.left .f-item.f-big { border-right: 3px solid #e0b95a; background: linear-gradient(260deg, rgba(224, 185, 90, 0.14), var(--cbg, transparent) 75%); }
     .flank.right { grid-column: 3; justify-self: start; text-align: left; padding-left: 1.6rem; border-left: 1px solid var(--line); }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -1748,6 +1756,8 @@
 
   var albums = [
     { t: 'The Atlas Sector', y: '2026', l: 'Projekt Records, new album', u: P + 'the-atlas-sector', art: 'a1408284073', id: '295441197', c: [
+      { q: 1, big: 1, x: "Safe to say, most of us will never know what it's like to travel in space. Certainly not in a science fiction movie sort of way where people board luxurious starcraft and set off for distant vistas. In lieu of that, I will settle for strapping into Deepspace's “The Atlas Sector” and letting the music paint those images for me. This is a spacey, 97-minute joyride to the star “Atlas, located at the edge of known space in a time that is post-earth.” Mirko Ruckels builds the trip across four quadrants, each with its share of sonic diversity. There are shimmering starlight pads and drones like cloudy nebulae; there are smooth downtempo passages that would be at home in some starcruiser's glass-domed space-lounge; and there are energetic, vibrant stretches like we're entering atmosphere to catch the first glimpse of an alien world. Laced throughout with classic spacemusic and EM sensibilities, “The Atlas Sector” is definitely a round-trip ticket. You'll listen all the way through without a single bump in the trip, and then book passage again.", pull: "You'll listen all the way through without a single bump in the trip, and then book passage again.", w: "John Shanahan, Hypnagogue" },
+      { x: "#9 on Top September releases", w: "Star\u2019s End" },
       { q: 1, x: "This is such a beautiful album. Relaxing, I just allow it to take me away and it is good. Favorite track: Atlas 8 - Arid Sector, I Think I Found Something Beautiful.", w: "Steve Lake, supporter on Bandcamp" },
       { q: 1, x: "Mirko is an amazing talent. The Atlas Sector is yet another modern masterpiece of progressive electronic space music. I thought Water Planets was hard to match and this album does just that! You need this in your collection. Highest possible recommendation. Favorite track: Atlas 8 - EMERALD OBSERVATORY.", w: "Progressive Music Planet, supporter on Bandcamp" },
       { q: 1, x: "Another ambient classic from Deepspace. A fitting follow-up to \"Water Planets\", which I regard as one of the greatest ambient albums ever made.\nThe interactive gamebook is something I have yet to explore, but is an interesting bonus all the same.\nHighly recommended. Favorite track: Atlas 8 - Arid Sector, I Think I Found Something Beautiful.", w: "Darksted, supporter on Bandcamp" },
@@ -2122,7 +2132,7 @@
       inner.appendChild(el('div', 'p-title', a.t));
       var ul = el('ul', 'comments');
       praiseOrder(a.c).forEach(function (c, ci) {
-        var li = el('li');
+        var li = el('li', c.big ? 'big' : null);
         tintComment(li, ACCENTS[a.t], ci);
         li.appendChild(el('span', 'c-text', c.q ? '\u201c' + c.x + '\u201d' : c.x));
         var who = el('span', 'c-who');
@@ -2242,6 +2252,14 @@
         box.appendChild(it);
       });
     }
+    (function () {                                                // pride of place: the featured review opens the left side
+      var box = document.getElementById('flank-left'), c = atlas.filter(function (x) { return x.big; })[0];
+      if (!box || !c) return;
+      var it = el('div', 'f-item f-big'); tintFlank(it, 1);
+      it.appendChild(el('span', 'f-text', '\u201c' + (c.pull || c.x) + '\u201d'));
+      it.appendChild(el('span', 'f-who', c.w));
+      box.appendChild(it);
+    })();
     fill('flank-left', ['Progressive Music Planet', 'Darksted', 'David TRIMBOUR']);
     fill('flank-right', ['Steve Lake', 'PhilPDX50', 'robw-37']);
   })();
